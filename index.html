@@ -85,6 +85,95 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.5rem, 4vw, 2.25rem);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      display: grid;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .hero-main {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 520px) {
+      .hero-main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .hero-metric {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(247, 248, 250, 0.4));
+      border-radius: var(--radius-lg);
+      padding: clamp(1.25rem, 4vw, 1.75rem);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 32px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .hero-value {
+      font-size: clamp(2.6rem, 9vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+
+    .hero-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .hero-sub {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 520px) {
+      .hero-sub {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .hero-sub-metric {
+      background: #f8fafc;
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .hero-sub-value {
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .hero-sub-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-caption {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
     .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
@@ -265,7 +354,7 @@
       font-size: 0.78rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--muted);
     }
 
     .kpi-value {
@@ -393,7 +482,7 @@
       grid-template-columns: repeat(8, minmax(0, 1fr));
       gap: 0.8rem;
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: var(--muted);
       text-align: center;
     }
 
@@ -433,6 +522,30 @@
     </div>
   </header>
   <main>
+    <section class="hero-card" aria-label="Laatste run overzicht">
+      <div class="hero-main">
+        <div class="hero-metric">
+          <span class="hero-value" id="heroTime">0.00</span>
+          <span class="hero-label">Hours</span>
+        </div>
+        <div class="hero-metric">
+          <span class="hero-value" id="heroDistance">0.00</span>
+          <span class="hero-label">KM</span>
+        </div>
+      </div>
+      <div class="hero-sub">
+        <div class="hero-sub-metric">
+          <span class="hero-sub-value" id="heroCurrentPace">—</span>
+          <span class="hero-sub-label">Current pace</span>
+        </div>
+        <div class="hero-sub-metric">
+          <span class="hero-sub-value" id="heroAvgPace">—</span>
+          <span class="hero-sub-label">Avg pace (30d)</span>
+        </div>
+      </div>
+      <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
+    </section>
+
     <section class="card" aria-labelledby="form-title">
       <h2 id="form-title">Run toevoegen</h2>
       <form id="runForm" novalidate>
@@ -509,6 +622,11 @@
       const kpiGrid = document.getElementById('kpiGrid');
       const chartBars = document.getElementById('chartBars');
       const chartLabels = document.getElementById('chartLabels');
+      const heroTime = document.getElementById('heroTime');
+      const heroDistance = document.getElementById('heroDistance');
+      const heroCurrentPace = document.getElementById('heroCurrentPace');
+      const heroAvgPace = document.getElementById('heroAvgPace');
+      const heroCaption = document.getElementById('heroCaption');
 
       let runs = [];
       let editId = null;
@@ -584,6 +702,18 @@
           seconds = 0;
         }
         return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min/km`;
+      }
+
+      function formatPaceShort(secondsPerKm) {
+        const pace = formatPace(secondsPerKm);
+        return pace === '—' ? '—' : pace.replace(' min/km', '');
+      }
+
+      function formatHours(hours) {
+        if (!Number.isFinite(hours) || hours <= 0) {
+          return '0.00';
+        }
+        return hours >= 10 ? hours.toFixed(1) : hours.toFixed(2);
       }
 
       function startOfWeek(date) {
@@ -698,6 +828,26 @@
         });
       }
 
+      function renderHero(stats) {
+        if (runs.length === 0) {
+          heroTime.textContent = '0.00';
+          heroDistance.textContent = '0.00';
+          heroCurrentPace.textContent = '—';
+          heroAvgPace.textContent = stats.avgPace ? formatPaceShort(stats.avgPace) : '—';
+          heroCaption.textContent = 'Voer je eerste run in om statistieken te zien.';
+          return;
+        }
+
+        const latest = runs[0];
+        const hours = latest.time / 3600;
+        heroTime.textContent = formatHours(hours);
+        heroDistance.textContent = latest.distance.toFixed(2);
+        heroCurrentPace.textContent = formatPaceShort(latest.time / latest.distance);
+        heroAvgPace.textContent = stats.avgPace ? formatPaceShort(stats.avgPace) : '—';
+        heroCaption.textContent = `Laatste run · ${formatDate(latest.date)} · ${formatDuration(latest.time)} (${latest.distance
+          .toFixed(2)} km)`;
+      }
+
       function renderChart(stats) {
         const now = new Date();
         now.setHours(0, 0, 0, 0);
@@ -769,6 +919,7 @@
       function refreshUI() {
         saveRuns();
         const stats = computeStats();
+        renderHero(stats);
         renderKPIs(stats);
         renderChart(stats);
         renderRuns();
