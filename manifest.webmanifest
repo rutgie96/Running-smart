@@ -1,0 +1,9 @@
+{
+  "name": "Running Smart",
+  "short_name": "RunningSmart",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F7F8FA",
+  "theme_color": "#ffffff",
+  "icons": []
+}
