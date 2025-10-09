@@ -12,1168 +12,269 @@
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F%3C/text%3E%3C/svg%3E"
   />
   <title>🏃‍♀️ Running Smart</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f7f8fa;
-      --surface: #ffffff;
-      --ink: #0f172a;
-      --muted: #475569;
-      --border: #e2e8f0;
-      --accent: #ff7a18;
-      --accent-ink: #1f2937;
-      --focus: rgba(255, 122, 24, 0.35);
-      --radius-lg: 16px;
-      --radius-pill: 999px;
-      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-      scroll-behavior: smooth;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--ink);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      -webkit-tap-highlight-color: rgba(255, 122, 24, 0.2);
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      z-index: 10;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-      color: var(--ink);
-      padding-top: env(safe-area-inset-top);
-    }
-
-    .header-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    h1 {
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      color: var(--ink);
-    }
-
-    main {
-      width: 100%;
-      max-width: 960px;
-      padding: 1.5rem 1.25rem 4rem;
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .hero-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: clamp(1.5rem, 4vw, 2.25rem);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
-      display: grid;
-      gap: 1.5rem;
-      text-align: center;
-    }
-
-    .hero-main {
-      display: grid;
-      gap: 1.25rem;
-    }
-
-    @media (min-width: 520px) {
-      .hero-main {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .hero-metric {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(247, 248, 250, 0.4));
-      border-radius: var(--radius-lg);
-      padding: clamp(1.25rem, 4vw, 1.75rem);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 32px rgba(15, 23, 42, 0.06);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .hero-value {
-      font-size: clamp(2.6rem, 9vw, 3.6rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-    }
-
-    .hero-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .hero-sub {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 520px) {
-      .hero-sub {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .hero-sub-metric {
-      background: #f8fafc;
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
-
-    .hero-sub-value {
-      font-size: clamp(1.35rem, 4vw, 1.75rem);
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .hero-sub-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .hero-caption {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-      overflow-wrap: anywhere;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      color: var(--ink);
-    }
-
-    form {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 600px) {
-      .form-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.02em;
-    }
-
-    input[type="date"],
-    input[type="text"] {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--ink);
-      font-size: 1rem;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    input[type="date"]:focus,
-    input[type="text"]:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--focus);
-    }
-
-    input::placeholder {
-      color: #94a3b8;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: var(--radius-pill);
-      padding: 0.75rem 1.4rem;
-      font-size: 1rem;
-      font-weight: 600;
-      background: linear-gradient(180deg, #ff8a3d, #ff6f00);
-      color: var(--accent-ink);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 12px 24px rgba(255, 122, 24, 0.25);
-      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
-      min-height: 44px;
-      min-width: 44px;
-    }
-
-    button.secondary {
-      background: #f1f5f9;
-      color: var(--ink);
-      box-shadow: none;
-      border: 1px solid var(--border);
-    }
-
-    button.danger {
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fca5a5;
-      box-shadow: none;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(255, 122, 24, 0.35);
-      background: linear-gradient(180deg, #ff7f29, #ff6500);
-    }
-
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 6px 15px rgba(255, 122, 24, 0.2);
-      background: linear-gradient(180deg, #ff7421, #ff6100);
-    }
-
-    button:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    button.secondary:hover {
-      background: #e2e8f0;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(148, 163, 184, 0.25);
-    }
-
-    button.danger:hover {
-      background: #fee2e2;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(248, 113, 113, 0.25);
-    }
-
-    button.secondary:active {
-      transform: translateY(0);
-      background: #dbe3ef;
-      box-shadow: 0 4px 10px rgba(148, 163, 184, 0.2);
-    }
-
-    button.danger:active {
-      transform: translateY(0);
-      background: #fecaca;
-      box-shadow: 0 4px 10px rgba(248, 113, 113, 0.2);
-    }
-
-    .feedback {
-      font-size: 0.85rem;
-      color: #dc2626;
-      min-height: 1.2rem;
-    }
-
-    .kpi-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 900px) {
-      .kpi-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-
-    .kpi-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: 1.2rem;
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-    }
-
-    .kpi-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .kpi-value {
-      font-size: clamp(1.5rem, 4vw, 1.9rem);
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-
-    thead {
-      color: var(--muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: #f8fafc;
-    }
-
-    thead th {
-      color: var(--muted);
-      background: #f8fafc;
-    }
-
-    th,
-    td {
-      padding: 0.75rem;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: middle;
-    }
-
-    tbody tr {
-      transition: background 0.2s ease;
-    }
-
-    tbody tr:nth-child(even) {
-      background: #f9fafb;
-    }
-
-    tbody tr:hover {
-      background: #f1f5f9;
-    }
-
-    .empty-state {
-      padding: 1rem 0;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .actions {
-      display: inline-flex;
-      gap: 0.35rem;
-    }
-
-    .icon-button {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      width: 2.75rem;
-      height: 2.75rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      color: var(--ink);
-      font-size: 1.1rem;
-      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .icon-button:hover {
-      background: #eff3f8;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(148, 163, 184, 0.25);
-    }
-
-    .icon-button:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    .chart-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .chart {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 0.8rem;
-      height: 180px;
-      align-items: end;
-    }
-
-    .bar {
-      position: relative;
-      background: linear-gradient(180deg, #ff8a3d, #ff6f00);
-      border-radius: 12px 12px 4px 4px;
-      box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .bar::after {
-      content: attr(data-value) " km";
-      position: absolute;
-      top: -1.8rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .bar:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(255, 122, 24, 0.28);
-    }
-
-    .chart-labels {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 0.8rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-
-    @media (max-width: 420px) {
-      body {
-        padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
-      }
-
-      main {
-        padding: 1.25rem 1rem 3rem;
-      }
-
-      .card,
-      .hero-card,
-      .kpi-card {
-        box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05);
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .hero-value {
-        font-size: 2.4rem;
-      }
-
-      button {
-        box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        color-scheme: dark;
-        --bg: #0f172a;
-        --surface: #131f36;
-        --ink: #e2e8f0;
-        --muted: #94a3b8;
-        --border: #1e293b;
-        --accent: #ff8a3d;
-        --accent-ink: #0f172a;
-        --focus: rgba(255, 138, 61, 0.35);
-      }
-
-      header {
-        background: var(--surface);
-        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.35);
-      }
-
-      .card,
-      .hero-card,
-      .kpi-card {
-        background: var(--surface);
-        border-color: var(--border);
-        box-shadow: 0 16px 32px rgba(2, 6, 23, 0.6);
-      }
-
-      input[type="date"],
-      input[type="text"] {
-        background: #0b1424;
-        color: var(--ink);
-      }
-
-      .hero-sub-metric {
-        background: #0b1424;
-      }
-
-      thead {
-        background: #1e293b;
-      }
-
-      tbody tr:nth-child(even) {
-        background: rgba(30, 41, 59, 0.4);
-      }
-
-      tbody tr:hover {
-        background: rgba(51, 65, 85, 0.6);
-      }
-
-      .icon-button {
-        background: #1e293b;
-      }
-
-      body {
-        background: var(--bg);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="header-inner">
       <h1 aria-label="Running Smart hardloop dashboard">🏃‍♀️ Running Smart</h1>
-      <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Backup</button>
+      <nav class="primary-nav" aria-label="Hoofdnavigatie">
+        <button type="button" class="nav-link active" data-view="homeView">Home</button>
+        <button type="button" class="nav-link" data-view="logView">Run loggen</button>
+        <button type="button" class="nav-link" data-view="kpiView">KPI overzicht</button>
+        <button type="button" class="nav-link" data-view="settingsView">Instellingen</button>
+      </nav>
     </div>
   </header>
   <main>
-    <section class="hero-card" aria-label="Laatste run overzicht">
-      <div class="hero-main">
-        <div class="hero-metric">
-          <span class="hero-value" id="heroTime">0,00</span>
-          <span class="hero-label">Uren</span>
-        </div>
-        <div class="hero-metric">
-          <span class="hero-value" id="heroDistance">0,00</span>
-          <span class="hero-label">KM</span>
-        </div>
-      </div>
-      <div class="hero-sub">
-        <div class="hero-sub-metric">
-          <span class="hero-sub-value" id="heroCurrentPace">—</span>
-          <span class="hero-sub-label">Huidig tempo</span>
-        </div>
-        <div class="hero-sub-metric">
-          <span class="hero-sub-value" id="heroAvgPace">—</span>
-          <span class="hero-sub-label">Gem. tempo (30d)</span>
-        </div>
-      </div>
-      <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
-    </section>
-
-    <section class="card" aria-labelledby="form-title">
-      <h2 id="form-title">Run toevoegen</h2>
-      <form id="runForm" novalidate>
-        <div class="form-grid">
-          <div>
-            <label for="runDate">Datum</label>
-            <input id="runDate" name="runDate" type="date" required aria-required="true" />
+    <section class="view active" id="homeView" aria-labelledby="home-title">
+      <section class="card intro-card">
+        <h2 id="home-title">Welkom terug</h2>
+        <p>
+          Houd je hardloopmomenten overzichtelijk bij en zie je voortgang in één oogopslag. Kies hieronder wat je wilt doen:
+          een nieuwe run registreren of direct naar je KPI&apos;s gaan.
+        </p>
+      </section>
+      <section class="hero-card" aria-label="Laatste run overzicht">
+        <div class="hero-main">
+          <div class="hero-metric">
+            <span class="hero-value" id="heroTime">0,00</span>
+            <span class="hero-label">Uren</span>
           </div>
-          <div>
-            <label for="runDistance">Afstand (km)</label>
-            <input id="runDistance" name="runDistance" type="text" required aria-required="true" inputmode="decimal" pattern="^\s*[0-9]+([\.,][0-9]{1,2})?\s*$" placeholder="Bijv. 5,25" />
-          </div>
-          <div>
-            <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
-            <input id="runTime" name="runTime" type="text" required aria-required="true" inputmode="numeric" pattern="^\s*(?:[0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]\s*$" placeholder="Bijv. 00:27:45" />
+          <div class="hero-metric">
+            <span class="hero-value" id="heroDistance">0,00</span>
+            <span class="hero-label">KM</span>
           </div>
         </div>
-        <div class="feedback" id="formFeedback" role="alert" aria-live="polite"></div>
-        <div class="button-row">
-          <button type="submit" id="submitButton">Run opslaan</button>
-          <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
-          <button type="button" class="danger" id="clearButton">Alles wissen</button>
+        <div class="hero-sub">
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAllTimePace">—</span>
+            <span class="hero-sub-label">Gem. tempo per km (altijd)</span>
+          </div>
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAvgPace">—</span>
+            <span class="hero-sub-label">Tempo (30 dagen)</span>
+          </div>
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAvgHr">—</span>
+            <span class="hero-sub-label">Gem. hartslag (30 dagen)</span>
+          </div>
         </div>
-      </form>
-    </section>
-
-    <section class="card" aria-labelledby="dashboard-title">
-      <h2 id="dashboard-title">Dashboard</h2>
-      <div class="kpi-grid" id="kpiGrid" role="list"></div>
-      <div class="chart-container" aria-label="Kilometers per week grafiek">
-        <h3 style="margin: 0; font-size: 1rem; color: var(--muted);">Laatste 8 weken</h3>
-        <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
-        <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+        <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
+      </section>
+      <div class="home-actions" role="list">
+        <article class="action-card" role="listitem">
+          <h3>Nieuwe activiteit</h3>
+          <p>Leg meteen je afstand, tijd en hartslag vast met slimme validatie.</p>
+          <button type="button" class="ghost" data-target="logView">Run toevoegen</button>
+        </article>
+        <article class="action-card" role="listitem">
+          <h3>KPI Dashboard</h3>
+          <p>Ontdek trends, snelheden en persoonlijke records uit je runs.</p>
+          <button type="button" class="ghost" data-target="kpiView">Bekijk KPI&apos;s</button>
+        </article>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="runs-title">
-      <h2 id="runs-title">Runs</h2>
-      <div class="table-wrapper" role="region" aria-live="polite" aria-labelledby="runs-title">
-        <table aria-label="Overzicht van runs" id="runsTable">
-          <thead>
-            <tr>
-              <th scope="col">Datum</th>
-              <th scope="col">Afstand</th>
-              <th scope="col">Tijd</th>
-              <th scope="col">Tempo</th>
-              <th scope="col">Acties</th>
-            </tr>
-          </thead>
-          <tbody id="runsBody"></tbody>
-        </table>
-        <p id="emptyState" class="empty-state">Nog geen runs toegevoegd. Tijd voor een rondje! 🏃‍♂️</p>
-      </div>
+    <section class="view" id="logView" aria-labelledby="form-title">
+      <section class="card" aria-labelledby="form-title">
+        <div class="card-header">
+          <h2 id="form-title">Run toevoegen</h2>
+          <p class="card-subtitle">Enter = opslaan · Esc = annuleren</p>
+        </div>
+        <form id="runForm" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="runDate">Datum</label>
+              <input id="runDate" name="runDate" type="date" required aria-required="true" aria-label="Datum van je run" />
+            </div>
+            <div class="form-field">
+              <label for="runDistance">Afstand (km)</label>
+              <input
+                id="runDistance"
+                name="runDistance"
+                type="text"
+                required
+                aria-required="true"
+                aria-describedby="distanceHint"
+                inputmode="decimal"
+                placeholder="Bijv. 5,25"
+              />
+              <p id="distanceHint" class="input-hint">Gebruik komma of punt. Waarde tussen 0 en 200 km.</p>
+            </div>
+            <div class="form-field">
+              <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
+              <input
+                id="runTime"
+                name="runTime"
+                type="text"
+                required
+                aria-required="true"
+                aria-describedby="timeHint"
+                inputmode="numeric"
+                placeholder="Bijv. 00:47:15"
+              />
+              <p id="timeHint" class="input-hint">Minimaal 00:01:00 en maximaal 24:00:00.</p>
+            </div>
+            <div class="form-field">
+              <label for="runAvgHr">Gem. hartslag (bpm)</label>
+              <input
+                id="runAvgHr"
+                name="runAvgHr"
+                type="number"
+                min="30"
+                max="240"
+                step="1"
+                required
+                aria-required="true"
+                aria-describedby="avgHrHint"
+                inputmode="numeric"
+              />
+              <p id="avgHrHint" class="input-hint">Verplicht veld. Typische waarden liggen tussen 120 en 190 bpm.</p>
+            </div>
+            <div class="form-field">
+              <label for="runMaxHr">Max. hartslag (bpm)</label>
+              <input
+                id="runMaxHr"
+                name="runMaxHr"
+                type="number"
+                min="30"
+                max="260"
+                step="1"
+                aria-describedby="maxHrHint"
+                inputmode="numeric"
+              />
+              <p id="maxHrHint" class="input-hint">Optioneel. Moet gelijk of hoger zijn dan je gemiddelde hartslag.</p>
+            </div>
+          </div>
+          <p class="feedback" id="formFeedback" role="alert" aria-live="polite"></p>
+          <p class="feedback warning" id="formWarning" role="status" aria-live="polite"></p>
+          <div class="button-row">
+            <button type="submit" id="submitButton">Run opslaan</button>
+            <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
+            <button type="button" class="danger" id="clearButton">Alles wissen</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="runs-title">
+        <h2 id="runs-title">Runs</h2>
+        <div class="table-wrapper" role="region" aria-live="polite" aria-labelledby="runs-title">
+          <table aria-label="Overzicht van runs" id="runsTable">
+            <thead>
+              <tr>
+                <th scope="col">Datum</th>
+                <th scope="col">Afstand</th>
+                <th scope="col">Tijd</th>
+                <th scope="col">Tempo</th>
+                <th scope="col">Gem. HR</th>
+                <th scope="col">Max HR</th>
+                <th scope="col">Acties</th>
+              </tr>
+            </thead>
+            <tbody id="runsBody"></tbody>
+          </table>
+          <p id="emptyState" class="empty-state">Nog geen runs toegevoegd. Tijd voor een rondje! 🏃‍♂️</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="kpiView" aria-labelledby="dashboard-title">
+      <section class="card" aria-labelledby="dashboard-title">
+        <div class="card-header">
+          <h2 id="dashboard-title">KPI overzicht</h2>
+          <p class="card-subtitle">Zie je voortgang, tempo en hartslagtrends op één plek.</p>
+        </div>
+        <div class="kpi-grid" id="kpiGrid" role="list"></div>
+        <div class="chart-grid">
+          <article class="chart-card" aria-labelledby="hrChartTitle">
+            <div class="chart-card-header">
+              <h3 id="hrChartTitle">Gemiddelde hartslag</h3>
+              <label class="chart-filter" for="hrRange">
+                Bereik
+                <select id="hrRange" name="hrRange">
+                  <option value="30">30 dagen</option>
+                  <option value="90">90 dagen</option>
+                  <option value="all">Alles</option>
+                </select>
+              </label>
+            </div>
+            <div class="chart-card-body">
+              <canvas id="hrLineChart" aria-label="Lijngrafiek hartslag" role="img"></canvas>
+              <p id="hrLineEmpty" class="chart-empty" hidden>Voer runs met hartslag in om deze grafiek te vullen.</p>
+            </div>
+          </article>
+          <article class="chart-card" aria-labelledby="zoneChartTitle">
+            <h3 id="zoneChartTitle">Hartslagzones</h3>
+            <div class="chart-card-body">
+              <canvas id="zoneChart" aria-label="Verdeling hartslagzones" role="img"></canvas>
+              <p id="zoneEmpty" class="chart-empty">Voer je maximale hartslag in bij Instellingen om deze grafiek te zien.</p>
+            </div>
+          </article>
+          <article class="chart-card" aria-labelledby="weeklyChartTitle">
+            <h3 id="weeklyChartTitle">Kilometers per week (laatste 8 weken)</h3>
+            <div class="chart-card-body">
+              <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
+              <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="settingsView" aria-labelledby="settings-title">
+      <section class="card" aria-labelledby="settings-title">
+        <h2 id="settings-title">Instellingen</h2>
+        <p class="settings-intro">
+          Stel je doelen en hartslaggegevens in zodat het dashboard direct laat zien hoe je presteert.
+        </p>
+        <form id="settingsForm" class="settings-form" novalidate>
+          <div class="settings-grid">
+            <div class="form-field">
+              <label for="goalWeeklyKm">Weekdoel afstand (km)</label>
+              <input id="goalWeeklyKm" name="goalWeeklyKm" type="number" min="0" step="0.5" aria-describedby="weeklyHint" />
+              <p id="weeklyHint" class="input-hint">Gebruik 0 om dit doel tijdelijk uit te schakelen.</p>
+            </div>
+            <div class="form-field">
+              <label for="goalMonthlyKm">Maanddoel afstand (km)</label>
+              <input id="goalMonthlyKm" name="goalMonthlyKm" type="number" min="0" step="1" aria-describedby="monthlyHint" />
+              <p id="monthlyHint" class="input-hint">Kies een haalbaar totaal voor je trainingsschema.</p>
+            </div>
+            <div class="form-field">
+              <label for="goalPace">Streeftempo (mm:ss per km)</label>
+              <input id="goalPace" name="goalPace" type="text" inputmode="numeric" aria-describedby="paceHint" placeholder="bijv. 04:45" />
+              <p id="paceHint" class="input-hint">Formaat mm:ss, bijvoorbeeld 04:50.</p>
+            </div>
+            <div class="form-field">
+              <label for="goalMaxHr">Maximale hartslag (bpm)</label>
+              <input id="goalMaxHr" name="goalMaxHr" type="number" min="120" max="240" step="1" aria-describedby="maxUserHint" />
+              <p id="maxUserHint" class="input-hint">Richtlijn: 207 - (0,7 × leeftijd). Pas aan op basis van je eigen metingen.</p>
+            </div>
+          </div>
+          <section class="zones-card" aria-labelledby="zonesTitle">
+            <div class="zones-header">
+              <h3 id="zonesTitle">Zones uitgelegd</h3>
+              <p>Gebaseerd op je maximale hartslag worden onderstaande trainingszones berekend.</p>
+            </div>
+            <ul class="zones-list" id="zonesList"></ul>
+          </section>
+          <div class="settings-actions">
+            <button type="submit">Instellingen opslaan</button>
+            <button type="button" class="secondary" id="settingsReset">Herstel standaard</button>
+            <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Export JSON</button>
+            <button type="button" class="secondary" id="backupCsvButton" aria-label="Exporteer runs als CSV">📄 Export CSV</button>
+          </div>
+        </form>
+        <p id="settingsFeedback" class="feedback" role="status" aria-live="polite"></p>
+      </section>
     </section>
   </main>
 
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <input type="file" accept="application/json" class="visually-hidden" id="importFile" aria-hidden="true" />
 
-  <script>
-    (function () {
-      const STORAGE_KEY = 'running-smart-runs';
-      const runForm = document.getElementById('runForm');
-      const runDate = document.getElementById('runDate');
-      const runDistance = document.getElementById('runDistance');
-      const runTime = document.getElementById('runTime');
-      const formFeedback = document.getElementById('formFeedback');
-      const submitButton = document.getElementById('submitButton');
-      const backupButton = document.getElementById('backupButton');
-      const restoreButton = document.getElementById('restoreButton');
-      const clearButton = document.getElementById('clearButton');
-      const importFile = document.getElementById('importFile');
-      const runsBody = document.getElementById('runsBody');
-      const emptyState = document.getElementById('emptyState');
-      const kpiGrid = document.getElementById('kpiGrid');
-      const chartBars = document.getElementById('chartBars');
-      const chartLabels = document.getElementById('chartLabels');
-      const heroTime = document.getElementById('heroTime');
-      const heroDistance = document.getElementById('heroDistance');
-      const heroCurrentPace = document.getElementById('heroCurrentPace');
-      const heroAvgPace = document.getElementById('heroAvgPace');
-      const heroCaption = document.getElementById('heroCaption');
-
-      let runs = [];
-      let editId = null;
-
-      const today = new Date();
-      runDate.value = today.toISOString().slice(0, 10);
-      submitButton.setAttribute('aria-label', 'Nieuwe run opslaan');
-
-      function uid() {
-        return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
-      }
-
-      function parseDistance(value) {
-        if (!value) return null;
-        const normalized = value.trim().replace(',', '.');
-        const distance = parseFloat(normalized);
-        if (Number.isNaN(distance) || distance <= 0) {
-          return null;
-        }
-        return distance;
-      }
-
-      function parseTimeInput(value) {
-        if (!value) return null;
-        const trimmed = value.trim();
-        const parts = trimmed.split(':');
-        if (parts.length < 2 || parts.length > 3) {
-          return null;
-        }
-        const numbers = parts.map(Number);
-        if (numbers.some((n) => Number.isNaN(n) || n < 0)) {
-          return null;
-        }
-        let hours = 0, minutes = 0, seconds = 0;
-        if (parts.length === 3) {
-          [hours, minutes, seconds] = numbers;
-        } else {
-          [minutes, seconds] = numbers;
-        }
-        if (minutes >= 60 || seconds >= 60) {
-          return null;
-        }
-        return hours * 3600 + minutes * 60 + seconds;
-      }
-
-      function formatDate(dateString) {
-        const date = new Date(dateString + 'T00:00:00');
-        return date.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      }
-
-      function formatDistance(distance) {
-        return distance.toFixed(2).replace('.', ',') + ' km';
-      }
-
-      function formatDuration(seconds) {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        if (h > 0) {
-          return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        }
-        return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      }
-
-      function formatPace(secondsPerKm) {
-        if (!Number.isFinite(secondsPerKm) || secondsPerKm <= 0) {
-          return '—';
-        }
-        let minutes = Math.floor(secondsPerKm / 60);
-        let seconds = Math.round(secondsPerKm % 60);
-        if (seconds === 60) {
-          minutes += 1;
-          seconds = 0;
-        }
-        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min/km`;
-      }
-
-      function formatPaceShort(secondsPerKm) {
-        const pace = formatPace(secondsPerKm);
-        return pace === '—' ? '—' : pace.replace(' min/km', '');
-      }
-
-      function formatHours(hours) {
-        if (!Number.isFinite(hours) || hours <= 0) {
-          return '0,00';
-        }
-        const value = hours >= 10 ? hours.toFixed(1) : hours.toFixed(2);
-        return value.replace('.', ',');
-      }
-
-      function startOfWeek(date) {
-        const temp = new Date(date);
-        const day = temp.getDay();
-        const diff = (day === 0 ? -6 : 1) - day; // maandag als start van de week
-        temp.setDate(temp.getDate() + diff);
-        temp.setHours(0, 0, 0, 0);
-        return temp;
-      }
-
-      function loadRuns() {
-        try {
-          const stored = localStorage.getItem(STORAGE_KEY);
-          if (stored) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed)) {
-              runs = parsed
-                .filter((run) => run && run.date && run.distance > 0 && run.time > 0)
-                .map((run) => ({
-                  id: run.id || uid(),
-                  date: run.date,
-                  distance: Number(run.distance),
-                  time: Number(run.time),
-                }))
-                .sort((a, b) => b.date.localeCompare(a.date));
-            }
-          }
-        } catch (error) {
-          console.error('Kon runs niet laden', error);
-          runs = [];
-        }
-      }
-
-      function saveRuns() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(runs));
-      }
-
-      function setFieldValidity(field, isValid) {
-        field.setAttribute('aria-invalid', String(!isValid));
-      }
-
-      setFieldValidity(runDistance, true);
-      setFieldValidity(runTime, true);
-      setFieldValidity(runDate, true);
-
-      function resetForm() {
-        runForm.reset();
-        runDate.value = today.toISOString().slice(0, 10);
-        editId = null;
-        submitButton.textContent = 'Run opslaan';
-        submitButton.setAttribute('aria-label', 'Nieuwe run opslaan');
-        formFeedback.textContent = '';
-        setFieldValidity(runDistance, true);
-        setFieldValidity(runTime, true);
-        setFieldValidity(runDate, true);
-      }
-
-      function computeStats() {
-        const now = new Date();
-        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-        const weekStart = startOfWeek(startOfToday);
-        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-        const thirtyDaysAgo = new Date(now);
-        thirtyDaysAgo.setDate(now.getDate() - 30);
-
-        let kmWeek = 0;
-        let kmMonth = 0;
-        let totalSeconds = 0;
-        let totalDistance = 0;
-        let bestFiveK = null;
-
-        const weeklyTotals = new Map();
-
-        runs.forEach((run) => {
-          const date = new Date(run.date + 'T00:00:00');
-          if (date >= weekStart) {
-            kmWeek += run.distance;
-          }
-          if (date >= monthStart) {
-            kmMonth += run.distance;
-          }
-          if (date >= thirtyDaysAgo) {
-            totalSeconds += run.time;
-            totalDistance += run.distance;
-          }
-          if (run.distance >= 5) {
-            const pace = run.time / run.distance;
-            // PR voor 5 km berekenen als het minimale tempo (tijd per km) maal 5 km
-            if (!bestFiveK || pace < bestFiveK) {
-              bestFiveK = pace;
-            }
-          }
-
-          const weekKey = startOfWeek(date).toISOString().slice(0, 10);
-          weeklyTotals.set(weekKey, (weeklyTotals.get(weekKey) || 0) + run.distance);
-        });
-
-        return {
-          kmWeek,
-          kmMonth,
-          avgPace: totalDistance > 0 ? totalSeconds / totalDistance : null,
-          pr5k: bestFiveK ? bestFiveK * 5 : null,
-          weeklyTotals,
-        };
-      }
-
-      function renderKPIs(stats) {
-        const tiles = [
-          { label: 'Km deze week', value: stats.kmWeek.toFixed(2).replace('.', ',') },
-          { label: 'Km deze maand', value: stats.kmMonth.toFixed(2).replace('.', ',') },
-          { label: 'Gemiddeld tempo (30d)', value: stats.avgPace ? formatPace(stats.avgPace) : '—' },
-          { label: 'PR 5 km', value: stats.pr5k ? formatDuration(Math.round(stats.pr5k)) : '—' },
-        ];
-
-        kpiGrid.innerHTML = '';
-        tiles.forEach((tile) => {
-          const div = document.createElement('div');
-          div.className = 'kpi-card';
-          div.setAttribute('role', 'listitem');
-          div.innerHTML = `<span class="kpi-label">${tile.label}</span><span class="kpi-value">${tile.value}</span>`;
-          kpiGrid.appendChild(div);
-        });
-      }
-
-      function renderHero(stats) {
-        if (runs.length === 0) {
-          heroTime.textContent = '0,00';
-          heroDistance.textContent = '0,00';
-          heroCurrentPace.textContent = '—';
-          heroAvgPace.textContent = stats.avgPace ? formatPaceShort(stats.avgPace) : '—';
-          heroCaption.textContent = 'Voer je eerste run in om statistieken te zien.';
-          return;
-        }
-
-        const latest = runs[0];
-        const hours = latest.time / 3600;
-        heroTime.textContent = formatHours(hours);
-        heroDistance.textContent = latest.distance.toFixed(2).replace('.', ',');
-        heroCurrentPace.textContent = formatPaceShort(latest.time / latest.distance);
-        heroAvgPace.textContent = stats.avgPace ? formatPaceShort(stats.avgPace) : '—';
-        heroCaption.textContent = `Laatste run · ${formatDate(latest.date)} · ${formatDuration(latest.time)} (${latest.distance
-          .toFixed(2)} km)`;
-      }
-
-      function renderChart(stats) {
-        const now = new Date();
-        now.setHours(0, 0, 0, 0);
-        const currentWeekStart = startOfWeek(now);
-        const bars = [];
-        const labels = [];
-        let maxKm = 0;
-
-        for (let i = 7; i >= 0; i--) {
-          const start = new Date(currentWeekStart);
-          start.setDate(start.getDate() - i * 7);
-          const key = start.toISOString().slice(0, 10);
-          const value = stats.weeklyTotals.get(key) || 0;
-          const end = new Date(start);
-          end.setDate(start.getDate() + 6);
-          const label = `${start.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit' })} – ${end.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit' })}`;
-          bars.push({ key, value, label });
-          maxKm = Math.max(maxKm, value);
-          labels.push(label);
-        }
-
-        chartBars.innerHTML = '';
-        chartLabels.innerHTML = '';
-        const safeMax = maxKm > 0 ? maxKm : 1;
-
-        bars.forEach(({ value, label }) => {
-          const bar = document.createElement('div');
-          bar.className = 'bar';
-          const height = (value / safeMax) * 100;
-          bar.style.height = `${Math.max(6, height)}%`;
-          bar.dataset.value = value.toFixed(1).replace('.', ',');
-          bar.setAttribute('role', 'listitem');
-          bar.setAttribute('aria-label', `${label}: ${value.toFixed(1)} kilometer`);
-          chartBars.appendChild(bar);
-        });
-
-        labels.forEach((label) => {
-          const span = document.createElement('span');
-          span.innerHTML = label.replace(' – ', '<br>–<br>');
-          chartLabels.appendChild(span);
-        });
-      }
-
-      function renderRuns() {
-        runsBody.innerHTML = '';
-        if (runs.length === 0) {
-          emptyState.style.display = 'block';
-          return;
-        }
-        emptyState.style.display = 'none';
-        runs.forEach((run) => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${formatDate(run.date)}</td>
-            <td>${formatDistance(run.distance)}</td>
-            <td>${formatDuration(run.time)}</td>
-            <td>${formatPace(run.time / run.distance)}</td>
-            <td>
-              <div class="actions">
-                <button type="button" class="icon-button" aria-label="Bewerk run ${formatDate(run.date)}" data-action="edit" data-id="${run.id}">✏️</button>
-                <button type="button" class="icon-button" aria-label="Verwijder run ${formatDate(run.date)}" data-action="delete" data-id="${run.id}">🗑️</button>
-              </div>
-            </td>
-          `;
-          runsBody.appendChild(tr);
-        });
-      }
-
-      function refreshUI() {
-        saveRuns();
-        const stats = computeStats();
-        renderHero(stats);
-        renderKPIs(stats);
-        renderChart(stats);
-        renderRuns();
-      }
-
-      function scrollToTop() {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) {
-          window.scrollTo(0, 0);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }
-
-      runForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const dateValue = runDate.value;
-        const distanceValue = parseDistance(runDistance.value);
-        const timeValue = parseTimeInput(runTime.value);
-
-        if (!dateValue || !distanceValue || !timeValue) {
-          formFeedback.textContent = 'Controleer datum, afstand en tijd. Gebruik bij tijd het formaat hh:mm:ss of mm:ss.';
-          setFieldValidity(runDistance, Boolean(distanceValue));
-          setFieldValidity(runTime, Boolean(timeValue));
-          setFieldValidity(runDate, Boolean(dateValue));
-          return;
-        }
-
-        setFieldValidity(runDistance, true);
-        setFieldValidity(runTime, true);
-        setFieldValidity(runDate, true);
-        const runData = {
-          id: editId || uid(),
-          date: dateValue,
-          distance: Number(distanceValue.toFixed(2)),
-          time: timeValue,
-        };
-
-        if (editId) {
-          runs = runs.map((run) => (run.id === editId ? runData : run));
-        } else {
-          runs.push(runData);
-        }
-
-        runs.sort((a, b) => b.date.localeCompare(a.date));
-        refreshUI();
-        resetForm();
-      });
-
-      runsBody.addEventListener('click', (event) => {
-        const button = event.target.closest('button[data-action]');
-        if (!button) return;
-        const { action, id } = button.dataset;
-        const run = runs.find((item) => item.id === id);
-        if (!run) return;
-
-        if (action === 'edit') {
-          editId = id;
-          runDate.value = run.date;
-          runDistance.value = run.distance.toFixed(2).replace('.', ',');
-          runTime.value = formatDuration(run.time);
-          submitButton.textContent = 'Run bijwerken';
-          submitButton.setAttribute('aria-label', 'Bestaande run bijwerken');
-          formFeedback.textContent = 'Bewerken: pas velden aan en sla op.';
-          runDistance.focus();
-        } else if (action === 'delete') {
-          if (confirm('Weet je zeker dat je deze run wilt verwijderen?')) {
-            runs = runs.filter((item) => item.id !== id);
-            refreshUI();
-            if (editId === id) {
-              resetForm();
-            }
-          }
-        }
-      });
-
-      backupButton.addEventListener('click', () => {
-        const dataStr = JSON.stringify(runs, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `running-smart-backup-${new Date().toISOString().slice(0, 10)}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      });
-
-      restoreButton.addEventListener('click', () => {
-        importFile.value = '';
-        importFile.click();
-      });
-
-      importFile.addEventListener('change', () => {
-        const file = importFile.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          try {
-            const data = JSON.parse(event.target.result);
-            if (!Array.isArray(data)) {
-              alert('Ongeldig backup-bestand.');
-              return;
-            }
-            const validRuns = data
-              .filter((run) => run && run.date && run.distance > 0 && run.time > 0)
-              .map((run) => ({
-                id: run.id || uid(),
-                date: run.date,
-                distance: Number(run.distance),
-                time: Number(run.time),
-              }));
-            if (validRuns.length === 0) {
-              alert('Geen geldige runs gevonden in het bestand.');
-              return;
-            }
-            runs = validRuns.sort((a, b) => b.date.localeCompare(a.date));
-            refreshUI();
-            resetForm();
-            scrollToTop();
-          } catch (error) {
-            console.error(error);
-            alert('Kon backup niet lezen. Controleer het bestand.');
-          }
-        };
-        reader.readAsText(file);
-      });
-
-      clearButton.addEventListener('click', () => {
-        if (confirm('Weet je zeker dat je alle runs wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
-          runs = [];
-          refreshUI();
-          resetForm();
-          scrollToTop();
-        }
-      });
-
-      loadRuns();
-      refreshUI();
-    })();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
