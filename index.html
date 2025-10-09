@@ -12,873 +12,13 @@
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F%3C/text%3E%3C/svg%3E"
   />
   <title>🏃‍♀️ Running Smart</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f3f4f8;
-      --surface: #ffffff;
-      --ink: #0f172a;
-      --muted: #4b5563;
-      --border: #e2e8f0;
-      --accent: #2563eb;
-      --accent-strong: #1d4ed8;
-      --accent-soft: #dbeafe;
-      --accent-ink: #ffffff;
-      --focus: rgba(37, 99, 235, 0.35);
-      --radius-lg: 16px;
-      --radius-pill: 999px;
-      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-      scroll-behavior: smooth;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--ink);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      z-index: 10;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(16px);
-      color: var(--ink);
-      padding-top: env(safe-area-inset-top);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
-    }
-
-    .header-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    h1 {
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      color: var(--ink);
-    }
-
-    .primary-nav {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .nav-link {
-      border: 1px solid transparent;
-      border-radius: var(--radius-pill);
-      background: transparent;
-      color: var(--muted);
-      font-weight: 600;
-      padding: 0.55rem 1rem;
-      cursor: pointer;
-      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-    }
-
-    .nav-link:hover,
-    .nav-link:focus-visible {
-      color: var(--accent-ink);
-      border-color: var(--accent);
-      outline: none;
-      background: var(--accent);
-    }
-
-    .nav-link.active {
-      background: var(--accent-strong);
-      color: var(--accent-ink);
-      border-color: var(--accent-strong);
-    }
-
-    .nav-link.active:hover,
-    .nav-link.active:focus-visible {
-      background: var(--accent-strong);
-      border-color: var(--accent-strong);
-    }
-
-    main {
-      width: 100%;
-      max-width: 960px;
-      padding: 1.5rem 1.25rem 4rem;
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .view {
-      display: none;
-      gap: 1.5rem;
-    }
-
-    .view.active {
-      display: grid;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid rgba(148, 163, 184, 0.15);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .hero-card {
-      background: linear-gradient(135deg, rgba(219, 234, 254, 0.6), rgba(255, 255, 255, 0.95));
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: var(--radius-lg);
-      padding: clamp(1.5rem, 4vw, 2.25rem);
-      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
-      display: grid;
-      gap: 1.5rem;
-      text-align: center;
-    }
-
-    .hero-main {
-      display: grid;
-      gap: 1.25rem;
-    }
-
-    @media (min-width: 520px) {
-      .hero-main {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .hero-metric {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: var(--radius-lg);
-      padding: clamp(1.25rem, 4vw, 1.75rem);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 16px 32px rgba(37, 99, 235, 0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .hero-value {
-      font-size: clamp(2.6rem, 9vw, 3.6rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-    }
-
-    .hero-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .hero-sub {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 520px) {
-      .hero-sub {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .hero-sub-metric {
-      background: rgba(219, 234, 254, 0.6);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-    }
-
-    .hero-sub-value {
-      font-size: clamp(1.35rem, 4vw, 1.75rem);
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .hero-sub-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .hero-caption {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-      overflow-wrap: anywhere;
-    }
-
-    .intro-card {
-      background: linear-gradient(135deg, rgba(219, 234, 254, 0.75), rgba(255, 255, 255, 0.95));
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      box-shadow: 0 22px 44px rgba(15, 23, 42, 0.12);
-    }
-
-    .home-actions {
-      display: grid;
-      gap: 1.25rem;
-    }
-
-    @media (min-width: 640px) {
-      .home-actions {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .action-card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .action-card h3 {
-      margin: 0;
-      font-size: 1.25rem;
-      color: var(--ink);
-    }
-
-    .action-card p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .ghost {
-      background: transparent;
-      color: var(--accent-strong);
-      border: 1px solid rgba(37, 99, 235, 0.4);
-      justify-self: flex-start;
-      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-    }
-
-    .ghost:hover,
-    .ghost:focus-visible {
-      background: var(--accent-strong);
-      color: var(--accent-ink);
-      border-color: var(--accent-strong);
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      color: var(--ink);
-    }
-
-    form {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .settings-intro {
-      margin-top: 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .settings-form {
-      display: grid;
-      gap: 1.2rem;
-    }
-
-    .settings-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 720px) {
-      .settings-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 600px) {
-      .form-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.02em;
-    }
-
-    input[type="date"],
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--ink);
-      font-size: 1rem;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    input[type="date"]:focus,
-    input[type="text"]:focus,
-    input[type="number"]:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--focus);
-    }
-
-    input::placeholder {
-      color: #94a3b8;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .settings-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: var(--radius-pill);
-      padding: 0.75rem 1.4rem;
-      font-size: 1rem;
-      font-weight: 600;
-      background: var(--accent);
-      color: var(--accent-ink);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: background 0.2s ease, transform 0.15s ease;
-      min-height: 44px;
-      min-width: 44px;
-    }
-
-    button.secondary {
-      background: rgba(15, 23, 42, 0.04);
-      color: var(--ink);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-    }
-
-    button.danger {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      background: var(--accent-strong);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    button:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    button.secondary:hover {
-      background: rgba(15, 23, 42, 0.12);
-      color: var(--ink);
-    }
-
-    button.danger:hover {
-      background: #fecaca;
-    }
-
-    .feedback {
-      font-size: 0.85rem;
-      color: #dc2626;
-      min-height: 1.2rem;
-    }
-
-    .feedback.success {
-      color: #15803d;
-    }
-
-    .setting-hint {
-      margin: 0.35rem 0 0;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .kpi-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 900px) {
-      .kpi-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    .kpi-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: 1.6rem;
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      display: grid;
-      gap: 1rem;
-      justify-items: center;
-      text-align: center;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(37, 99, 235, 0.35);
-    }
-
-    .kpi-card.plain {
-      justify-items: start;
-      text-align: left;
-    }
-
-    .kpi-header {
-      display: grid;
-      justify-items: center;
-      gap: 0.5rem;
-    }
-
-    .kpi-card.plain .kpi-header {
-      justify-items: start;
-    }
-
-    .kpi-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .kpi-detail {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .kpi-value {
-      font-size: clamp(1.4rem, 4vw, 1.85rem);
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .kpi-helper {
-      margin: 0;
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .kpi-gauge {
-      position: relative;
-      width: min(220px, 65vw);
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .gauge-svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .gauge-track,
-    .gauge-fill {
-      fill: none;
-      stroke-width: 12;
-      stroke-linecap: round;
-    }
-
-    .gauge-track {
-      stroke: rgba(148, 163, 184, 0.3);
-    }
-
-    .gauge-fill {
-      stroke: var(--accent-strong);
-      transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .gauge-tick {
-      stroke: rgba(148, 163, 184, 0.35);
-      stroke-width: 2;
-      stroke-linecap: round;
-    }
-
-    .gauge-tick.major {
-      stroke-width: 3;
-    }
-
-    .gauge-marker {
-      stroke: var(--accent-strong);
-      stroke-width: 3;
-      stroke-linecap: round;
-    }
-
-    .gauge-center {
-      position: absolute;
-      inset: 28% 18% 18%;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.25rem;
-      padding: 0.75rem;
-      backdrop-filter: blur(6px);
-    }
-
-    .gauge-value {
-      font-size: clamp(1.35rem, 4vw, 1.9rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-    }
-
-    .gauge-unit {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-    }
-
-    .gauge-delta {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--accent-strong);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-
-    thead {
-      color: var(--muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: var(--accent-soft);
-    }
-
-    thead th {
-      color: var(--muted);
-      background: transparent;
-    }
-
-    th,
-    td {
-      padding: 0.75rem;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: middle;
-    }
-
-    tbody tr {
-      transition: background 0.2s ease;
-    }
-
-    tbody tr:nth-child(even) {
-      background: rgba(226, 232, 240, 0.4);
-    }
-
-    tbody tr:hover {
-      background: rgba(219, 234, 254, 0.6);
-    }
-
-    .empty-state {
-      padding: 1rem 0;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .actions {
-      display: inline-flex;
-      gap: 0.35rem;
-    }
-
-    .icon-button {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      width: 2.75rem;
-      height: 2.75rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      color: var(--ink);
-      font-size: 1.1rem;
-      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .icon-button:hover {
-      background: #eff3f8;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(148, 163, 184, 0.25);
-    }
-
-    .icon-button:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    .chart-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .chart {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 0.8rem;
-      height: 180px;
-      align-items: end;
-    }
-
-    .bar {
-      position: relative;
-      background: linear-gradient(180deg, var(--accent), var(--accent-strong));
-      border-radius: 12px 12px 4px 4px;
-      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .bar::after {
-      content: attr(data-value) " km";
-      position: absolute;
-      top: -1.8rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .bar:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 36px rgba(29, 78, 216, 0.3);
-    }
-
-    .chart-labels {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 0.8rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-
-    @media (max-width: 420px) {
-      body {
-        padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
-      }
-
-      main {
-        padding: 1.25rem 1rem 3rem;
-      }
-
-      .card,
-      .hero-card,
-      .kpi-card {
-        box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05);
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .hero-value {
-        font-size: 2.4rem;
-      }
-
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        color-scheme: dark;
-        --bg: #0f172a;
-        --surface: #131f36;
-        --ink: #e2e8f0;
-        --muted: #94a3b8;
-        --border: #1e293b;
-        --accent: #3b82f6;
-        --accent-strong: #2563eb;
-        --accent-soft: rgba(37, 99, 235, 0.28);
-        --accent-ink: #f8fafc;
-        --focus: rgba(59, 130, 246, 0.35);
-      }
-
-      header {
-        background: var(--surface);
-        box-shadow: 0 8px 20px rgba(2, 6, 23, 0.35);
-      }
-
-      .card,
-      .hero-card,
-      .kpi-card {
-        background: var(--surface);
-        border-color: var(--border);
-        box-shadow: 0 16px 32px rgba(2, 6, 23, 0.6);
-      }
-
-      .intro-card,
-      .action-card {
-        background: #16243f;
-        border-color: rgba(59, 130, 246, 0.25);
-      }
-
-      input[type="date"],
-      input[type="text"],
-      input[type="number"] {
-        background: #0b1424;
-        color: var(--ink);
-      }
-
-      .hero-sub-metric {
-        background: rgba(37, 99, 235, 0.16);
-        border-color: rgba(59, 130, 246, 0.35);
-      }
-
-      thead {
-        background: rgba(37, 99, 235, 0.2);
-      }
-
-      tbody tr:nth-child(even) {
-        background: rgba(30, 41, 59, 0.4);
-      }
-
-      tbody tr:hover {
-        background: rgba(51, 65, 85, 0.6);
-      }
-
-      .icon-button {
-        background: #1e293b;
-      }
-
-      .nav-link.active {
-        background: var(--accent);
-        color: var(--accent-ink);
-        border-color: transparent;
-      }
-
-      .ghost {
-        border-color: rgba(148, 163, 184, 0.4);
-        color: var(--accent-ink);
-        background: transparent;
-      }
-
-      .gauge-center {
-        background: rgba(15, 23, 42, 0.85);
-        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.65);
-      }
-
-      .gauge-delta {
-        color: #93c5fd;
-      }
-
-      body {
-        background: var(--bg);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="header-inner">
       <h1 aria-label="Running Smart hardloop dashboard">🏃‍♀️ Running Smart</h1>
-      <nav class="primary-nav" aria-label="Hoofd navigatie">
+      <nav class="primary-nav" aria-label="Hoofdnavigatie">
         <button type="button" class="nav-link active" data-view="homeView">Home</button>
         <button type="button" class="nav-link" data-view="logView">Run loggen</button>
         <button type="button" class="nav-link" data-view="kpiView">KPI overzicht</button>
@@ -891,8 +31,8 @@
       <section class="card intro-card">
         <h2 id="home-title">Welkom terug</h2>
         <p>
-          Houd je hardloopmomenten overzichtelijk bij en zie je voortgang in één oogopslag. Kies hieronder wat je wilt doen: een
-          nieuwe run registreren of direct naar je KPI&apos;s gaan.
+          Houd je hardloopmomenten overzichtelijk bij en zie je voortgang in één oogopslag. Kies hieronder wat je wilt doen:
+          een nieuwe run registreren of direct naar je KPI&apos;s gaan.
         </p>
       </section>
       <section class="hero-card" aria-label="Laatste run overzicht">
@@ -913,7 +53,11 @@
           </div>
           <div class="hero-sub-metric">
             <span class="hero-sub-value" id="heroAvgPace">—</span>
-            <span class="hero-sub-label">Gem. tempo (30 dagen)</span>
+            <span class="hero-sub-label">Tempo (30 dagen)</span>
+          </div>
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAvgHr">—</span>
+            <span class="hero-sub-label">Gem. hartslag (30 dagen)</span>
           </div>
         </div>
         <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
@@ -921,7 +65,7 @@
       <div class="home-actions" role="list">
         <article class="action-card" role="listitem">
           <h3>Nieuwe activiteit</h3>
-          <p>Leg meteen je afstand, tijd en tempo vast met slimme validatie.</p>
+          <p>Leg meteen je afstand, tijd en hartslag vast met slimme validatie.</p>
           <button type="button" class="ghost" data-target="logView">Run toevoegen</button>
         </article>
         <article class="action-card" role="listitem">
@@ -934,14 +78,17 @@
 
     <section class="view" id="logView" aria-labelledby="form-title">
       <section class="card" aria-labelledby="form-title">
-        <h2 id="form-title">Run toevoegen</h2>
+        <div class="card-header">
+          <h2 id="form-title">Run toevoegen</h2>
+          <p class="card-subtitle">Enter = opslaan · Esc = annuleren</p>
+        </div>
         <form id="runForm" novalidate>
           <div class="form-grid">
-            <div>
+            <div class="form-field">
               <label for="runDate">Datum</label>
-              <input id="runDate" name="runDate" type="date" required aria-required="true" />
+              <input id="runDate" name="runDate" type="date" required aria-required="true" aria-label="Datum van je run" />
             </div>
-            <div>
+            <div class="form-field">
               <label for="runDistance">Afstand (km)</label>
               <input
                 id="runDistance"
@@ -949,12 +96,13 @@
                 type="text"
                 required
                 aria-required="true"
+                aria-describedby="distanceHint"
                 inputmode="decimal"
-                pattern="^\s*[0-9]+([\.,][0-9]{1,2})?\s*$"
                 placeholder="Bijv. 5,25"
               />
+              <p id="distanceHint" class="input-hint">Gebruik komma of punt. Waarde tussen 0 en 200 km.</p>
             </div>
-            <div>
+            <div class="form-field">
               <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
               <input
                 id="runTime"
@@ -962,13 +110,45 @@
                 type="text"
                 required
                 aria-required="true"
+                aria-describedby="timeHint"
                 inputmode="numeric"
-                pattern="^\s*(?:[0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]\s*$"
-                placeholder="Bijv. 00:27:45"
+                placeholder="Bijv. 00:47:15"
               />
+              <p id="timeHint" class="input-hint">Minimaal 00:01:00 en maximaal 24:00:00.</p>
+            </div>
+            <div class="form-field">
+              <label for="runAvgHr">Gem. hartslag (bpm)</label>
+              <input
+                id="runAvgHr"
+                name="runAvgHr"
+                type="number"
+                min="30"
+                max="240"
+                step="1"
+                required
+                aria-required="true"
+                aria-describedby="avgHrHint"
+                inputmode="numeric"
+              />
+              <p id="avgHrHint" class="input-hint">Verplicht veld. Typische waarden liggen tussen 120 en 190 bpm.</p>
+            </div>
+            <div class="form-field">
+              <label for="runMaxHr">Max. hartslag (bpm)</label>
+              <input
+                id="runMaxHr"
+                name="runMaxHr"
+                type="number"
+                min="30"
+                max="260"
+                step="1"
+                aria-describedby="maxHrHint"
+                inputmode="numeric"
+              />
+              <p id="maxHrHint" class="input-hint">Optioneel. Moet gelijk of hoger zijn dan je gemiddelde hartslag.</p>
             </div>
           </div>
-          <div class="feedback" id="formFeedback" role="alert" aria-live="polite"></div>
+          <p class="feedback" id="formFeedback" role="alert" aria-live="polite"></p>
+          <p class="feedback warning" id="formWarning" role="status" aria-live="polite"></p>
           <div class="button-row">
             <button type="submit" id="submitButton">Run opslaan</button>
             <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
@@ -987,6 +167,8 @@
                 <th scope="col">Afstand</th>
                 <th scope="col">Tijd</th>
                 <th scope="col">Tempo</th>
+                <th scope="col">Gem. HR</th>
+                <th scope="col">Max HR</th>
                 <th scope="col">Acties</th>
               </tr>
             </thead>
@@ -999,12 +181,43 @@
 
     <section class="view" id="kpiView" aria-labelledby="dashboard-title">
       <section class="card" aria-labelledby="dashboard-title">
-        <h2 id="dashboard-title">KPI dashboard</h2>
+        <div class="card-header">
+          <h2 id="dashboard-title">KPI overzicht</h2>
+          <p class="card-subtitle">Zie je voortgang, tempo en hartslagtrends op één plek.</p>
+        </div>
         <div class="kpi-grid" id="kpiGrid" role="list"></div>
-        <div class="chart-container" aria-label="Kilometers per week grafiek">
-          <h3 style="margin: 0; font-size: 1rem; color: var(--muted);">Laatste 8 weken</h3>
-          <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
-          <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+        <div class="chart-grid">
+          <article class="chart-card" aria-labelledby="hrChartTitle">
+            <div class="chart-card-header">
+              <h3 id="hrChartTitle">Gemiddelde hartslag</h3>
+              <label class="chart-filter" for="hrRange">
+                Bereik
+                <select id="hrRange" name="hrRange">
+                  <option value="30">30 dagen</option>
+                  <option value="90">90 dagen</option>
+                  <option value="all">Alles</option>
+                </select>
+              </label>
+            </div>
+            <div class="chart-card-body">
+              <canvas id="hrLineChart" aria-label="Lijngrafiek hartslag" role="img"></canvas>
+              <p id="hrLineEmpty" class="chart-empty" hidden>Voer runs met hartslag in om deze grafiek te vullen.</p>
+            </div>
+          </article>
+          <article class="chart-card" aria-labelledby="zoneChartTitle">
+            <h3 id="zoneChartTitle">Hartslagzones</h3>
+            <div class="chart-card-body">
+              <canvas id="zoneChart" aria-label="Verdeling hartslagzones" role="img"></canvas>
+              <p id="zoneEmpty" class="chart-empty">Voer je maximale hartslag in bij Instellingen om deze grafiek te zien.</p>
+            </div>
+          </article>
+          <article class="chart-card" aria-labelledby="weeklyChartTitle">
+            <h3 id="weeklyChartTitle">Kilometers per week (laatste 8 weken)</h3>
+            <div class="chart-card-body">
+              <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
+              <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+            </div>
+          </article>
         </div>
       </section>
     </section>
@@ -1013,30 +226,43 @@
       <section class="card" aria-labelledby="settings-title">
         <h2 id="settings-title">Instellingen</h2>
         <p class="settings-intro">
-          Stel je doelen in voor kilometers en tempo zodat het dashboard je voortgang kan tonen met duidelijke meters.
+          Stel je doelen en hartslaggegevens in zodat het dashboard direct laat zien hoe je presteert.
         </p>
         <form id="settingsForm" class="settings-form" novalidate>
           <div class="settings-grid">
-            <div>
+            <div class="form-field">
               <label for="goalWeeklyKm">Weekdoel afstand (km)</label>
-              <input id="goalWeeklyKm" name="goalWeeklyKm" type="number" min="0" step="0.5" />
-              <p class="setting-hint">Gebruik 0 om dit doel tijdelijk uit te schakelen.</p>
+              <input id="goalWeeklyKm" name="goalWeeklyKm" type="number" min="0" step="0.5" aria-describedby="weeklyHint" />
+              <p id="weeklyHint" class="input-hint">Gebruik 0 om dit doel tijdelijk uit te schakelen.</p>
             </div>
-            <div>
+            <div class="form-field">
               <label for="goalMonthlyKm">Maanddoel afstand (km)</label>
-              <input id="goalMonthlyKm" name="goalMonthlyKm" type="number" min="0" step="1" />
-              <p class="setting-hint">Kies een haalbaar totaal voor je huidige trainingsschema.</p>
+              <input id="goalMonthlyKm" name="goalMonthlyKm" type="number" min="0" step="1" aria-describedby="monthlyHint" />
+              <p id="monthlyHint" class="input-hint">Kies een haalbaar totaal voor je trainingsschema.</p>
             </div>
-            <div>
+            <div class="form-field">
               <label for="goalPace">Streeftempo (mm:ss per km)</label>
-              <input id="goalPace" name="goalPace" type="text" inputmode="numeric" pattern="^[0-9]{1,2}:[0-9]{2}$" placeholder="bijv. 04:45" />
-              <p class="setting-hint">Sneller is beter. Formaat mm:ss, bijvoorbeeld 04:50.</p>
+              <input id="goalPace" name="goalPace" type="text" inputmode="numeric" aria-describedby="paceHint" placeholder="bijv. 04:45" />
+              <p id="paceHint" class="input-hint">Formaat mm:ss, bijvoorbeeld 04:50.</p>
+            </div>
+            <div class="form-field">
+              <label for="goalMaxHr">Maximale hartslag (bpm)</label>
+              <input id="goalMaxHr" name="goalMaxHr" type="number" min="120" max="240" step="1" aria-describedby="maxUserHint" />
+              <p id="maxUserHint" class="input-hint">Richtlijn: 207 - (0,7 × leeftijd). Pas aan op basis van je eigen metingen.</p>
             </div>
           </div>
+          <section class="zones-card" aria-labelledby="zonesTitle">
+            <div class="zones-header">
+              <h3 id="zonesTitle">Zones uitgelegd</h3>
+              <p>Gebaseerd op je maximale hartslag worden onderstaande trainingszones berekend.</p>
+            </div>
+            <ul class="zones-list" id="zonesList"></ul>
+          </section>
           <div class="settings-actions">
-            <button type="submit">Doelen opslaan</button>
-            <button type="button" class="secondary" id="settingsReset">Herstel standaarddoelen</button>
-            <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Exporteer runs</button>
+            <button type="submit">Instellingen opslaan</button>
+            <button type="button" class="secondary" id="settingsReset">Herstel standaard</button>
+            <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Export JSON</button>
+            <button type="button" class="secondary" id="backupCsvButton" aria-label="Exporteer runs als CSV">📄 Export CSV</button>
           </div>
         </form>
         <p id="settingsFeedback" class="feedback" role="status" aria-live="polite"></p>
@@ -1044,1071 +270,11 @@
     </section>
   </main>
 
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <input type="file" accept="application/json" class="visually-hidden" id="importFile" aria-hidden="true" />
 
-  <script>
-    (function () {
-      const STORAGE_KEY = 'running-smart-runs';
-      const GOALS_KEY = 'running-smart-goals';
-      const runForm = document.getElementById('runForm');
-      const runDate = document.getElementById('runDate');
-      const runDistance = document.getElementById('runDistance');
-      const runTime = document.getElementById('runTime');
-      const formFeedback = document.getElementById('formFeedback');
-      const submitButton = document.getElementById('submitButton');
-      const backupButton = document.getElementById('backupButton');
-      const restoreButton = document.getElementById('restoreButton');
-      const clearButton = document.getElementById('clearButton');
-      const importFile = document.getElementById('importFile');
-      const runsBody = document.getElementById('runsBody');
-      const emptyState = document.getElementById('emptyState');
-      const kpiGrid = document.getElementById('kpiGrid');
-      const chartBars = document.getElementById('chartBars');
-      const chartLabels = document.getElementById('chartLabels');
-      const heroTime = document.getElementById('heroTime');
-      const heroDistance = document.getElementById('heroDistance');
-      const heroAllTimePace = document.getElementById('heroAllTimePace');
-      const heroAvgPace = document.getElementById('heroAvgPace');
-      const heroCaption = document.getElementById('heroCaption');
-      const viewButtons = Array.from(document.querySelectorAll('.nav-link[data-view]'));
-      const views = new Map(viewButtons.map((button) => [button.dataset.view, document.getElementById(button.dataset.view)]));
-      const viewShortcuts = document.querySelectorAll('[data-target]');
-      const settingsForm = document.getElementById('settingsForm');
-      const goalWeeklyKm = document.getElementById('goalWeeklyKm');
-      const goalMonthlyKm = document.getElementById('goalMonthlyKm');
-      const goalPace = document.getElementById('goalPace');
-      const settingsFeedback = document.getElementById('settingsFeedback');
-      const settingsReset = document.getElementById('settingsReset');
-      const defaultGoals = { weeklyKm: 30, monthlyKm: 120, paceSeconds: 330 };
-
-      let runs = [];
-      let editId = null;
-      let goals = { ...defaultGoals };
-
-      const today = new Date();
-      runDate.value = today.toISOString().slice(0, 10);
-      submitButton.setAttribute('aria-label', 'Nieuwe run opslaan');
-
-      function showView(viewId) {
-        if (!views.has(viewId)) return;
-        views.forEach((section, id) => {
-          if (!section) return;
-          section.classList.toggle('active', id === viewId);
-        });
-        viewButtons.forEach((button) => {
-          button.classList.toggle('active', button.dataset.view === viewId);
-        });
-        scrollToTop();
-      }
-
-      viewButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          showView(button.dataset.view);
-        });
-      });
-
-      viewShortcuts.forEach((button) => {
-        button.addEventListener('click', () => {
-          const target = button.dataset.target;
-          if (target) {
-            showView(target);
-          }
-        });
-      });
-
-      function uid() {
-        return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
-      }
-
-      function parseDistance(value) {
-        if (!value) return null;
-        const normalized = value.trim().replace(',', '.');
-        const distance = parseFloat(normalized);
-        if (Number.isNaN(distance) || distance <= 0) {
-          return null;
-        }
-        return distance;
-      }
-
-      function parseGoalDistance(value) {
-        if (value === undefined || value === null) {
-          return null;
-        }
-        const normalized = String(value).trim().replace(',', '.');
-        if (normalized === '') {
-          return null;
-        }
-        const distance = Number(normalized);
-        if (Number.isNaN(distance) || distance < 0) {
-          return null;
-        }
-        return distance;
-      }
-
-      function parsePaceGoal(value) {
-        if (!value) return null;
-        const trimmed = value.trim();
-        const parts = trimmed.split(':');
-        if (parts.length !== 2) {
-          return null;
-        }
-        const [minutesStr, secondsStr] = parts;
-        const minutes = Number(minutesStr);
-        const seconds = Number(secondsStr);
-        if ([minutes, seconds].some((n) => Number.isNaN(n) || n < 0) || seconds >= 60) {
-          return null;
-        }
-        return minutes * 60 + seconds;
-      }
-
-      function formatGoalPace(seconds) {
-        if (!Number.isFinite(seconds) || seconds <= 0) {
-          return '';
-        }
-        const minutes = Math.floor(seconds / 60);
-        let secs = Math.round(seconds % 60);
-        if (secs === 60) {
-          return `${String(minutes + 1).padStart(2, '0')}:00`;
-        }
-        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      }
-
-      function formatPaceDifference(seconds) {
-        if (!Number.isFinite(seconds)) {
-          return '—';
-        }
-        const absolute = Math.abs(seconds);
-        let minutes = Math.floor(absolute / 60);
-        let secs = Math.round(absolute % 60);
-        if (secs === 60) {
-          minutes += 1;
-          secs = 0;
-        }
-        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      }
-
-      function formatSignedPaceDifference(seconds) {
-        if (!Number.isFinite(seconds) || seconds === 0) {
-          return seconds === 0 ? '±00:00' : null;
-        }
-        const absolute = formatPaceDifference(seconds);
-        return `${seconds < 0 ? '−' : '+'}${absolute}`;
-      }
-
-      function clamp(value, min, max) {
-        return Math.min(Math.max(value, min), max);
-      }
-
-      const GAUGE_START = -130;
-      const GAUGE_END = 130;
-      const GAUGE_RADIUS = 52;
-      const GAUGE_RANGE = GAUGE_END - GAUGE_START;
-      const GAUGE_LENGTH = (Math.PI * GAUGE_RADIUS * GAUGE_RANGE) / 180;
-      const PACE_SLOW = 480;
-      const PACE_FAST = 210;
-      const SVG_NS = 'http://www.w3.org/2000/svg';
-
-      function gaugeProgressFromPace(seconds) {
-        if (!Number.isFinite(seconds) || seconds <= 0) {
-          return null;
-        }
-        const clamped = clamp(seconds, PACE_FAST, PACE_SLOW);
-        return (PACE_SLOW - clamped) / (PACE_SLOW - PACE_FAST);
-      }
-
-      function polarToCartesian(cx, cy, radius, angleInDegrees) {
-        const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180;
-        return {
-          x: cx + radius * Math.cos(angleInRadians),
-          y: cy + radius * Math.sin(angleInRadians),
-        };
-      }
-
-      function describeArc(cx, cy, radius, startAngle, endAngle) {
-        const start = polarToCartesian(cx, cy, radius, endAngle);
-        const end = polarToCartesian(cx, cy, radius, startAngle);
-        const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
-        return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
-      }
-
-      function createGaugeSvg(progressValue, markerProgress) {
-        const svg = document.createElementNS(SVG_NS, 'svg');
-        svg.setAttribute('viewBox', '0 0 120 120');
-        svg.classList.add('gauge-svg');
-
-        const arcPath = describeArc(60, 60, GAUGE_RADIUS, GAUGE_START, GAUGE_END);
-
-        const track = document.createElementNS(SVG_NS, 'path');
-        track.setAttribute('d', arcPath);
-        track.classList.add('gauge-track');
-        svg.appendChild(track);
-
-        const fill = document.createElementNS(SVG_NS, 'path');
-        fill.setAttribute('d', arcPath);
-        fill.classList.add('gauge-fill');
-        fill.setAttribute('stroke-dasharray', GAUGE_LENGTH.toFixed(2));
-        const safeProgress = clamp(Number(progressValue) || 0, 0, 1);
-        fill.setAttribute('stroke-dashoffset', (GAUGE_LENGTH * (1 - safeProgress)).toFixed(2));
-        svg.appendChild(fill);
-
-        for (let i = 0; i <= 6; i += 1) {
-          const ratio = i / 6;
-          const angle = GAUGE_START + ratio * GAUGE_RANGE;
-          const isMajor = i % 3 === 0;
-          const outer = polarToCartesian(60, 60, GAUGE_RADIUS + 4, angle);
-          const inner = polarToCartesian(60, 60, GAUGE_RADIUS - (isMajor ? 16 : 10), angle);
-          const tick = document.createElementNS(SVG_NS, 'line');
-          tick.setAttribute('x1', inner.x.toFixed(2));
-          tick.setAttribute('y1', inner.y.toFixed(2));
-          tick.setAttribute('x2', outer.x.toFixed(2));
-          tick.setAttribute('y2', outer.y.toFixed(2));
-          tick.classList.add('gauge-tick');
-          if (isMajor) {
-            tick.classList.add('major');
-          }
-          svg.appendChild(tick);
-        }
-
-        if (typeof markerProgress === 'number' && Number.isFinite(markerProgress)) {
-          const safeMarker = clamp(markerProgress, 0, 1);
-          const markerAngle = GAUGE_START + safeMarker * GAUGE_RANGE;
-          const outer = polarToCartesian(60, 60, GAUGE_RADIUS + 2, markerAngle);
-          const inner = polarToCartesian(60, 60, GAUGE_RADIUS - 18, markerAngle);
-          const marker = document.createElementNS(SVG_NS, 'line');
-          marker.setAttribute('x1', inner.x.toFixed(2));
-          marker.setAttribute('y1', inner.y.toFixed(2));
-          marker.setAttribute('x2', outer.x.toFixed(2));
-          marker.setAttribute('y2', outer.y.toFixed(2));
-          marker.classList.add('gauge-marker');
-          svg.appendChild(marker);
-        }
-
-        return svg;
-      }
-
-      function formatKmValue(value) {
-        return value.toFixed(1).replace('.', ',');
-      }
-
-      function parseTimeInput(value) {
-        if (!value) return null;
-        const trimmed = value.trim();
-        const parts = trimmed.split(':');
-        if (parts.length < 2 || parts.length > 3) {
-          return null;
-        }
-        const numbers = parts.map(Number);
-        if (numbers.some((n) => Number.isNaN(n) || n < 0)) {
-          return null;
-        }
-        let hours = 0, minutes = 0, seconds = 0;
-        if (parts.length === 3) {
-          [hours, minutes, seconds] = numbers;
-        } else {
-          [minutes, seconds] = numbers;
-        }
-        if (minutes >= 60 || seconds >= 60) {
-          return null;
-        }
-        return hours * 3600 + minutes * 60 + seconds;
-      }
-
-      function formatDate(dateString) {
-        const date = new Date(dateString + 'T00:00:00');
-        return date.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      }
-
-      function formatDistance(distance) {
-        return distance.toFixed(2).replace('.', ',') + ' km';
-      }
-
-      function formatDuration(seconds) {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        if (h > 0) {
-          return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        }
-        return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      }
-
-      function formatPace(secondsPerKm) {
-        if (!Number.isFinite(secondsPerKm) || secondsPerKm <= 0) {
-          return '—';
-        }
-        let minutes = Math.floor(secondsPerKm / 60);
-        let seconds = Math.round(secondsPerKm % 60);
-        if (seconds === 60) {
-          minutes += 1;
-          seconds = 0;
-        }
-        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min/km`;
-      }
-
-      function formatPaceShort(secondsPerKm) {
-        const pace = formatPace(secondsPerKm);
-        return pace === '—' ? '—' : pace.replace(' min/km', '');
-      }
-
-      function formatHours(hours) {
-        if (!Number.isFinite(hours) || hours <= 0) {
-          return '0,00';
-        }
-        const value = hours >= 10 ? hours.toFixed(1) : hours.toFixed(2);
-        return value.replace('.', ',');
-      }
-
-      function startOfWeek(date) {
-        const temp = new Date(date);
-        const day = temp.getDay();
-        const diff = (day === 0 ? -6 : 1) - day; // maandag als start van de week
-        temp.setDate(temp.getDate() + diff);
-        temp.setHours(0, 0, 0, 0);
-        return temp;
-      }
-
-      function loadRuns() {
-        try {
-          const stored = localStorage.getItem(STORAGE_KEY);
-          if (stored) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed)) {
-              runs = parsed
-                .filter((run) => run && run.date && run.distance > 0 && run.time > 0)
-                .map((run) => ({
-                  id: run.id || uid(),
-                  date: run.date,
-                  distance: Number(run.distance),
-                  time: Number(run.time),
-                }))
-                .sort((a, b) => b.date.localeCompare(a.date));
-            }
-          }
-        } catch (error) {
-          console.error('Kon runs niet laden', error);
-          runs = [];
-        }
-      }
-
-      function saveRuns() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(runs));
-      }
-
-      function loadGoals() {
-        try {
-          const stored = localStorage.getItem(GOALS_KEY);
-          if (stored) {
-            const parsed = JSON.parse(stored);
-            if (parsed && typeof parsed === 'object') {
-              goals = {
-                weeklyKm: Number(parsed.weeklyKm) || 0,
-                monthlyKm: Number(parsed.monthlyKm) || 0,
-                paceSeconds: Number(parsed.paceSeconds) || 0,
-              };
-            }
-          }
-        } catch (error) {
-          console.error('Kon doelen niet laden', error);
-          goals = { ...defaultGoals };
-        }
-        applyGoalsToForm();
-      }
-
-      function saveGoals() {
-        localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
-      }
-
-      function applyGoalsToForm() {
-        if (!settingsForm) return;
-        goalWeeklyKm.value = goals.weeklyKm !== undefined && goals.weeklyKm !== null ? String(goals.weeklyKm) : '';
-        goalMonthlyKm.value = goals.monthlyKm !== undefined && goals.monthlyKm !== null ? String(goals.monthlyKm) : '';
-        goalPace.value = goals.paceSeconds ? formatGoalPace(goals.paceSeconds) : '';
-        if (settingsFeedback) {
-          settingsFeedback.textContent = '';
-          settingsFeedback.classList.remove('success');
-        }
-      }
-
-      function updateSettingsFeedback(message, isSuccess = false) {
-        if (!settingsFeedback) return;
-        settingsFeedback.textContent = message;
-        if (isSuccess) {
-          settingsFeedback.classList.add('success');
-        } else {
-          settingsFeedback.classList.remove('success');
-        }
-      }
-
-      function setFieldValidity(field, isValid) {
-        field.setAttribute('aria-invalid', String(!isValid));
-      }
-
-      setFieldValidity(runDistance, true);
-      setFieldValidity(runTime, true);
-      setFieldValidity(runDate, true);
-
-      function resetForm() {
-        runForm.reset();
-        runDate.value = today.toISOString().slice(0, 10);
-        editId = null;
-        submitButton.textContent = 'Run opslaan';
-        submitButton.setAttribute('aria-label', 'Nieuwe run opslaan');
-        formFeedback.textContent = '';
-        setFieldValidity(runDistance, true);
-        setFieldValidity(runTime, true);
-        setFieldValidity(runDate, true);
-      }
-
-      function computeStats() {
-        const now = new Date();
-        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-        const weekStart = startOfWeek(startOfToday);
-        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-        const thirtyDaysAgo = new Date(now);
-        thirtyDaysAgo.setDate(now.getDate() - 30);
-        const sevenDaysAgo = new Date(now);
-        sevenDaysAgo.setDate(now.getDate() - 7);
-
-        let kmWeek = 0;
-        let kmMonth = 0;
-        let totalSeconds30 = 0;
-        let totalDistance30 = 0;
-        let totalSeconds7 = 0;
-        let totalDistance7 = 0;
-        let totalSecondsAll = 0;
-        let totalDistanceAll = 0;
-        let bestFiveK = null;
-        let bestWeekDistance = 0;
-        let bestMonthDistance = 0;
-
-        const weeklyTotals = new Map();
-        const monthlyTotals = new Map();
-
-        runs.forEach((run) => {
-          const date = new Date(run.date + 'T00:00:00');
-          totalSecondsAll += run.time;
-          totalDistanceAll += run.distance;
-          if (date >= weekStart) {
-            kmWeek += run.distance;
-          }
-          if (date >= monthStart) {
-            kmMonth += run.distance;
-          }
-          if (date >= thirtyDaysAgo) {
-            totalSeconds30 += run.time;
-            totalDistance30 += run.distance;
-          }
-          if (date >= sevenDaysAgo) {
-            totalSeconds7 += run.time;
-            totalDistance7 += run.distance;
-          }
-          if (run.distance >= 5) {
-            const pace = run.time / run.distance;
-            // PR voor 5 km berekenen als het minimale tempo (tijd per km) maal 5 km
-            if (!bestFiveK || pace < bestFiveK) {
-              bestFiveK = pace;
-            }
-          }
-
-          const weekKey = startOfWeek(date).toISOString().slice(0, 10);
-          const weekTotal = (weeklyTotals.get(weekKey) || 0) + run.distance;
-          weeklyTotals.set(weekKey, weekTotal);
-          if (weekTotal > bestWeekDistance) {
-            bestWeekDistance = weekTotal;
-          }
-
-          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-          const monthTotal = (monthlyTotals.get(monthKey) || 0) + run.distance;
-          monthlyTotals.set(monthKey, monthTotal);
-          if (monthTotal > bestMonthDistance) {
-            bestMonthDistance = monthTotal;
-          }
-        });
-
-        return {
-          kmWeek,
-          kmMonth,
-          avgPace30: totalDistance30 > 0 ? totalSeconds30 / totalDistance30 : null,
-          avgPace7: totalDistance7 > 0 ? totalSeconds7 / totalDistance7 : null,
-          overallPace: totalDistanceAll > 0 ? totalSecondsAll / totalDistanceAll : null,
-          pr5k: bestFiveK ? bestFiveK * 5 : null,
-          weeklyTotals,
-          totalDistanceAll,
-          totalRuns: runs.length,
-          bestWeekDistance,
-          bestMonthDistance,
-        };
-      }
-
-      function renderKPIs(stats) {
-        if (!kpiGrid) return;
-
-        const weekGoal = Number(goals.weeklyKm) || 0;
-        const monthGoal = Number(goals.monthlyKm) || 0;
-        const paceGoal = Number(goals.paceSeconds) || 0;
-        const weekHasGoal = weekGoal > 0;
-        const monthHasGoal = monthGoal > 0;
-        const paceHasGoal = paceGoal > 0;
-
-        const fallbackWeekTarget = weekHasGoal ? weekGoal : Math.max(stats.bestWeekDistance, 20);
-        const weekTarget = fallbackWeekTarget > 0 ? fallbackWeekTarget : 20;
-        const weekProgress = clamp(weekTarget > 0 ? stats.kmWeek / weekTarget : 0, 0, 1);
-
-        const fallbackMonthTarget = monthHasGoal ? monthGoal : Math.max(stats.bestMonthDistance, 80);
-        const monthTarget = fallbackMonthTarget > 0 ? fallbackMonthTarget : 80;
-        const monthProgress = clamp(monthTarget > 0 ? stats.kmMonth / monthTarget : 0, 0, 1);
-
-        const hasOverallPace = Number.isFinite(stats.overallPace) && stats.overallPace > 0;
-        const has30Pace = Number.isFinite(stats.avgPace30) && stats.avgPace30 > 0;
-        const has7Pace = Number.isFinite(stats.avgPace7) && stats.avgPace7 > 0;
-        const paceGoalProgress = paceHasGoal ? gaugeProgressFromPace(paceGoal) : null;
-
-        const describeGoal = (paceValue, fallbackText) => {
-          if (!Number.isFinite(paceValue) || paceValue <= 0) {
-            return fallbackText;
-          }
-          if (!paceHasGoal) {
-            return fallbackText;
-          }
-          const diff = paceValue - paceGoal;
-          if (Math.abs(diff) < 1) {
-            return 'Je loopt precies op je doeltempo.';
-          }
-          if (diff < 0) {
-            return `Je bent ${formatPaceDifference(diff)} sneller dan je doel.`;
-          }
-          return `${formatPaceDifference(diff)} sneller nodig voor je doel.`;
-        };
-
-        const cards = [];
-
-        cards.push({
-          type: 'gauge',
-          label: 'Kilometers deze week',
-          valueText: formatKmValue(stats.kmWeek),
-          unitText: 'km',
-          detail: weekHasGoal
-            ? `Doel ${formatKmValue(weekGoal)} km`
-            : `Richtwaarde ${formatKmValue(weekTarget)} km`,
-          helper: weekHasGoal
-            ? stats.kmWeek >= weekGoal
-              ? 'Doel behaald! 🎉'
-              : `${formatKmValue(Math.max(weekGoal - stats.kmWeek, 0))} km te gaan`
-            : stats.bestWeekDistance > 0
-              ? `Beste week tot nu toe: ${formatKmValue(stats.bestWeekDistance)} km`
-              : 'Voer je eerste run in om deze meter te vullen.',
-          progress: weekProgress,
-          ariaLabel: `Kilometers deze week ${formatKmValue(stats.kmWeek)} van ${formatKmValue(weekTarget)} km`,
-        });
-
-        cards.push({
-          type: 'gauge',
-          label: 'Kilometers deze maand',
-          valueText: formatKmValue(stats.kmMonth),
-          unitText: 'km',
-          detail: monthHasGoal
-            ? `Doel ${formatKmValue(monthGoal)} km`
-            : `Richtwaarde ${formatKmValue(monthTarget)} km`,
-          helper: monthHasGoal
-            ? stats.kmMonth >= monthGoal
-              ? 'Je maanddoel is binnen!'
-              : `${formatKmValue(Math.max(monthGoal - stats.kmMonth, 0))} km resterend`
-            : stats.bestMonthDistance > 0
-              ? `Sterkste maand: ${formatKmValue(stats.bestMonthDistance)} km`
-              : 'Plan runs om je eerste maandmeter te vullen.',
-          progress: monthProgress,
-          ariaLabel: `Kilometers deze maand ${formatKmValue(stats.kmMonth)} van ${formatKmValue(monthTarget)} km`,
-        });
-
-        const overallHelperFallback = hasOverallPace
-          ? `Gebaseerd op ${stats.totalRuns} run${stats.totalRuns === 1 ? '' : 's'}.`
-          : 'Nog geen runs geregistreerd.';
-        cards.push({
-          type: 'gauge',
-          label: 'Tempo per km (altijd)',
-          valueText: hasOverallPace ? formatPaceShort(stats.overallPace) : '—',
-          unitText: hasOverallPace ? 'min/km' : '',
-          detail: paceHasGoal
-            ? `Doel ${formatPaceShort(paceGoal)}`
-            : hasOverallPace
-              ? `Runs totaal: ${stats.totalRuns}`
-              : '',
-          helper: describeGoal(stats.overallPace, overallHelperFallback),
-          progress: hasOverallPace ? gaugeProgressFromPace(stats.overallPace) ?? 0 : 0,
-          marker: paceGoalProgress,
-          deltaText:
-            paceHasGoal && hasOverallPace
-              ? `${formatSignedPaceDifference(stats.overallPace - paceGoal)} vs doel`
-              : null,
-          ariaLabel: hasOverallPace
-            ? `Tempo per kilometer gemiddeld ${formatPaceShort(stats.overallPace)}`
-            : 'Tempo per kilometer: geen data beschikbaar',
-        });
-
-        const pace30Diff = has30Pace && hasOverallPace ? stats.avgPace30 - stats.overallPace : null;
-        let pace30Helper = has30Pace
-          ? describeGoal(
-              stats.avgPace30,
-              hasOverallPace
-                ? Math.abs(pace30Diff) < 1
-                  ? 'Bijna gelijk aan je all-time gemiddelde tempo.'
-                  : pace30Diff < 0
-                    ? `Sneller dan je all-time gemiddelde met ${formatPaceDifference(pace30Diff)}.`
-                    : `Langzamer dan je all-time gemiddelde met ${formatPaceDifference(pace30Diff)}.`
-                : 'Tempo gebaseerd op je laatste 30 dagen.'
-            )
-          : 'Nog onvoldoende data in de laatste 30 dagen.';
-        if (!has30Pace) {
-          pace30Helper = 'Nog onvoldoende data in de laatste 30 dagen.';
-        }
-
-        const pace30Delta = (() => {
-          if (paceHasGoal && has30Pace) {
-            return `${formatSignedPaceDifference(stats.avgPace30 - paceGoal)} vs doel`;
-          }
-          if (has30Pace && hasOverallPace && Number.isFinite(pace30Diff) && Math.abs(pace30Diff) >= 1) {
-            return `${pace30Diff < 0 ? '−' : '+'}${formatPaceDifference(pace30Diff)} vs all-time`;
-          }
-          return null;
-        })();
-
-        cards.push({
-          type: 'gauge',
-          label: 'Tempo per km (30 dagen)',
-          valueText: has30Pace ? formatPaceShort(stats.avgPace30) : '—',
-          unitText: has30Pace ? 'min/km' : '',
-          detail: [
-            paceHasGoal ? `Doel ${formatPaceShort(paceGoal)}` : '',
-            hasOverallPace ? `All-time ${formatPaceShort(stats.overallPace)}` : '',
-          ]
-            .filter(Boolean)
-            .join(' • '),
-          helper: pace30Helper,
-          progress: has30Pace ? gaugeProgressFromPace(stats.avgPace30) ?? 0 : 0,
-          marker: paceGoalProgress,
-          deltaText: pace30Delta,
-          ariaLabel: has30Pace
-            ? `Tempo per kilometer laatste 30 dagen ${formatPaceShort(stats.avgPace30)}`
-            : 'Tempo per kilometer laatste 30 dagen: geen data',
-        });
-
-        const referenceFor7 = has30Pace ? stats.avgPace30 : hasOverallPace ? stats.overallPace : null;
-        const pace7Diff = has7Pace && Number.isFinite(referenceFor7) ? stats.avgPace7 - referenceFor7 : null;
-        let pace7Helper = has7Pace
-          ? describeGoal(
-              stats.avgPace7,
-              referenceFor7
-                ? Math.abs(pace7Diff) < 1
-                  ? 'Op lijn met je recente tempo.'
-                  : pace7Diff < 0
-                    ? `Sneller dan je ${has30Pace ? '30-dagen' : 'all-time'} tempo met ${formatPaceDifference(pace7Diff)}.`
-                    : `Langzamer dan je ${has30Pace ? '30-dagen' : 'all-time'} tempo met ${formatPaceDifference(pace7Diff)}.`
-                : 'Tempo van je meest recente week.'
-            )
-          : 'Nog onvoldoende data in de afgelopen week.';
-        if (!has7Pace) {
-          pace7Helper = 'Nog onvoldoende data in de afgelopen week.';
-        }
-
-        const pace7Delta = (() => {
-          if (paceHasGoal && has7Pace) {
-            return `${formatSignedPaceDifference(stats.avgPace7 - paceGoal)} vs doel`;
-          }
-          if (has7Pace && Number.isFinite(pace7Diff) && Math.abs(pace7Diff) >= 1) {
-            return `${pace7Diff < 0 ? '−' : '+'}${formatPaceDifference(pace7Diff)} vs ${has30Pace ? '30 dagen' : 'all-time'}`;
-          }
-          return null;
-        })();
-
-        cards.push({
-          type: 'gauge',
-          label: 'Tempo per km (7 dagen)',
-          valueText: has7Pace ? formatPaceShort(stats.avgPace7) : '—',
-          unitText: has7Pace ? 'min/km' : '',
-          detail: [
-            paceHasGoal ? `Doel ${formatPaceShort(paceGoal)}` : '',
-            has30Pace ? `30 dagen ${formatPaceShort(stats.avgPace30)}` : hasOverallPace ? `All-time ${formatPaceShort(stats.overallPace)}` : '',
-          ]
-            .filter(Boolean)
-            .join(' • '),
-          helper: pace7Helper,
-          progress: has7Pace ? gaugeProgressFromPace(stats.avgPace7) ?? 0 : 0,
-          marker: paceGoalProgress,
-          deltaText: pace7Delta,
-          ariaLabel: has7Pace
-            ? `Tempo per kilometer laatste 7 dagen ${formatPaceShort(stats.avgPace7)}`
-            : 'Tempo per kilometer laatste 7 dagen: geen data',
-        });
-
-        cards.push({
-          type: 'plain',
-          label: 'PR 5 km',
-          valueText: stats.pr5k ? formatDuration(Math.round(stats.pr5k)) : '—',
-          helper: stats.pr5k
-            ? 'Beste tijd gebaseerd op je snelste tempo over minimaal 5 km.'
-            : 'Loop een afstand van 5 km of meer om een PR vast te leggen.',
-        });
-
-        kpiGrid.innerHTML = '';
-        cards.forEach((card) => {
-          const div = document.createElement('div');
-          div.className = 'kpi-card';
-          div.setAttribute('role', 'listitem');
-
-          const header = document.createElement('div');
-          header.className = 'kpi-header';
-          const label = document.createElement('span');
-          label.className = 'kpi-label';
-          label.textContent = card.label;
-          header.appendChild(label);
-
-          if (card.detail) {
-            const detail = document.createElement('span');
-            detail.className = 'kpi-detail';
-            detail.textContent = card.detail;
-            header.appendChild(detail);
-          }
-
-          if (card.type === 'plain') {
-            div.classList.add('plain');
-            const value = document.createElement('span');
-            value.className = 'kpi-value';
-            value.textContent = card.valueText;
-            header.appendChild(value);
-            div.appendChild(header);
-
-            const helper = document.createElement('p');
-            helper.className = 'kpi-helper';
-            helper.textContent = card.helper;
-            div.appendChild(helper);
-          } else {
-            div.appendChild(header);
-            const gaugeWrapper = document.createElement('div');
-            gaugeWrapper.className = 'kpi-gauge';
-            gaugeWrapper.setAttribute('role', 'img');
-            gaugeWrapper.setAttribute('aria-label', card.ariaLabel || `${card.label}: ${card.valueText}`);
-            const svg = createGaugeSvg(card.progress, card.marker);
-            svg.setAttribute('aria-hidden', 'true');
-            gaugeWrapper.appendChild(svg);
-
-            const center = document.createElement('div');
-            center.className = 'gauge-center';
-            const value = document.createElement('span');
-            value.className = 'gauge-value';
-            value.textContent = card.valueText;
-            center.appendChild(value);
-            if (card.unitText) {
-              const unit = document.createElement('span');
-              unit.className = 'gauge-unit';
-              unit.textContent = card.unitText;
-              center.appendChild(unit);
-            }
-            if (card.deltaText) {
-              const delta = document.createElement('span');
-              delta.className = 'gauge-delta';
-              delta.textContent = card.deltaText;
-              center.appendChild(delta);
-            }
-            gaugeWrapper.appendChild(center);
-            div.appendChild(gaugeWrapper);
-
-            const helper = document.createElement('p');
-            helper.className = 'kpi-helper';
-            helper.textContent = card.helper;
-            div.appendChild(helper);
-          }
-
-          kpiGrid.appendChild(div);
-        });
-      }
-
-      function renderHero(stats) {
-        if (runs.length === 0) {
-          heroTime.textContent = '0,00';
-          heroDistance.textContent = '0,00';
-          heroAllTimePace.textContent = '—';
-          heroAvgPace.textContent = stats.avgPace30 ? formatPaceShort(stats.avgPace30) : '—';
-          heroCaption.textContent = 'Voer je eerste run in om statistieken te zien.';
-          return;
-        }
-
-        const latest = runs[0];
-        const hours = latest.time / 3600;
-        heroTime.textContent = formatHours(hours);
-        heroDistance.textContent = latest.distance.toFixed(2).replace('.', ',');
-        heroAllTimePace.textContent = stats.overallPace ? formatPaceShort(stats.overallPace) : '—';
-        heroAvgPace.textContent = stats.avgPace30 ? formatPaceShort(stats.avgPace30) : '—';
-        const totalKm = formatKmValue(stats.totalDistanceAll || latest.distance);
-        heroCaption.textContent = `Laatste run · ${formatDate(latest.date)} · ${formatDuration(latest.time)} (${latest.distance
-          .toFixed(2)} km) · Totaal ${totalKm} km gelopen`;
-      }
-
-      function renderChart(stats) {
-        const now = new Date();
-        now.setHours(0, 0, 0, 0);
-        const currentWeekStart = startOfWeek(now);
-        const bars = [];
-        const labels = [];
-        let maxKm = 0;
-
-        for (let i = 7; i >= 0; i--) {
-          const start = new Date(currentWeekStart);
-          start.setDate(start.getDate() - i * 7);
-          const key = start.toISOString().slice(0, 10);
-          const value = stats.weeklyTotals.get(key) || 0;
-          const end = new Date(start);
-          end.setDate(start.getDate() + 6);
-          const label = `${start.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit' })} – ${end.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit' })}`;
-          bars.push({ key, value, label });
-          maxKm = Math.max(maxKm, value);
-          labels.push(label);
-        }
-
-        chartBars.innerHTML = '';
-        chartLabels.innerHTML = '';
-        const safeMax = maxKm > 0 ? maxKm : 1;
-
-        bars.forEach(({ value, label }) => {
-          const bar = document.createElement('div');
-          bar.className = 'bar';
-          const height = (value / safeMax) * 100;
-          bar.style.height = `${Math.max(6, height)}%`;
-          bar.dataset.value = value.toFixed(1).replace('.', ',');
-          bar.setAttribute('role', 'listitem');
-          bar.setAttribute('aria-label', `${label}: ${value.toFixed(1)} kilometer`);
-          chartBars.appendChild(bar);
-        });
-
-        labels.forEach((label) => {
-          const span = document.createElement('span');
-          span.innerHTML = label.replace(' – ', '<br>–<br>');
-          chartLabels.appendChild(span);
-        });
-      }
-
-      function renderRuns() {
-        runsBody.innerHTML = '';
-        if (runs.length === 0) {
-          emptyState.style.display = 'block';
-          return;
-        }
-        emptyState.style.display = 'none';
-        runs.forEach((run) => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${formatDate(run.date)}</td>
-            <td>${formatDistance(run.distance)}</td>
-            <td>${formatDuration(run.time)}</td>
-            <td>${formatPace(run.time / run.distance)}</td>
-            <td>
-              <div class="actions">
-                <button type="button" class="icon-button" aria-label="Bewerk run ${formatDate(run.date)}" data-action="edit" data-id="${run.id}">✏️</button>
-                <button type="button" class="icon-button" aria-label="Verwijder run ${formatDate(run.date)}" data-action="delete" data-id="${run.id}">🗑️</button>
-              </div>
-            </td>
-          `;
-          runsBody.appendChild(tr);
-        });
-      }
-
-      function refreshUI() {
-        saveRuns();
-        const stats = computeStats();
-        renderHero(stats);
-        renderKPIs(stats);
-        renderChart(stats);
-        renderRuns();
-      }
-
-      function scrollToTop() {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) {
-          window.scrollTo(0, 0);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }
-
-      runForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const dateValue = runDate.value;
-        const distanceValue = parseDistance(runDistance.value);
-        const timeValue = parseTimeInput(runTime.value);
-
-        if (!dateValue || !distanceValue || !timeValue) {
-          formFeedback.textContent = 'Controleer datum, afstand en tijd. Gebruik bij tijd het formaat hh:mm:ss of mm:ss.';
-          setFieldValidity(runDistance, Boolean(distanceValue));
-          setFieldValidity(runTime, Boolean(timeValue));
-          setFieldValidity(runDate, Boolean(dateValue));
-          return;
-        }
-
-        setFieldValidity(runDistance, true);
-        setFieldValidity(runTime, true);
-        setFieldValidity(runDate, true);
-        const runData = {
-          id: editId || uid(),
-          date: dateValue,
-          distance: Number(distanceValue.toFixed(2)),
-          time: timeValue,
-        };
-
-        if (editId) {
-          runs = runs.map((run) => (run.id === editId ? runData : run));
-        } else {
-          runs.push(runData);
-        }
-
-        runs.sort((a, b) => b.date.localeCompare(a.date));
-        refreshUI();
-        resetForm();
-      });
-
-      runsBody.addEventListener('click', (event) => {
-        const button = event.target.closest('button[data-action]');
-        if (!button) return;
-        const { action, id } = button.dataset;
-        const run = runs.find((item) => item.id === id);
-        if (!run) return;
-
-        if (action === 'edit') {
-          editId = id;
-          showView('logView');
-          runDate.value = run.date;
-          runDistance.value = run.distance.toFixed(2).replace('.', ',');
-          runTime.value = formatDuration(run.time);
-          submitButton.textContent = 'Run bijwerken';
-          submitButton.setAttribute('aria-label', 'Bestaande run bijwerken');
-          formFeedback.textContent = 'Bewerken: pas velden aan en sla op.';
-          runDistance.focus();
-        } else if (action === 'delete') {
-          if (confirm('Weet je zeker dat je deze run wilt verwijderen?')) {
-            runs = runs.filter((item) => item.id !== id);
-            refreshUI();
-            if (editId === id) {
-              resetForm();
-            }
-          }
-        }
-      });
-
-      backupButton.addEventListener('click', () => {
-        const dataStr = JSON.stringify(runs, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `running-smart-backup-${new Date().toISOString().slice(0, 10)}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      });
-
-      restoreButton.addEventListener('click', () => {
-        importFile.value = '';
-        importFile.click();
-      });
-
-      importFile.addEventListener('change', () => {
-        const file = importFile.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          try {
-            const data = JSON.parse(event.target.result);
-            if (!Array.isArray(data)) {
-              alert('Ongeldig backup-bestand.');
-              return;
-            }
-            const validRuns = data
-              .filter((run) => run && run.date && run.distance > 0 && run.time > 0)
-              .map((run) => ({
-                id: run.id || uid(),
-                date: run.date,
-                distance: Number(run.distance),
-                time: Number(run.time),
-              }));
-            if (validRuns.length === 0) {
-              alert('Geen geldige runs gevonden in het bestand.');
-              return;
-            }
-            runs = validRuns.sort((a, b) => b.date.localeCompare(a.date));
-            refreshUI();
-            resetForm();
-            scrollToTop();
-          } catch (error) {
-            console.error(error);
-            alert('Kon backup niet lezen. Controleer het bestand.');
-          }
-        };
-        reader.readAsText(file);
-      });
-
-      clearButton.addEventListener('click', () => {
-        if (confirm('Weet je zeker dat je alle runs wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
-          runs = [];
-          refreshUI();
-          resetForm();
-          scrollToTop();
-        }
-      });
-
-      if (settingsForm) {
-        settingsForm.addEventListener('submit', (event) => {
-          event.preventDefault();
-          const weeklyValue = goalWeeklyKm.value === '' ? 0 : parseGoalDistance(goalWeeklyKm.value);
-          const monthlyValue = goalMonthlyKm.value === '' ? 0 : parseGoalDistance(goalMonthlyKm.value);
-          const paceInput = goalPace.value.trim();
-          const paceValue = paceInput === '' ? 0 : parsePaceGoal(paceInput);
-
-          const invalidLabels = [];
-          if (weeklyValue === null) {
-            invalidLabels.push('het weekdoel (gebruik cijfers)');
-          }
-          if (monthlyValue === null) {
-            invalidLabels.push('het maanddoel (gebruik cijfers)');
-          }
-          if (paceValue === null) {
-            invalidLabels.push('het streeftempo in mm:ss');
-          }
-
-          if (invalidLabels.length > 0) {
-            updateSettingsFeedback(`Controleer ${invalidLabels.join(' en ')}.`);
-            return;
-          }
-
-          goals = {
-            weeklyKm: weeklyValue === null ? 0 : Number(weeklyValue),
-            monthlyKm: monthlyValue === null ? 0 : Number(monthlyValue),
-            paceSeconds: paceValue === null ? 0 : Number(paceValue),
-          };
-          saveGoals();
-          goalWeeklyKm.value = String(goals.weeklyKm);
-          goalMonthlyKm.value = String(goals.monthlyKm);
-          goalPace.value = goals.paceSeconds ? formatGoalPace(goals.paceSeconds) : '';
-          updateSettingsFeedback('Doelen opgeslagen ✔️', true);
-          refreshUI();
-        });
-      }
-
-      if (settingsReset) {
-        settingsReset.addEventListener('click', () => {
-          goals = { ...defaultGoals };
-          saveGoals();
-          goalWeeklyKm.value = String(goals.weeklyKm);
-          goalMonthlyKm.value = String(goals.monthlyKm);
-          goalPace.value = formatGoalPace(goals.paceSeconds);
-          updateSettingsFeedback('Standaarddoelen hersteld.', true);
-          refreshUI();
-        });
-      }
-
-      loadGoals();
-      loadRuns();
-      refreshUI();
-    })();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
