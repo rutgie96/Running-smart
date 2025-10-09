@@ -15,14 +15,16 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #f7f8fa;
+      --bg: #f3f4f8;
       --surface: #ffffff;
       --ink: #0f172a;
-      --muted: #475569;
+      --muted: #4b5563;
       --border: #e2e8f0;
-      --accent: #ff7a18;
-      --accent-ink: #1f2937;
-      --focus: rgba(255, 122, 24, 0.35);
+      --accent: #2563eb;
+      --accent-strong: #1d4ed8;
+      --accent-soft: #dbeafe;
+      --accent-ink: #ffffff;
+      --focus: rgba(37, 99, 235, 0.35);
       --radius-lg: 16px;
       --radius-pill: 999px;
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -54,10 +56,11 @@
       top: 0;
       width: 100%;
       z-index: 10;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
       color: var(--ink);
       padding-top: env(safe-area-inset-top);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
     }
 
     .header-inner {
@@ -68,6 +71,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     h1 {
@@ -79,6 +83,46 @@
       color: var(--ink);
     }
 
+    .primary-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: none;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--ink);
+      border-color: rgba(37, 99, 235, 0.3);
+      outline: none;
+      background: rgba(37, 99, 235, 0.12);
+    }
+
+    .nav-link.active {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+    }
+
     main {
       width: 100%;
       max-width: 960px;
@@ -87,21 +131,30 @@
       gap: 1.5rem;
     }
 
+    .view {
+      display: none;
+      gap: 1.5rem;
+    }
+
+    .view.active {
+      display: grid;
+    }
+
     .card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(148, 163, 184, 0.15);
       border-radius: var(--radius-lg);
       padding: 1.25rem;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .hero-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(219, 234, 254, 0.6), rgba(255, 255, 255, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.2);
       border-radius: var(--radius-lg);
       padding: clamp(1.5rem, 4vw, 2.25rem);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
       display: grid;
       gap: 1.5rem;
       text-align: center;
@@ -119,10 +172,10 @@
     }
 
     .hero-metric {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(247, 248, 250, 0.4));
+      background: rgba(255, 255, 255, 0.85);
       border-radius: var(--radius-lg);
       padding: clamp(1.25rem, 4vw, 1.75rem);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 32px rgba(15, 23, 42, 0.06);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 16px 32px rgba(37, 99, 235, 0.08);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -157,13 +210,13 @@
     }
 
     .hero-sub-metric {
-      background: #f8fafc;
+      background: rgba(219, 234, 254, 0.6);
       border-radius: var(--radius-lg);
       padding: 1rem 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.25);
     }
 
     .hero-sub-value {
@@ -186,6 +239,59 @@
       overflow-wrap: anywhere;
     }
 
+    .intro-card {
+      background: linear-gradient(135deg, rgba(219, 234, 254, 0.75), rgba(255, 255, 255, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: 0 22px 44px rgba(15, 23, 42, 0.12);
+    }
+
+    .home-actions {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .home-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .action-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .action-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--ink);
+    }
+
+    .action-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .ghost {
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--accent-strong);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      box-shadow: none;
+      justify-self: flex-start;
+    }
+
+    .ghost:hover,
+    .ghost:focus-visible {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: transparent;
+    }
+
     .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
@@ -201,6 +307,28 @@
     form {
       display: grid;
       gap: 1rem;
+    }
+
+    .settings-intro {
+      margin-top: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .settings-form {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .settings-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .settings-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     .form-grid {
@@ -223,7 +351,8 @@
     }
 
     input[type="date"],
-    input[type="text"] {
+    input[type="text"],
+    input[type="number"] {
       width: 100%;
       padding: 0.75rem 1rem;
       border-radius: var(--radius-pill);
@@ -235,7 +364,8 @@
     }
 
     input[type="date"]:focus,
-    input[type="text"]:focus {
+    input[type="text"]:focus,
+    input[type="number"]:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--focus);
@@ -251,6 +381,13 @@
       gap: 0.75rem;
     }
 
+    .settings-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
     button {
       cursor: pointer;
       border: none;
@@ -258,41 +395,41 @@
       padding: 0.75rem 1.4rem;
       font-size: 1rem;
       font-weight: 600;
-      background: linear-gradient(180deg, #ff8a3d, #ff6f00);
+      background: var(--accent);
       color: var(--accent-ink);
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      box-shadow: 0 12px 24px rgba(255, 122, 24, 0.25);
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
       transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
       min-height: 44px;
       min-width: 44px;
     }
 
     button.secondary {
-      background: #f1f5f9;
+      background: rgba(15, 23, 42, 0.04);
       color: var(--ink);
       box-shadow: none;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(148, 163, 184, 0.35);
     }
 
     button.danger {
-      background: #fef2f2;
+      background: #fee2e2;
       color: #b91c1c;
-      border: 1px solid #fca5a5;
+      border: 1px solid #fecaca;
       box-shadow: none;
     }
 
     button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(255, 122, 24, 0.35);
-      background: linear-gradient(180deg, #ff7f29, #ff6500);
+      box-shadow: 0 16px 32px rgba(29, 78, 216, 0.3);
+      background: var(--accent-strong);
     }
 
     button:active {
       transform: translateY(0);
-      box-shadow: 0 6px 15px rgba(255, 122, 24, 0.2);
-      background: linear-gradient(180deg, #ff7421, #ff6100);
+      box-shadow: 0 6px 16px rgba(29, 78, 216, 0.25);
+      background: var(--accent-strong);
     }
 
     button:focus-visible {
@@ -301,33 +438,30 @@
     }
 
     button.secondary:hover {
-      background: #e2e8f0;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(148, 163, 184, 0.25);
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--ink);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
     }
 
     button.danger:hover {
-      background: #fee2e2;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(248, 113, 113, 0.25);
-    }
-
-    button.secondary:active {
-      transform: translateY(0);
-      background: #dbe3ef;
-      box-shadow: 0 4px 10px rgba(148, 163, 184, 0.2);
-    }
-
-    button.danger:active {
-      transform: translateY(0);
       background: #fecaca;
-      box-shadow: 0 4px 10px rgba(248, 113, 113, 0.2);
+      box-shadow: 0 10px 20px rgba(248, 113, 113, 0.3);
     }
 
     .feedback {
       font-size: 0.85rem;
       color: #dc2626;
       min-height: 1.2rem;
+    }
+
+    .feedback.success {
+      color: #15803d;
+    }
+
+    .setting-hint {
+      margin: 0.35rem 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     .kpi-grid {
@@ -343,25 +477,31 @@
 
     @media (min-width: 900px) {
       .kpi-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
     .kpi-card {
       background: var(--surface);
       border-radius: var(--radius-lg);
-      padding: 1.2rem;
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+      padding: 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      display: grid;
+      gap: 0.85rem;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .kpi-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.1);
+    }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
     }
 
     .kpi-label {
@@ -372,9 +512,39 @@
     }
 
     .kpi-value {
-      font-size: clamp(1.5rem, 4vw, 1.9rem);
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
       font-weight: 700;
       color: var(--ink);
+    }
+
+    .kpi-meter {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .meter-track {
+      position: relative;
+      height: 0.75rem;
+      border-radius: var(--radius-pill);
+      background: rgba(148, 163, 184, 0.2);
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: var(--meter-progress, 0%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+      transition: width 0.3s ease;
+    }
+
+    .kpi-helper {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
 
     table {
@@ -389,12 +559,12 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      background: #f8fafc;
+      background: var(--accent-soft);
     }
 
     thead th {
       color: var(--muted);
-      background: #f8fafc;
+      background: transparent;
     }
 
     th,
@@ -410,11 +580,11 @@
     }
 
     tbody tr:nth-child(even) {
-      background: #f9fafb;
+      background: rgba(226, 232, 240, 0.4);
     }
 
     tbody tr:hover {
-      background: #f1f5f9;
+      background: rgba(219, 234, 254, 0.6);
     }
 
     .empty-state {
@@ -469,9 +639,9 @@
 
     .bar {
       position: relative;
-      background: linear-gradient(180deg, #ff8a3d, #ff6f00);
+      background: linear-gradient(180deg, var(--accent), var(--accent-strong));
       border-radius: 12px 12px 4px 4px;
-      box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -488,7 +658,7 @@
 
     .bar:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(255, 122, 24, 0.28);
+      box-shadow: 0 18px 36px rgba(29, 78, 216, 0.3);
     }
 
     .chart-labels {
@@ -552,7 +722,7 @@
       }
 
       button {
-        box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
       }
     }
 
@@ -564,9 +734,11 @@
         --ink: #e2e8f0;
         --muted: #94a3b8;
         --border: #1e293b;
-        --accent: #ff8a3d;
-        --accent-ink: #0f172a;
-        --focus: rgba(255, 138, 61, 0.35);
+        --accent: #3b82f6;
+        --accent-strong: #2563eb;
+        --accent-soft: rgba(37, 99, 235, 0.28);
+        --accent-ink: #f8fafc;
+        --focus: rgba(59, 130, 246, 0.35);
       }
 
       header {
@@ -582,18 +754,26 @@
         box-shadow: 0 16px 32px rgba(2, 6, 23, 0.6);
       }
 
+      .intro-card,
+      .action-card {
+        background: #16243f;
+        border-color: rgba(59, 130, 246, 0.25);
+      }
+
       input[type="date"],
-      input[type="text"] {
+      input[type="text"],
+      input[type="number"] {
         background: #0b1424;
         color: var(--ink);
       }
 
       .hero-sub-metric {
-        background: #0b1424;
+        background: rgba(37, 99, 235, 0.16);
+        border-color: rgba(59, 130, 246, 0.35);
       }
 
       thead {
-        background: #1e293b;
+        background: rgba(37, 99, 235, 0.2);
       }
 
       tbody tr:nth-child(even) {
@@ -608,6 +788,18 @@
         background: #1e293b;
       }
 
+      .nav-link.active {
+        background: var(--accent);
+        color: var(--accent-ink);
+        border-color: transparent;
+      }
+
+      .ghost {
+        border-color: rgba(148, 163, 184, 0.3);
+        color: var(--ink);
+        background: rgba(37, 99, 235, 0.16);
+      }
+
       body {
         background: var(--bg);
       }
@@ -618,87 +810,171 @@
   <header>
     <div class="header-inner">
       <h1 aria-label="Running Smart hardloop dashboard">🏃‍♀️ Running Smart</h1>
-      <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Backup</button>
+      <nav class="primary-nav" aria-label="Hoofd navigatie">
+        <button type="button" class="nav-link active" data-view="homeView">Home</button>
+        <button type="button" class="nav-link" data-view="logView">Run loggen</button>
+        <button type="button" class="nav-link" data-view="kpiView">KPI overzicht</button>
+        <button type="button" class="nav-link" data-view="settingsView">Instellingen</button>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Backup</button>
+      </div>
     </div>
   </header>
   <main>
-    <section class="hero-card" aria-label="Laatste run overzicht">
-      <div class="hero-main">
-        <div class="hero-metric">
-          <span class="hero-value" id="heroTime">0,00</span>
-          <span class="hero-label">Uren</span>
-        </div>
-        <div class="hero-metric">
-          <span class="hero-value" id="heroDistance">0,00</span>
-          <span class="hero-label">KM</span>
-        </div>
-      </div>
-      <div class="hero-sub">
-        <div class="hero-sub-metric">
-          <span class="hero-sub-value" id="heroCurrentPace">—</span>
-          <span class="hero-sub-label">Huidig tempo</span>
-        </div>
-        <div class="hero-sub-metric">
-          <span class="hero-sub-value" id="heroAvgPace">—</span>
-          <span class="hero-sub-label">Gem. tempo (30d)</span>
-        </div>
-      </div>
-      <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
-    </section>
-
-    <section class="card" aria-labelledby="form-title">
-      <h2 id="form-title">Run toevoegen</h2>
-      <form id="runForm" novalidate>
-        <div class="form-grid">
-          <div>
-            <label for="runDate">Datum</label>
-            <input id="runDate" name="runDate" type="date" required aria-required="true" />
+    <section class="view active" id="homeView" aria-labelledby="home-title">
+      <section class="card intro-card">
+        <h2 id="home-title">Welkom terug</h2>
+        <p>
+          Houd je hardloopmomenten overzichtelijk bij en zie je voortgang in één oogopslag. Kies hieronder wat je wilt doen: een
+          nieuwe run registreren of direct naar je KPI&apos;s gaan.
+        </p>
+      </section>
+      <section class="hero-card" aria-label="Laatste run overzicht">
+        <div class="hero-main">
+          <div class="hero-metric">
+            <span class="hero-value" id="heroTime">0,00</span>
+            <span class="hero-label">Uren</span>
           </div>
-          <div>
-            <label for="runDistance">Afstand (km)</label>
-            <input id="runDistance" name="runDistance" type="text" required aria-required="true" inputmode="decimal" pattern="^\s*[0-9]+([\.,][0-9]{1,2})?\s*$" placeholder="Bijv. 5,25" />
-          </div>
-          <div>
-            <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
-            <input id="runTime" name="runTime" type="text" required aria-required="true" inputmode="numeric" pattern="^\s*(?:[0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]\s*$" placeholder="Bijv. 00:27:45" />
+          <div class="hero-metric">
+            <span class="hero-value" id="heroDistance">0,00</span>
+            <span class="hero-label">KM</span>
           </div>
         </div>
-        <div class="feedback" id="formFeedback" role="alert" aria-live="polite"></div>
-        <div class="button-row">
-          <button type="submit" id="submitButton">Run opslaan</button>
-          <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
-          <button type="button" class="danger" id="clearButton">Alles wissen</button>
+        <div class="hero-sub">
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAllTimePace">—</span>
+            <span class="hero-sub-label">Gem. tempo per km (altijd)</span>
+          </div>
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAvgPace">—</span>
+            <span class="hero-sub-label">Gem. tempo (30 dagen)</span>
+          </div>
         </div>
-      </form>
-    </section>
-
-    <section class="card" aria-labelledby="dashboard-title">
-      <h2 id="dashboard-title">Dashboard</h2>
-      <div class="kpi-grid" id="kpiGrid" role="list"></div>
-      <div class="chart-container" aria-label="Kilometers per week grafiek">
-        <h3 style="margin: 0; font-size: 1rem; color: var(--muted);">Laatste 8 weken</h3>
-        <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
-        <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+        <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
+      </section>
+      <div class="home-actions" role="list">
+        <article class="action-card" role="listitem">
+          <h3>Nieuwe activiteit</h3>
+          <p>Leg meteen je afstand, tijd en tempo vast met slimme validatie.</p>
+          <button type="button" class="ghost" data-target="logView">Run toevoegen</button>
+        </article>
+        <article class="action-card" role="listitem">
+          <h3>KPI Dashboard</h3>
+          <p>Ontdek trends, snelheden en persoonlijke records uit je runs.</p>
+          <button type="button" class="ghost" data-target="kpiView">Bekijk KPI&apos;s</button>
+        </article>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="runs-title">
-      <h2 id="runs-title">Runs</h2>
-      <div class="table-wrapper" role="region" aria-live="polite" aria-labelledby="runs-title">
-        <table aria-label="Overzicht van runs" id="runsTable">
-          <thead>
-            <tr>
-              <th scope="col">Datum</th>
-              <th scope="col">Afstand</th>
-              <th scope="col">Tijd</th>
-              <th scope="col">Tempo</th>
-              <th scope="col">Acties</th>
-            </tr>
-          </thead>
-          <tbody id="runsBody"></tbody>
-        </table>
-        <p id="emptyState" class="empty-state">Nog geen runs toegevoegd. Tijd voor een rondje! 🏃‍♂️</p>
-      </div>
+    <section class="view" id="logView" aria-labelledby="form-title">
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Run toevoegen</h2>
+        <form id="runForm" novalidate>
+          <div class="form-grid">
+            <div>
+              <label for="runDate">Datum</label>
+              <input id="runDate" name="runDate" type="date" required aria-required="true" />
+            </div>
+            <div>
+              <label for="runDistance">Afstand (km)</label>
+              <input
+                id="runDistance"
+                name="runDistance"
+                type="text"
+                required
+                aria-required="true"
+                inputmode="decimal"
+                pattern="^\s*[0-9]+([\.,][0-9]{1,2})?\s*$"
+                placeholder="Bijv. 5,25"
+              />
+            </div>
+            <div>
+              <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
+              <input
+                id="runTime"
+                name="runTime"
+                type="text"
+                required
+                aria-required="true"
+                inputmode="numeric"
+                pattern="^\s*(?:[0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]\s*$"
+                placeholder="Bijv. 00:27:45"
+              />
+            </div>
+          </div>
+          <div class="feedback" id="formFeedback" role="alert" aria-live="polite"></div>
+          <div class="button-row">
+            <button type="submit" id="submitButton">Run opslaan</button>
+            <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
+            <button type="button" class="danger" id="clearButton">Alles wissen</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="runs-title">
+        <h2 id="runs-title">Runs</h2>
+        <div class="table-wrapper" role="region" aria-live="polite" aria-labelledby="runs-title">
+          <table aria-label="Overzicht van runs" id="runsTable">
+            <thead>
+              <tr>
+                <th scope="col">Datum</th>
+                <th scope="col">Afstand</th>
+                <th scope="col">Tijd</th>
+                <th scope="col">Tempo</th>
+                <th scope="col">Acties</th>
+              </tr>
+            </thead>
+            <tbody id="runsBody"></tbody>
+          </table>
+          <p id="emptyState" class="empty-state">Nog geen runs toegevoegd. Tijd voor een rondje! 🏃‍♂️</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="kpiView" aria-labelledby="dashboard-title">
+      <section class="card" aria-labelledby="dashboard-title">
+        <h2 id="dashboard-title">KPI dashboard</h2>
+        <div class="kpi-grid" id="kpiGrid" role="list"></div>
+        <div class="chart-container" aria-label="Kilometers per week grafiek">
+          <h3 style="margin: 0; font-size: 1rem; color: var(--muted);">Laatste 8 weken</h3>
+          <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
+          <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="settingsView" aria-labelledby="settings-title">
+      <section class="card" aria-labelledby="settings-title">
+        <h2 id="settings-title">Instellingen</h2>
+        <p class="settings-intro">
+          Stel je doelen in voor kilometers en tempo zodat het dashboard je voortgang kan tonen met duidelijke meters.
+        </p>
+        <form id="settingsForm" class="settings-form" novalidate>
+          <div class="settings-grid">
+            <div>
+              <label for="goalWeeklyKm">Weekdoel afstand (km)</label>
+              <input id="goalWeeklyKm" name="goalWeeklyKm" type="number" min="0" step="0.5" />
+              <p class="setting-hint">Gebruik 0 om dit doel tijdelijk uit te schakelen.</p>
+            </div>
+            <div>
+              <label for="goalMonthlyKm">Maanddoel afstand (km)</label>
+              <input id="goalMonthlyKm" name="goalMonthlyKm" type="number" min="0" step="1" />
+              <p class="setting-hint">Kies een haalbaar totaal voor je huidige trainingsschema.</p>
+            </div>
+            <div>
+              <label for="goalPace">Streeftempo (mm:ss per km)</label>
+              <input id="goalPace" name="goalPace" type="text" inputmode="numeric" pattern="^[0-9]{1,2}:[0-9]{2}$" placeholder="bijv. 04:45" />
+              <p class="setting-hint">Sneller is beter. Formaat mm:ss, bijvoorbeeld 04:50.</p>
+            </div>
+          </div>
+          <div class="settings-actions">
+            <button type="submit">Doelen opslaan</button>
+            <button type="button" class="secondary" id="settingsReset">Herstel standaarddoelen</button>
+          </div>
+        </form>
+        <p id="settingsFeedback" class="feedback" role="status" aria-live="polite"></p>
+      </section>
     </section>
   </main>
 
@@ -707,6 +983,7 @@
   <script>
     (function () {
       const STORAGE_KEY = 'running-smart-runs';
+      const GOALS_KEY = 'running-smart-goals';
       const runForm = document.getElementById('runForm');
       const runDate = document.getElementById('runDate');
       const runDistance = document.getElementById('runDistance');
@@ -724,16 +1001,54 @@
       const chartLabels = document.getElementById('chartLabels');
       const heroTime = document.getElementById('heroTime');
       const heroDistance = document.getElementById('heroDistance');
-      const heroCurrentPace = document.getElementById('heroCurrentPace');
+      const heroAllTimePace = document.getElementById('heroAllTimePace');
       const heroAvgPace = document.getElementById('heroAvgPace');
       const heroCaption = document.getElementById('heroCaption');
+      const viewButtons = Array.from(document.querySelectorAll('.nav-link[data-view]'));
+      const views = new Map(viewButtons.map((button) => [button.dataset.view, document.getElementById(button.dataset.view)]));
+      const viewShortcuts = document.querySelectorAll('[data-target]');
+      const settingsForm = document.getElementById('settingsForm');
+      const goalWeeklyKm = document.getElementById('goalWeeklyKm');
+      const goalMonthlyKm = document.getElementById('goalMonthlyKm');
+      const goalPace = document.getElementById('goalPace');
+      const settingsFeedback = document.getElementById('settingsFeedback');
+      const settingsReset = document.getElementById('settingsReset');
+      const defaultGoals = { weeklyKm: 30, monthlyKm: 120, paceSeconds: 330 };
 
       let runs = [];
       let editId = null;
+      let goals = { ...defaultGoals };
 
       const today = new Date();
       runDate.value = today.toISOString().slice(0, 10);
       submitButton.setAttribute('aria-label', 'Nieuwe run opslaan');
+
+      function showView(viewId) {
+        if (!views.has(viewId)) return;
+        views.forEach((section, id) => {
+          if (!section) return;
+          section.classList.toggle('active', id === viewId);
+        });
+        viewButtons.forEach((button) => {
+          button.classList.toggle('active', button.dataset.view === viewId);
+        });
+        scrollToTop();
+      }
+
+      viewButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          showView(button.dataset.view);
+        });
+      });
+
+      viewShortcuts.forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.dataset.target;
+          if (target) {
+            showView(target);
+          }
+        });
+      });
 
       function uid() {
         return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
@@ -747,6 +1062,67 @@
           return null;
         }
         return distance;
+      }
+
+      function parseGoalDistance(value) {
+        if (value === undefined || value === null) {
+          return null;
+        }
+        const normalized = String(value).trim().replace(',', '.');
+        if (normalized === '') {
+          return null;
+        }
+        const distance = Number(normalized);
+        if (Number.isNaN(distance) || distance < 0) {
+          return null;
+        }
+        return distance;
+      }
+
+      function parsePaceGoal(value) {
+        if (!value) return null;
+        const trimmed = value.trim();
+        const parts = trimmed.split(':');
+        if (parts.length !== 2) {
+          return null;
+        }
+        const [minutesStr, secondsStr] = parts;
+        const minutes = Number(minutesStr);
+        const seconds = Number(secondsStr);
+        if ([minutes, seconds].some((n) => Number.isNaN(n) || n < 0) || seconds >= 60) {
+          return null;
+        }
+        return minutes * 60 + seconds;
+      }
+
+      function formatGoalPace(seconds) {
+        if (!Number.isFinite(seconds) || seconds <= 0) {
+          return '';
+        }
+        const minutes = Math.floor(seconds / 60);
+        let secs = Math.round(seconds % 60);
+        if (secs === 60) {
+          return `${String(minutes + 1).padStart(2, '0')}:00`;
+        }
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      function formatPaceDifference(seconds) {
+        if (!Number.isFinite(seconds)) {
+          return '—';
+        }
+        const absolute = Math.abs(seconds);
+        let minutes = Math.floor(absolute / 60);
+        let secs = Math.round(absolute % 60);
+        if (secs === 60) {
+          minutes += 1;
+          secs = 0;
+        }
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      function formatKmValue(value) {
+        return value.toFixed(1).replace('.', ',');
       }
 
       function parseTimeInput(value) {
@@ -853,6 +1229,51 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(runs));
       }
 
+      function loadGoals() {
+        try {
+          const stored = localStorage.getItem(GOALS_KEY);
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (parsed && typeof parsed === 'object') {
+              goals = {
+                weeklyKm: Number(parsed.weeklyKm) || 0,
+                monthlyKm: Number(parsed.monthlyKm) || 0,
+                paceSeconds: Number(parsed.paceSeconds) || 0,
+              };
+            }
+          }
+        } catch (error) {
+          console.error('Kon doelen niet laden', error);
+          goals = { ...defaultGoals };
+        }
+        applyGoalsToForm();
+      }
+
+      function saveGoals() {
+        localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+      }
+
+      function applyGoalsToForm() {
+        if (!settingsForm) return;
+        goalWeeklyKm.value = goals.weeklyKm !== undefined && goals.weeklyKm !== null ? String(goals.weeklyKm) : '';
+        goalMonthlyKm.value = goals.monthlyKm !== undefined && goals.monthlyKm !== null ? String(goals.monthlyKm) : '';
+        goalPace.value = goals.paceSeconds ? formatGoalPace(goals.paceSeconds) : '';
+        if (settingsFeedback) {
+          settingsFeedback.textContent = '';
+          settingsFeedback.classList.remove('success');
+        }
+      }
+
+      function updateSettingsFeedback(message, isSuccess = false) {
+        if (!settingsFeedback) return;
+        settingsFeedback.textContent = message;
+        if (isSuccess) {
+          settingsFeedback.classList.add('success');
+        } else {
+          settingsFeedback.classList.remove('success');
+        }
+      }
+
       function setFieldValidity(field, isValid) {
         field.setAttribute('aria-invalid', String(!isValid));
       }
@@ -884,14 +1305,18 @@
 
         let kmWeek = 0;
         let kmMonth = 0;
-        let totalSeconds = 0;
-        let totalDistance = 0;
+        let totalSeconds30 = 0;
+        let totalDistance30 = 0;
+        let totalSecondsAll = 0;
+        let totalDistanceAll = 0;
         let bestFiveK = null;
 
         const weeklyTotals = new Map();
 
         runs.forEach((run) => {
           const date = new Date(run.date + 'T00:00:00');
+          totalSecondsAll += run.time;
+          totalDistanceAll += run.distance;
           if (date >= weekStart) {
             kmWeek += run.distance;
           }
@@ -899,8 +1324,8 @@
             kmMonth += run.distance;
           }
           if (date >= thirtyDaysAgo) {
-            totalSeconds += run.time;
-            totalDistance += run.distance;
+            totalSeconds30 += run.time;
+            totalDistance30 += run.distance;
           }
           if (run.distance >= 5) {
             const pace = run.time / run.distance;
@@ -917,26 +1342,139 @@
         return {
           kmWeek,
           kmMonth,
-          avgPace: totalDistance > 0 ? totalSeconds / totalDistance : null,
+          avgPace30: totalDistance30 > 0 ? totalSeconds30 / totalDistance30 : null,
+          overallPace: totalDistanceAll > 0 ? totalSecondsAll / totalDistanceAll : null,
           pr5k: bestFiveK ? bestFiveK * 5 : null,
           weeklyTotals,
+          totalDistanceAll,
+          totalRuns: runs.length,
         };
       }
 
       function renderKPIs(stats) {
-        const tiles = [
-          { label: 'Km deze week', value: stats.kmWeek.toFixed(2).replace('.', ',') },
-          { label: 'Km deze maand', value: stats.kmMonth.toFixed(2).replace('.', ',') },
-          { label: 'Gemiddeld tempo (30d)', value: stats.avgPace ? formatPace(stats.avgPace) : '—' },
-          { label: 'PR 5 km', value: stats.pr5k ? formatDuration(Math.round(stats.pr5k)) : '—' },
-        ];
+        if (!kpiGrid) return;
+
+        const weekGoal = Number(goals.weeklyKm) || 0;
+        const monthGoal = Number(goals.monthlyKm) || 0;
+        const paceGoal = Number(goals.paceSeconds) || 0;
+        const weekHasGoal = weekGoal > 0;
+        const monthHasGoal = monthGoal > 0;
+        const paceHasGoal = paceGoal > 0;
+
+        const cards = [];
+
+        const weekProgress = weekHasGoal ? Math.min(stats.kmWeek / weekGoal, 1) : 0;
+        cards.push({
+          label: 'Kilometers deze week',
+          value: weekHasGoal
+            ? `${formatKmValue(stats.kmWeek)} / ${formatKmValue(weekGoal)} km`
+            : `${formatKmValue(stats.kmWeek)} km`,
+          progress: weekHasGoal ? weekProgress : null,
+          helper: weekHasGoal
+            ? stats.kmWeek >= weekGoal
+              ? 'Doel behaald! 🎉'
+              : `${formatKmValue(Math.max(weekGoal - stats.kmWeek, 0))} km te gaan`
+            : 'Stel een weekdoel in om de meter te activeren.',
+        });
+
+        const monthProgress = monthHasGoal ? Math.min(stats.kmMonth / monthGoal, 1) : 0;
+        cards.push({
+          label: 'Kilometers deze maand',
+          value: monthHasGoal
+            ? `${formatKmValue(stats.kmMonth)} / ${formatKmValue(monthGoal)} km`
+            : `${formatKmValue(stats.kmMonth)} km`,
+          progress: monthHasGoal ? monthProgress : null,
+          helper: monthHasGoal
+            ? stats.kmMonth >= monthGoal
+              ? 'Je maanddoel is binnen!'
+              : `${formatKmValue(Math.max(monthGoal - stats.kmMonth, 0))} km resterend`
+            : 'Bepaal een maanddoel om je groei te volgen.',
+        });
+
+        const hasPaceData = Number.isFinite(stats.overallPace) && stats.overallPace > 0;
+        let paceHelper = 'Nog geen runs geregistreerd.';
+        if (hasPaceData && paceHasGoal) {
+          const diff = stats.overallPace - paceGoal;
+          if (Math.abs(diff) < 1) {
+            paceHelper = 'Je loopt precies op je doeltempo.';
+          } else if (diff <= 0) {
+            paceHelper = `Je bent ${formatPaceDifference(diff)} sneller dan je doel.`;
+          } else {
+            paceHelper = `${formatPaceDifference(diff)} sneller nodig voor je doel.`;
+          }
+        } else if (paceHasGoal) {
+          paceHelper = 'Voeg runs toe om voortgang op je streeftempo te zien.';
+        } else if (hasPaceData) {
+          paceHelper = 'Stel een streeftempo in om progressie te meten.';
+        }
+
+        const paceProgress = hasPaceData && paceHasGoal ? Math.min(paceGoal / stats.overallPace, 1) : null;
+        cards.push({
+          label: 'Gemiddeld tempo per km (altijd)',
+          value: hasPaceData
+            ? `${formatPaceShort(stats.overallPace)}${paceHasGoal ? ` · doel ${formatPaceShort(paceGoal)}` : ''}`
+            : '—',
+          progress: paceProgress,
+          helper: paceHelper,
+        });
+
+        cards.push({
+          label: 'PR 5 km',
+          value: stats.pr5k ? formatDuration(Math.round(stats.pr5k)) : '—',
+          progress: null,
+          helper: stats.pr5k
+            ? 'Beste tijd gebaseerd op je snelste tempo over minimaal 5 km.'
+            : 'Loop een afstand van 5 km of meer om een PR vast te leggen.',
+        });
 
         kpiGrid.innerHTML = '';
-        tiles.forEach((tile) => {
+        cards.forEach((card) => {
           const div = document.createElement('div');
           div.className = 'kpi-card';
           div.setAttribute('role', 'listitem');
-          div.innerHTML = `<span class="kpi-label">${tile.label}</span><span class="kpi-value">${tile.value}</span>`;
+
+          const header = document.createElement('div');
+          header.className = 'kpi-header';
+          const label = document.createElement('span');
+          label.className = 'kpi-label';
+          label.textContent = card.label;
+          const value = document.createElement('span');
+          value.className = 'kpi-value';
+          value.textContent = card.value;
+          header.append(label, value);
+          div.appendChild(header);
+
+          if (typeof card.progress === 'number') {
+            const safeProgress = Math.max(0, Math.min(card.progress, 1));
+            const meter = document.createElement('div');
+            meter.className = 'kpi-meter';
+            meter.setAttribute('role', 'meter');
+            meter.setAttribute('aria-valuemin', '0');
+            meter.setAttribute('aria-valuemax', '100');
+            meter.setAttribute('aria-valuenow', String(Math.round(safeProgress * 100)));
+            const track = document.createElement('div');
+            track.className = 'meter-track';
+            const fill = document.createElement('div');
+            fill.className = 'meter-fill';
+            const percent = safeProgress * 100;
+            fill.style.setProperty('--meter-progress', `${percent}%`);
+            if (percent > 0 && percent < 8) {
+              fill.style.setProperty('--meter-progress', '8%');
+            }
+            track.appendChild(fill);
+            meter.appendChild(track);
+            const helper = document.createElement('p');
+            helper.className = 'kpi-helper';
+            helper.textContent = card.helper;
+            meter.appendChild(helper);
+            div.appendChild(meter);
+          } else {
+            const helper = document.createElement('p');
+            helper.className = 'kpi-helper';
+            helper.textContent = card.helper;
+            div.appendChild(helper);
+          }
+
           kpiGrid.appendChild(div);
         });
       }
@@ -945,8 +1483,8 @@
         if (runs.length === 0) {
           heroTime.textContent = '0,00';
           heroDistance.textContent = '0,00';
-          heroCurrentPace.textContent = '—';
-          heroAvgPace.textContent = stats.avgPace ? formatPaceShort(stats.avgPace) : '—';
+          heroAllTimePace.textContent = '—';
+          heroAvgPace.textContent = stats.avgPace30 ? formatPaceShort(stats.avgPace30) : '—';
           heroCaption.textContent = 'Voer je eerste run in om statistieken te zien.';
           return;
         }
@@ -955,10 +1493,11 @@
         const hours = latest.time / 3600;
         heroTime.textContent = formatHours(hours);
         heroDistance.textContent = latest.distance.toFixed(2).replace('.', ',');
-        heroCurrentPace.textContent = formatPaceShort(latest.time / latest.distance);
-        heroAvgPace.textContent = stats.avgPace ? formatPaceShort(stats.avgPace) : '—';
+        heroAllTimePace.textContent = stats.overallPace ? formatPaceShort(stats.overallPace) : '—';
+        heroAvgPace.textContent = stats.avgPace30 ? formatPaceShort(stats.avgPace30) : '—';
+        const totalKm = formatKmValue(stats.totalDistanceAll || latest.distance);
         heroCaption.textContent = `Laatste run · ${formatDate(latest.date)} · ${formatDuration(latest.time)} (${latest.distance
-          .toFixed(2)} km)`;
+          .toFixed(2)} km) · Totaal ${totalKm} km gelopen`;
       }
 
       function renderChart(stats) {
@@ -1091,6 +1630,7 @@
 
         if (action === 'edit') {
           editId = id;
+          showView('logView');
           runDate.value = run.date;
           runDistance.value = run.distance.toFixed(2).replace('.', ',');
           runTime.value = formatDuration(run.time);
@@ -1171,6 +1711,57 @@
         }
       });
 
+      if (settingsForm) {
+        settingsForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const weeklyValue = goalWeeklyKm.value === '' ? 0 : parseGoalDistance(goalWeeklyKm.value);
+          const monthlyValue = goalMonthlyKm.value === '' ? 0 : parseGoalDistance(goalMonthlyKm.value);
+          const paceInput = goalPace.value.trim();
+          const paceValue = paceInput === '' ? 0 : parsePaceGoal(paceInput);
+
+          const invalidLabels = [];
+          if (weeklyValue === null) {
+            invalidLabels.push('het weekdoel (gebruik cijfers)');
+          }
+          if (monthlyValue === null) {
+            invalidLabels.push('het maanddoel (gebruik cijfers)');
+          }
+          if (paceValue === null) {
+            invalidLabels.push('het streeftempo in mm:ss');
+          }
+
+          if (invalidLabels.length > 0) {
+            updateSettingsFeedback(`Controleer ${invalidLabels.join(' en ')}.`);
+            return;
+          }
+
+          goals = {
+            weeklyKm: weeklyValue === null ? 0 : Number(weeklyValue),
+            monthlyKm: monthlyValue === null ? 0 : Number(monthlyValue),
+            paceSeconds: paceValue === null ? 0 : Number(paceValue),
+          };
+          saveGoals();
+          goalWeeklyKm.value = String(goals.weeklyKm);
+          goalMonthlyKm.value = String(goals.monthlyKm);
+          goalPace.value = goals.paceSeconds ? formatGoalPace(goals.paceSeconds) : '';
+          updateSettingsFeedback('Doelen opgeslagen ✔️', true);
+          refreshUI();
+        });
+      }
+
+      if (settingsReset) {
+        settingsReset.addEventListener('click', () => {
+          goals = { ...defaultGoals };
+          saveGoals();
+          goalWeeklyKm.value = String(goals.weeklyKm);
+          goalMonthlyKm.value = String(goals.monthlyKm);
+          goalPace.value = formatGoalPace(goals.paceSeconds);
+          updateSettingsFeedback('Standaarddoelen hersteld.', true);
+          refreshUI();
+        });
+      }
+
+      loadGoals();
       loadRuns();
       refreshUI();
     })();
