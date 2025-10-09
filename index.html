@@ -48,7 +48,7 @@
       flex-direction: column;
       align-items: center;
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      -webkit-tap-highlight-color: rgba(255, 122, 24, 0.2);
+      -webkit-tap-highlight-color: transparent;
     }
 
     header {
@@ -90,12 +90,6 @@
       flex-wrap: wrap;
     }
 
-    .header-actions {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
     .nav-link {
       border: 1px solid transparent;
       border-radius: var(--radius-pill);
@@ -104,23 +98,27 @@
       font-weight: 600;
       padding: 0.55rem 1rem;
       cursor: pointer;
-      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: none;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
     .nav-link:hover,
     .nav-link:focus-visible {
-      color: var(--ink);
-      border-color: rgba(37, 99, 235, 0.3);
+      color: var(--accent-ink);
+      border-color: var(--accent);
       outline: none;
-      background: rgba(37, 99, 235, 0.12);
+      background: var(--accent);
     }
 
     .nav-link.active {
-      background: var(--accent);
+      background: var(--accent-strong);
       color: var(--accent-ink);
-      border-color: transparent;
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+      border-color: var(--accent-strong);
+    }
+
+    .nav-link.active:hover,
+    .nav-link.active:focus-visible {
+      background: var(--accent-strong);
+      border-color: var(--accent-strong);
     }
 
     main {
@@ -278,18 +276,18 @@
     }
 
     .ghost {
-      background: rgba(37, 99, 235, 0.08);
+      background: transparent;
       color: var(--accent-strong);
-      border: 1px solid rgba(37, 99, 235, 0.2);
-      box-shadow: none;
+      border: 1px solid rgba(37, 99, 235, 0.4);
       justify-self: flex-start;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
     .ghost:hover,
     .ghost:focus-visible {
-      background: var(--accent);
+      background: var(--accent-strong);
       color: var(--accent-ink);
-      border-color: transparent;
+      border-color: var(--accent-strong);
     }
 
     .card:hover {
@@ -400,8 +398,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
-      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+      transition: background 0.2s ease, transform 0.15s ease;
       min-height: 44px;
       min-width: 44px;
     }
@@ -409,7 +406,6 @@
     button.secondary {
       background: rgba(15, 23, 42, 0.04);
       color: var(--ink);
-      box-shadow: none;
       border: 1px solid rgba(148, 163, 184, 0.35);
     }
 
@@ -417,19 +413,15 @@
       background: #fee2e2;
       color: #b91c1c;
       border: 1px solid #fecaca;
-      box-shadow: none;
     }
 
     button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(29, 78, 216, 0.3);
       background: var(--accent-strong);
     }
 
     button:active {
       transform: translateY(0);
-      box-shadow: 0 6px 16px rgba(29, 78, 216, 0.25);
-      background: var(--accent-strong);
     }
 
     button:focus-visible {
@@ -438,14 +430,12 @@
     }
 
     button.secondary:hover {
-      background: rgba(37, 99, 235, 0.12);
+      background: rgba(15, 23, 42, 0.12);
       color: var(--ink);
-      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
     }
 
     button.danger:hover {
       background: #fecaca;
-      box-shadow: 0 10px 20px rgba(248, 113, 113, 0.3);
     }
 
     .feedback {
@@ -484,24 +474,33 @@
     .kpi-card {
       background: var(--surface);
       border-radius: var(--radius-lg);
-      padding: 1.4rem;
+      padding: 1.6rem;
       border: 1px solid rgba(148, 163, 184, 0.2);
       display: grid;
-      gap: 0.85rem;
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      gap: 1rem;
+      justify-items: center;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
     .kpi-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.1);
+      border-color: rgba(37, 99, 235, 0.35);
+    }
+
+    .kpi-card.plain {
+      justify-items: start;
+      text-align: left;
     }
 
     .kpi-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
+      display: grid;
+      justify-items: center;
+      gap: 0.5rem;
+    }
+
+    .kpi-card.plain .kpi-header {
+      justify-items: start;
     }
 
     .kpi-label {
@@ -511,40 +510,103 @@
       color: var(--muted);
     }
 
+    .kpi-detail {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
     .kpi-value {
       font-size: clamp(1.4rem, 4vw, 1.85rem);
       font-weight: 700;
       color: var(--ink);
     }
 
-    .kpi-meter {
-      display: grid;
-      gap: 0.45rem;
-    }
-
-    .meter-track {
-      position: relative;
-      height: 0.75rem;
-      border-radius: var(--radius-pill);
-      background: rgba(148, 163, 184, 0.2);
-      overflow: hidden;
-    }
-
-    .meter-fill {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: var(--meter-progress, 0%);
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-      transition: width 0.3s ease;
-    }
-
     .kpi-helper {
       margin: 0;
       font-size: 0.85rem;
       color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .kpi-gauge {
+      position: relative;
+      width: min(220px, 65vw);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .gauge-track,
+    .gauge-fill {
+      fill: none;
+      stroke-width: 12;
+      stroke-linecap: round;
+    }
+
+    .gauge-track {
+      stroke: rgba(148, 163, 184, 0.3);
+    }
+
+    .gauge-fill {
+      stroke: var(--accent-strong);
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gauge-tick {
+      stroke: rgba(148, 163, 184, 0.35);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .gauge-tick.major {
+      stroke-width: 3;
+    }
+
+    .gauge-marker {
+      stroke: var(--accent-strong);
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .gauge-center {
+      position: absolute;
+      inset: 28% 18% 18%;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0.75rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .gauge-value {
+      font-size: clamp(1.35rem, 4vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .gauge-unit {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .gauge-delta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent-strong);
     }
 
     table {
@@ -721,9 +783,6 @@
         font-size: 2.4rem;
       }
 
-      button {
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
-      }
     }
 
     @media (prefers-color-scheme: dark) {
@@ -795,9 +854,18 @@
       }
 
       .ghost {
-        border-color: rgba(148, 163, 184, 0.3);
-        color: var(--ink);
-        background: rgba(37, 99, 235, 0.16);
+        border-color: rgba(148, 163, 184, 0.4);
+        color: var(--accent-ink);
+        background: transparent;
+      }
+
+      .gauge-center {
+        background: rgba(15, 23, 42, 0.85);
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.65);
+      }
+
+      .gauge-delta {
+        color: #93c5fd;
       }
 
       body {
@@ -816,9 +884,6 @@
         <button type="button" class="nav-link" data-view="kpiView">KPI overzicht</button>
         <button type="button" class="nav-link" data-view="settingsView">Instellingen</button>
       </nav>
-      <div class="header-actions">
-        <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Backup</button>
-      </div>
     </div>
   </header>
   <main>
@@ -971,6 +1036,7 @@
           <div class="settings-actions">
             <button type="submit">Doelen opslaan</button>
             <button type="button" class="secondary" id="settingsReset">Herstel standaarddoelen</button>
+            <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Exporteer runs</button>
           </div>
         </form>
         <p id="settingsFeedback" class="feedback" role="status" aria-live="polite"></p>
@@ -1119,6 +1185,105 @@
           secs = 0;
         }
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      function formatSignedPaceDifference(seconds) {
+        if (!Number.isFinite(seconds) || seconds === 0) {
+          return seconds === 0 ? '±00:00' : null;
+        }
+        const absolute = formatPaceDifference(seconds);
+        return `${seconds < 0 ? '−' : '+'}${absolute}`;
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      const GAUGE_START = -130;
+      const GAUGE_END = 130;
+      const GAUGE_RADIUS = 52;
+      const GAUGE_RANGE = GAUGE_END - GAUGE_START;
+      const GAUGE_LENGTH = (Math.PI * GAUGE_RADIUS * GAUGE_RANGE) / 180;
+      const PACE_SLOW = 480;
+      const PACE_FAST = 210;
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+
+      function gaugeProgressFromPace(seconds) {
+        if (!Number.isFinite(seconds) || seconds <= 0) {
+          return null;
+        }
+        const clamped = clamp(seconds, PACE_FAST, PACE_SLOW);
+        return (PACE_SLOW - clamped) / (PACE_SLOW - PACE_FAST);
+      }
+
+      function polarToCartesian(cx, cy, radius, angleInDegrees) {
+        const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180;
+        return {
+          x: cx + radius * Math.cos(angleInRadians),
+          y: cy + radius * Math.sin(angleInRadians),
+        };
+      }
+
+      function describeArc(cx, cy, radius, startAngle, endAngle) {
+        const start = polarToCartesian(cx, cy, radius, endAngle);
+        const end = polarToCartesian(cx, cy, radius, startAngle);
+        const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+        return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
+      }
+
+      function createGaugeSvg(progressValue, markerProgress) {
+        const svg = document.createElementNS(SVG_NS, 'svg');
+        svg.setAttribute('viewBox', '0 0 120 120');
+        svg.classList.add('gauge-svg');
+
+        const arcPath = describeArc(60, 60, GAUGE_RADIUS, GAUGE_START, GAUGE_END);
+
+        const track = document.createElementNS(SVG_NS, 'path');
+        track.setAttribute('d', arcPath);
+        track.classList.add('gauge-track');
+        svg.appendChild(track);
+
+        const fill = document.createElementNS(SVG_NS, 'path');
+        fill.setAttribute('d', arcPath);
+        fill.classList.add('gauge-fill');
+        fill.setAttribute('stroke-dasharray', GAUGE_LENGTH.toFixed(2));
+        const safeProgress = clamp(Number(progressValue) || 0, 0, 1);
+        fill.setAttribute('stroke-dashoffset', (GAUGE_LENGTH * (1 - safeProgress)).toFixed(2));
+        svg.appendChild(fill);
+
+        for (let i = 0; i <= 6; i += 1) {
+          const ratio = i / 6;
+          const angle = GAUGE_START + ratio * GAUGE_RANGE;
+          const isMajor = i % 3 === 0;
+          const outer = polarToCartesian(60, 60, GAUGE_RADIUS + 4, angle);
+          const inner = polarToCartesian(60, 60, GAUGE_RADIUS - (isMajor ? 16 : 10), angle);
+          const tick = document.createElementNS(SVG_NS, 'line');
+          tick.setAttribute('x1', inner.x.toFixed(2));
+          tick.setAttribute('y1', inner.y.toFixed(2));
+          tick.setAttribute('x2', outer.x.toFixed(2));
+          tick.setAttribute('y2', outer.y.toFixed(2));
+          tick.classList.add('gauge-tick');
+          if (isMajor) {
+            tick.classList.add('major');
+          }
+          svg.appendChild(tick);
+        }
+
+        if (typeof markerProgress === 'number' && Number.isFinite(markerProgress)) {
+          const safeMarker = clamp(markerProgress, 0, 1);
+          const markerAngle = GAUGE_START + safeMarker * GAUGE_RANGE;
+          const outer = polarToCartesian(60, 60, GAUGE_RADIUS + 2, markerAngle);
+          const inner = polarToCartesian(60, 60, GAUGE_RADIUS - 18, markerAngle);
+          const marker = document.createElementNS(SVG_NS, 'line');
+          marker.setAttribute('x1', inner.x.toFixed(2));
+          marker.setAttribute('y1', inner.y.toFixed(2));
+          marker.setAttribute('x2', outer.x.toFixed(2));
+          marker.setAttribute('y2', outer.y.toFixed(2));
+          marker.classList.add('gauge-marker');
+          svg.appendChild(marker);
+        }
+
+        return svg;
       }
 
       function formatKmValue(value) {
@@ -1302,16 +1467,23 @@
         const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
         const thirtyDaysAgo = new Date(now);
         thirtyDaysAgo.setDate(now.getDate() - 30);
+        const sevenDaysAgo = new Date(now);
+        sevenDaysAgo.setDate(now.getDate() - 7);
 
         let kmWeek = 0;
         let kmMonth = 0;
         let totalSeconds30 = 0;
         let totalDistance30 = 0;
+        let totalSeconds7 = 0;
+        let totalDistance7 = 0;
         let totalSecondsAll = 0;
         let totalDistanceAll = 0;
         let bestFiveK = null;
+        let bestWeekDistance = 0;
+        let bestMonthDistance = 0;
 
         const weeklyTotals = new Map();
+        const monthlyTotals = new Map();
 
         runs.forEach((run) => {
           const date = new Date(run.date + 'T00:00:00');
@@ -1327,6 +1499,10 @@
             totalSeconds30 += run.time;
             totalDistance30 += run.distance;
           }
+          if (date >= sevenDaysAgo) {
+            totalSeconds7 += run.time;
+            totalDistance7 += run.distance;
+          }
           if (run.distance >= 5) {
             const pace = run.time / run.distance;
             // PR voor 5 km berekenen als het minimale tempo (tijd per km) maal 5 km
@@ -1336,18 +1512,32 @@
           }
 
           const weekKey = startOfWeek(date).toISOString().slice(0, 10);
-          weeklyTotals.set(weekKey, (weeklyTotals.get(weekKey) || 0) + run.distance);
+          const weekTotal = (weeklyTotals.get(weekKey) || 0) + run.distance;
+          weeklyTotals.set(weekKey, weekTotal);
+          if (weekTotal > bestWeekDistance) {
+            bestWeekDistance = weekTotal;
+          }
+
+          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+          const monthTotal = (monthlyTotals.get(monthKey) || 0) + run.distance;
+          monthlyTotals.set(monthKey, monthTotal);
+          if (monthTotal > bestMonthDistance) {
+            bestMonthDistance = monthTotal;
+          }
         });
 
         return {
           kmWeek,
           kmMonth,
           avgPace30: totalDistance30 > 0 ? totalSeconds30 / totalDistance30 : null,
+          avgPace7: totalDistance7 > 0 ? totalSeconds7 / totalDistance7 : null,
           overallPace: totalDistanceAll > 0 ? totalSecondsAll / totalDistanceAll : null,
           pr5k: bestFiveK ? bestFiveK * 5 : null,
           weeklyTotals,
           totalDistanceAll,
           totalRuns: runs.length,
+          bestWeekDistance,
+          bestMonthDistance,
         };
       }
 
@@ -1361,67 +1551,200 @@
         const monthHasGoal = monthGoal > 0;
         const paceHasGoal = paceGoal > 0;
 
+        const fallbackWeekTarget = weekHasGoal ? weekGoal : Math.max(stats.bestWeekDistance, 20);
+        const weekTarget = fallbackWeekTarget > 0 ? fallbackWeekTarget : 20;
+        const weekProgress = clamp(weekTarget > 0 ? stats.kmWeek / weekTarget : 0, 0, 1);
+
+        const fallbackMonthTarget = monthHasGoal ? monthGoal : Math.max(stats.bestMonthDistance, 80);
+        const monthTarget = fallbackMonthTarget > 0 ? fallbackMonthTarget : 80;
+        const monthProgress = clamp(monthTarget > 0 ? stats.kmMonth / monthTarget : 0, 0, 1);
+
+        const hasOverallPace = Number.isFinite(stats.overallPace) && stats.overallPace > 0;
+        const has30Pace = Number.isFinite(stats.avgPace30) && stats.avgPace30 > 0;
+        const has7Pace = Number.isFinite(stats.avgPace7) && stats.avgPace7 > 0;
+        const paceGoalProgress = paceHasGoal ? gaugeProgressFromPace(paceGoal) : null;
+
+        const describeGoal = (paceValue, fallbackText) => {
+          if (!Number.isFinite(paceValue) || paceValue <= 0) {
+            return fallbackText;
+          }
+          if (!paceHasGoal) {
+            return fallbackText;
+          }
+          const diff = paceValue - paceGoal;
+          if (Math.abs(diff) < 1) {
+            return 'Je loopt precies op je doeltempo.';
+          }
+          if (diff < 0) {
+            return `Je bent ${formatPaceDifference(diff)} sneller dan je doel.`;
+          }
+          return `${formatPaceDifference(diff)} sneller nodig voor je doel.`;
+        };
+
         const cards = [];
 
-        const weekProgress = weekHasGoal ? Math.min(stats.kmWeek / weekGoal, 1) : 0;
         cards.push({
+          type: 'gauge',
           label: 'Kilometers deze week',
-          value: weekHasGoal
-            ? `${formatKmValue(stats.kmWeek)} / ${formatKmValue(weekGoal)} km`
-            : `${formatKmValue(stats.kmWeek)} km`,
-          progress: weekHasGoal ? weekProgress : null,
+          valueText: formatKmValue(stats.kmWeek),
+          unitText: 'km',
+          detail: weekHasGoal
+            ? `Doel ${formatKmValue(weekGoal)} km`
+            : `Richtwaarde ${formatKmValue(weekTarget)} km`,
           helper: weekHasGoal
             ? stats.kmWeek >= weekGoal
               ? 'Doel behaald! 🎉'
               : `${formatKmValue(Math.max(weekGoal - stats.kmWeek, 0))} km te gaan`
-            : 'Stel een weekdoel in om de meter te activeren.',
+            : stats.bestWeekDistance > 0
+              ? `Beste week tot nu toe: ${formatKmValue(stats.bestWeekDistance)} km`
+              : 'Voer je eerste run in om deze meter te vullen.',
+          progress: weekProgress,
+          ariaLabel: `Kilometers deze week ${formatKmValue(stats.kmWeek)} van ${formatKmValue(weekTarget)} km`,
         });
 
-        const monthProgress = monthHasGoal ? Math.min(stats.kmMonth / monthGoal, 1) : 0;
         cards.push({
+          type: 'gauge',
           label: 'Kilometers deze maand',
-          value: monthHasGoal
-            ? `${formatKmValue(stats.kmMonth)} / ${formatKmValue(monthGoal)} km`
-            : `${formatKmValue(stats.kmMonth)} km`,
-          progress: monthHasGoal ? monthProgress : null,
+          valueText: formatKmValue(stats.kmMonth),
+          unitText: 'km',
+          detail: monthHasGoal
+            ? `Doel ${formatKmValue(monthGoal)} km`
+            : `Richtwaarde ${formatKmValue(monthTarget)} km`,
           helper: monthHasGoal
             ? stats.kmMonth >= monthGoal
               ? 'Je maanddoel is binnen!'
               : `${formatKmValue(Math.max(monthGoal - stats.kmMonth, 0))} km resterend`
-            : 'Bepaal een maanddoel om je groei te volgen.',
+            : stats.bestMonthDistance > 0
+              ? `Sterkste maand: ${formatKmValue(stats.bestMonthDistance)} km`
+              : 'Plan runs om je eerste maandmeter te vullen.',
+          progress: monthProgress,
+          ariaLabel: `Kilometers deze maand ${formatKmValue(stats.kmMonth)} van ${formatKmValue(monthTarget)} km`,
         });
 
-        const hasPaceData = Number.isFinite(stats.overallPace) && stats.overallPace > 0;
-        let paceHelper = 'Nog geen runs geregistreerd.';
-        if (hasPaceData && paceHasGoal) {
-          const diff = stats.overallPace - paceGoal;
-          if (Math.abs(diff) < 1) {
-            paceHelper = 'Je loopt precies op je doeltempo.';
-          } else if (diff <= 0) {
-            paceHelper = `Je bent ${formatPaceDifference(diff)} sneller dan je doel.`;
-          } else {
-            paceHelper = `${formatPaceDifference(diff)} sneller nodig voor je doel.`;
-          }
-        } else if (paceHasGoal) {
-          paceHelper = 'Voeg runs toe om voortgang op je streeftempo te zien.';
-        } else if (hasPaceData) {
-          paceHelper = 'Stel een streeftempo in om progressie te meten.';
+        const overallHelperFallback = hasOverallPace
+          ? `Gebaseerd op ${stats.totalRuns} run${stats.totalRuns === 1 ? '' : 's'}.`
+          : 'Nog geen runs geregistreerd.';
+        cards.push({
+          type: 'gauge',
+          label: 'Tempo per km (altijd)',
+          valueText: hasOverallPace ? formatPaceShort(stats.overallPace) : '—',
+          unitText: hasOverallPace ? 'min/km' : '',
+          detail: paceHasGoal
+            ? `Doel ${formatPaceShort(paceGoal)}`
+            : hasOverallPace
+              ? `Runs totaal: ${stats.totalRuns}`
+              : '',
+          helper: describeGoal(stats.overallPace, overallHelperFallback),
+          progress: hasOverallPace ? gaugeProgressFromPace(stats.overallPace) ?? 0 : 0,
+          marker: paceGoalProgress,
+          deltaText:
+            paceHasGoal && hasOverallPace
+              ? `${formatSignedPaceDifference(stats.overallPace - paceGoal)} vs doel`
+              : null,
+          ariaLabel: hasOverallPace
+            ? `Tempo per kilometer gemiddeld ${formatPaceShort(stats.overallPace)}`
+            : 'Tempo per kilometer: geen data beschikbaar',
+        });
+
+        const pace30Diff = has30Pace && hasOverallPace ? stats.avgPace30 - stats.overallPace : null;
+        let pace30Helper = has30Pace
+          ? describeGoal(
+              stats.avgPace30,
+              hasOverallPace
+                ? Math.abs(pace30Diff) < 1
+                  ? 'Bijna gelijk aan je all-time gemiddelde tempo.'
+                  : pace30Diff < 0
+                    ? `Sneller dan je all-time gemiddelde met ${formatPaceDifference(pace30Diff)}.`
+                    : `Langzamer dan je all-time gemiddelde met ${formatPaceDifference(pace30Diff)}.`
+                : 'Tempo gebaseerd op je laatste 30 dagen.'
+            )
+          : 'Nog onvoldoende data in de laatste 30 dagen.';
+        if (!has30Pace) {
+          pace30Helper = 'Nog onvoldoende data in de laatste 30 dagen.';
         }
 
-        const paceProgress = hasPaceData && paceHasGoal ? Math.min(paceGoal / stats.overallPace, 1) : null;
+        const pace30Delta = (() => {
+          if (paceHasGoal && has30Pace) {
+            return `${formatSignedPaceDifference(stats.avgPace30 - paceGoal)} vs doel`;
+          }
+          if (has30Pace && hasOverallPace && Number.isFinite(pace30Diff) && Math.abs(pace30Diff) >= 1) {
+            return `${pace30Diff < 0 ? '−' : '+'}${formatPaceDifference(pace30Diff)} vs all-time`;
+          }
+          return null;
+        })();
+
         cards.push({
-          label: 'Gemiddeld tempo per km (altijd)',
-          value: hasPaceData
-            ? `${formatPaceShort(stats.overallPace)}${paceHasGoal ? ` · doel ${formatPaceShort(paceGoal)}` : ''}`
-            : '—',
-          progress: paceProgress,
-          helper: paceHelper,
+          type: 'gauge',
+          label: 'Tempo per km (30 dagen)',
+          valueText: has30Pace ? formatPaceShort(stats.avgPace30) : '—',
+          unitText: has30Pace ? 'min/km' : '',
+          detail: [
+            paceHasGoal ? `Doel ${formatPaceShort(paceGoal)}` : '',
+            hasOverallPace ? `All-time ${formatPaceShort(stats.overallPace)}` : '',
+          ]
+            .filter(Boolean)
+            .join(' • '),
+          helper: pace30Helper,
+          progress: has30Pace ? gaugeProgressFromPace(stats.avgPace30) ?? 0 : 0,
+          marker: paceGoalProgress,
+          deltaText: pace30Delta,
+          ariaLabel: has30Pace
+            ? `Tempo per kilometer laatste 30 dagen ${formatPaceShort(stats.avgPace30)}`
+            : 'Tempo per kilometer laatste 30 dagen: geen data',
+        });
+
+        const referenceFor7 = has30Pace ? stats.avgPace30 : hasOverallPace ? stats.overallPace : null;
+        const pace7Diff = has7Pace && Number.isFinite(referenceFor7) ? stats.avgPace7 - referenceFor7 : null;
+        let pace7Helper = has7Pace
+          ? describeGoal(
+              stats.avgPace7,
+              referenceFor7
+                ? Math.abs(pace7Diff) < 1
+                  ? 'Op lijn met je recente tempo.'
+                  : pace7Diff < 0
+                    ? `Sneller dan je ${has30Pace ? '30-dagen' : 'all-time'} tempo met ${formatPaceDifference(pace7Diff)}.`
+                    : `Langzamer dan je ${has30Pace ? '30-dagen' : 'all-time'} tempo met ${formatPaceDifference(pace7Diff)}.`
+                : 'Tempo van je meest recente week.'
+            )
+          : 'Nog onvoldoende data in de afgelopen week.';
+        if (!has7Pace) {
+          pace7Helper = 'Nog onvoldoende data in de afgelopen week.';
+        }
+
+        const pace7Delta = (() => {
+          if (paceHasGoal && has7Pace) {
+            return `${formatSignedPaceDifference(stats.avgPace7 - paceGoal)} vs doel`;
+          }
+          if (has7Pace && Number.isFinite(pace7Diff) && Math.abs(pace7Diff) >= 1) {
+            return `${pace7Diff < 0 ? '−' : '+'}${formatPaceDifference(pace7Diff)} vs ${has30Pace ? '30 dagen' : 'all-time'}`;
+          }
+          return null;
+        })();
+
+        cards.push({
+          type: 'gauge',
+          label: 'Tempo per km (7 dagen)',
+          valueText: has7Pace ? formatPaceShort(stats.avgPace7) : '—',
+          unitText: has7Pace ? 'min/km' : '',
+          detail: [
+            paceHasGoal ? `Doel ${formatPaceShort(paceGoal)}` : '',
+            has30Pace ? `30 dagen ${formatPaceShort(stats.avgPace30)}` : hasOverallPace ? `All-time ${formatPaceShort(stats.overallPace)}` : '',
+          ]
+            .filter(Boolean)
+            .join(' • '),
+          helper: pace7Helper,
+          progress: has7Pace ? gaugeProgressFromPace(stats.avgPace7) ?? 0 : 0,
+          marker: paceGoalProgress,
+          deltaText: pace7Delta,
+          ariaLabel: has7Pace
+            ? `Tempo per kilometer laatste 7 dagen ${formatPaceShort(stats.avgPace7)}`
+            : 'Tempo per kilometer laatste 7 dagen: geen data',
         });
 
         cards.push({
+          type: 'plain',
           label: 'PR 5 km',
-          value: stats.pr5k ? formatDuration(Math.round(stats.pr5k)) : '—',
-          progress: null,
+          valueText: stats.pr5k ? formatDuration(Math.round(stats.pr5k)) : '—',
           helper: stats.pr5k
             ? 'Beste tijd gebaseerd op je snelste tempo over minimaal 5 km.'
             : 'Loop een afstand van 5 km of meer om een PR vast te leggen.',
@@ -1438,37 +1761,58 @@
           const label = document.createElement('span');
           label.className = 'kpi-label';
           label.textContent = card.label;
-          const value = document.createElement('span');
-          value.className = 'kpi-value';
-          value.textContent = card.value;
-          header.append(label, value);
-          div.appendChild(header);
+          header.appendChild(label);
 
-          if (typeof card.progress === 'number') {
-            const safeProgress = Math.max(0, Math.min(card.progress, 1));
-            const meter = document.createElement('div');
-            meter.className = 'kpi-meter';
-            meter.setAttribute('role', 'meter');
-            meter.setAttribute('aria-valuemin', '0');
-            meter.setAttribute('aria-valuemax', '100');
-            meter.setAttribute('aria-valuenow', String(Math.round(safeProgress * 100)));
-            const track = document.createElement('div');
-            track.className = 'meter-track';
-            const fill = document.createElement('div');
-            fill.className = 'meter-fill';
-            const percent = safeProgress * 100;
-            fill.style.setProperty('--meter-progress', `${percent}%`);
-            if (percent > 0 && percent < 8) {
-              fill.style.setProperty('--meter-progress', '8%');
-            }
-            track.appendChild(fill);
-            meter.appendChild(track);
+          if (card.detail) {
+            const detail = document.createElement('span');
+            detail.className = 'kpi-detail';
+            detail.textContent = card.detail;
+            header.appendChild(detail);
+          }
+
+          if (card.type === 'plain') {
+            div.classList.add('plain');
+            const value = document.createElement('span');
+            value.className = 'kpi-value';
+            value.textContent = card.valueText;
+            header.appendChild(value);
+            div.appendChild(header);
+
             const helper = document.createElement('p');
             helper.className = 'kpi-helper';
             helper.textContent = card.helper;
-            meter.appendChild(helper);
-            div.appendChild(meter);
+            div.appendChild(helper);
           } else {
+            div.appendChild(header);
+            const gaugeWrapper = document.createElement('div');
+            gaugeWrapper.className = 'kpi-gauge';
+            gaugeWrapper.setAttribute('role', 'img');
+            gaugeWrapper.setAttribute('aria-label', card.ariaLabel || `${card.label}: ${card.valueText}`);
+            const svg = createGaugeSvg(card.progress, card.marker);
+            svg.setAttribute('aria-hidden', 'true');
+            gaugeWrapper.appendChild(svg);
+
+            const center = document.createElement('div');
+            center.className = 'gauge-center';
+            const value = document.createElement('span');
+            value.className = 'gauge-value';
+            value.textContent = card.valueText;
+            center.appendChild(value);
+            if (card.unitText) {
+              const unit = document.createElement('span');
+              unit.className = 'gauge-unit';
+              unit.textContent = card.unitText;
+              center.appendChild(unit);
+            }
+            if (card.deltaText) {
+              const delta = document.createElement('span');
+              delta.className = 'gauge-delta';
+              delta.textContent = card.deltaText;
+              center.appendChild(delta);
+            }
+            gaugeWrapper.appendChild(center);
+            div.appendChild(gaugeWrapper);
+
             const helper = document.createElement('p');
             helper.className = 'kpi-helper';
             helper.textContent = card.helper;
