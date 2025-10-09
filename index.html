@@ -68,6 +68,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     h1 {
@@ -79,12 +80,61 @@
       color: var(--ink);
     }
 
+    .primary-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      box-shadow: none;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--ink);
+      border-color: var(--border);
+      outline: none;
+      background: rgba(15, 23, 42, 0.05);
+    }
+
+    .nav-link.active {
+      background: var(--ink);
+      color: #ffffff;
+      border-color: var(--ink);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+    }
+
     main {
       width: 100%;
       max-width: 960px;
       padding: 1.5rem 1.25rem 4rem;
       display: grid;
       gap: 1.5rem;
+    }
+
+    .view {
+      display: none;
+      gap: 1.5rem;
+    }
+
+    .view.active {
+      display: grid;
     }
 
     .card {
@@ -184,6 +234,58 @@
       font-size: 0.9rem;
       color: var(--muted);
       overflow-wrap: anywhere;
+    }
+
+    .intro-card {
+      background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.6));
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
+    }
+
+    .home-actions {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .home-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .action-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .action-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--ink);
+    }
+
+    .action-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      box-shadow: none;
+      justify-self: flex-start;
+    }
+
+    .ghost:hover,
+    .ghost:focus-visible {
+      background: rgba(15, 23, 42, 0.05);
+      outline: none;
     }
 
     .card:hover {
@@ -582,6 +684,11 @@
         box-shadow: 0 16px 32px rgba(2, 6, 23, 0.6);
       }
 
+      .intro-card,
+      .action-card {
+        background: #15233b;
+      }
+
       input[type="date"],
       input[type="text"] {
         background: #0b1424;
@@ -608,6 +715,17 @@
         background: #1e293b;
       }
 
+      .nav-link.active {
+        background: #ff8a3d;
+        color: #0f172a;
+        border-color: transparent;
+      }
+
+      .ghost {
+        border-color: rgba(226, 232, 240, 0.12);
+        color: var(--ink);
+      }
+
       body {
         background: var(--bg);
       }
@@ -618,87 +736,137 @@
   <header>
     <div class="header-inner">
       <h1 aria-label="Running Smart hardloop dashboard">🏃‍♀️ Running Smart</h1>
-      <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Backup</button>
+      <nav class="primary-nav" aria-label="Hoofd navigatie">
+        <button type="button" class="nav-link active" data-view="homeView">Home</button>
+        <button type="button" class="nav-link" data-view="logView">Run loggen</button>
+        <button type="button" class="nav-link" data-view="kpiView">KPI overzicht</button>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="secondary" id="backupButton" aria-label="Exporteer runs als JSON">💾 Backup</button>
+      </div>
     </div>
   </header>
   <main>
-    <section class="hero-card" aria-label="Laatste run overzicht">
-      <div class="hero-main">
-        <div class="hero-metric">
-          <span class="hero-value" id="heroTime">0,00</span>
-          <span class="hero-label">Uren</span>
-        </div>
-        <div class="hero-metric">
-          <span class="hero-value" id="heroDistance">0,00</span>
-          <span class="hero-label">KM</span>
-        </div>
-      </div>
-      <div class="hero-sub">
-        <div class="hero-sub-metric">
-          <span class="hero-sub-value" id="heroCurrentPace">—</span>
-          <span class="hero-sub-label">Huidig tempo</span>
-        </div>
-        <div class="hero-sub-metric">
-          <span class="hero-sub-value" id="heroAvgPace">—</span>
-          <span class="hero-sub-label">Gem. tempo (30d)</span>
-        </div>
-      </div>
-      <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
-    </section>
-
-    <section class="card" aria-labelledby="form-title">
-      <h2 id="form-title">Run toevoegen</h2>
-      <form id="runForm" novalidate>
-        <div class="form-grid">
-          <div>
-            <label for="runDate">Datum</label>
-            <input id="runDate" name="runDate" type="date" required aria-required="true" />
+    <section class="view active" id="homeView" aria-labelledby="home-title">
+      <section class="card intro-card">
+        <h2 id="home-title">Welkom terug</h2>
+        <p>
+          Houd je hardloopmomenten overzichtelijk bij en zie je voortgang in één oogopslag. Kies hieronder wat je wilt doen: een
+          nieuwe run registreren of direct naar je KPI&apos;s gaan.
+        </p>
+      </section>
+      <section class="hero-card" aria-label="Laatste run overzicht">
+        <div class="hero-main">
+          <div class="hero-metric">
+            <span class="hero-value" id="heroTime">0,00</span>
+            <span class="hero-label">Uren</span>
           </div>
-          <div>
-            <label for="runDistance">Afstand (km)</label>
-            <input id="runDistance" name="runDistance" type="text" required aria-required="true" inputmode="decimal" pattern="^\s*[0-9]+([\.,][0-9]{1,2})?\s*$" placeholder="Bijv. 5,25" />
-          </div>
-          <div>
-            <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
-            <input id="runTime" name="runTime" type="text" required aria-required="true" inputmode="numeric" pattern="^\s*(?:[0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]\s*$" placeholder="Bijv. 00:27:45" />
+          <div class="hero-metric">
+            <span class="hero-value" id="heroDistance">0,00</span>
+            <span class="hero-label">KM</span>
           </div>
         </div>
-        <div class="feedback" id="formFeedback" role="alert" aria-live="polite"></div>
-        <div class="button-row">
-          <button type="submit" id="submitButton">Run opslaan</button>
-          <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
-          <button type="button" class="danger" id="clearButton">Alles wissen</button>
+        <div class="hero-sub">
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroCurrentPace">—</span>
+            <span class="hero-sub-label">Huidig tempo</span>
+          </div>
+          <div class="hero-sub-metric">
+            <span class="hero-sub-value" id="heroAvgPace">—</span>
+            <span class="hero-sub-label">Gem. tempo (30d)</span>
+          </div>
         </div>
-      </form>
-    </section>
-
-    <section class="card" aria-labelledby="dashboard-title">
-      <h2 id="dashboard-title">Dashboard</h2>
-      <div class="kpi-grid" id="kpiGrid" role="list"></div>
-      <div class="chart-container" aria-label="Kilometers per week grafiek">
-        <h3 style="margin: 0; font-size: 1rem; color: var(--muted);">Laatste 8 weken</h3>
-        <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
-        <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+        <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
+      </section>
+      <div class="home-actions" role="list">
+        <article class="action-card" role="listitem">
+          <h3>Nieuwe activiteit</h3>
+          <p>Leg meteen je afstand, tijd en tempo vast met slimme validatie.</p>
+          <button type="button" class="ghost" data-target="logView">Run toevoegen</button>
+        </article>
+        <article class="action-card" role="listitem">
+          <h3>KPI Dashboard</h3>
+          <p>Ontdek trends, snelheden en persoonlijke records uit je runs.</p>
+          <button type="button" class="ghost" data-target="kpiView">Bekijk KPI&apos;s</button>
+        </article>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="runs-title">
-      <h2 id="runs-title">Runs</h2>
-      <div class="table-wrapper" role="region" aria-live="polite" aria-labelledby="runs-title">
-        <table aria-label="Overzicht van runs" id="runsTable">
-          <thead>
-            <tr>
-              <th scope="col">Datum</th>
-              <th scope="col">Afstand</th>
-              <th scope="col">Tijd</th>
-              <th scope="col">Tempo</th>
-              <th scope="col">Acties</th>
-            </tr>
-          </thead>
-          <tbody id="runsBody"></tbody>
-        </table>
-        <p id="emptyState" class="empty-state">Nog geen runs toegevoegd. Tijd voor een rondje! 🏃‍♂️</p>
-      </div>
+    <section class="view" id="logView" aria-labelledby="form-title">
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Run toevoegen</h2>
+        <form id="runForm" novalidate>
+          <div class="form-grid">
+            <div>
+              <label for="runDate">Datum</label>
+              <input id="runDate" name="runDate" type="date" required aria-required="true" />
+            </div>
+            <div>
+              <label for="runDistance">Afstand (km)</label>
+              <input
+                id="runDistance"
+                name="runDistance"
+                type="text"
+                required
+                aria-required="true"
+                inputmode="decimal"
+                pattern="^\s*[0-9]+([\.,][0-9]{1,2})?\s*$"
+                placeholder="Bijv. 5,25"
+              />
+            </div>
+            <div>
+              <label for="runTime">Tijd (hh:mm:ss of mm:ss)</label>
+              <input
+                id="runTime"
+                name="runTime"
+                type="text"
+                required
+                aria-required="true"
+                inputmode="numeric"
+                pattern="^\s*(?:[0-9]{1,2}:)?[0-5][0-9]:[0-5][0-9]\s*$"
+                placeholder="Bijv. 00:27:45"
+              />
+            </div>
+          </div>
+          <div class="feedback" id="formFeedback" role="alert" aria-live="polite"></div>
+          <div class="button-row">
+            <button type="submit" id="submitButton">Run opslaan</button>
+            <button type="button" class="secondary" id="restoreButton" aria-label="Importeer runs uit JSON">📥 Importeren</button>
+            <button type="button" class="danger" id="clearButton">Alles wissen</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="runs-title">
+        <h2 id="runs-title">Runs</h2>
+        <div class="table-wrapper" role="region" aria-live="polite" aria-labelledby="runs-title">
+          <table aria-label="Overzicht van runs" id="runsTable">
+            <thead>
+              <tr>
+                <th scope="col">Datum</th>
+                <th scope="col">Afstand</th>
+                <th scope="col">Tijd</th>
+                <th scope="col">Tempo</th>
+                <th scope="col">Acties</th>
+              </tr>
+            </thead>
+            <tbody id="runsBody"></tbody>
+          </table>
+          <p id="emptyState" class="empty-state">Nog geen runs toegevoegd. Tijd voor een rondje! 🏃‍♂️</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="kpiView" aria-labelledby="dashboard-title">
+      <section class="card" aria-labelledby="dashboard-title">
+        <h2 id="dashboard-title">KPI dashboard</h2>
+        <div class="kpi-grid" id="kpiGrid" role="list"></div>
+        <div class="chart-container" aria-label="Kilometers per week grafiek">
+          <h3 style="margin: 0; font-size: 1rem; color: var(--muted);">Laatste 8 weken</h3>
+          <div class="chart" id="chartBars" role="list" aria-label="Balkgrafiek kilometers per week"></div>
+          <div class="chart-labels" id="chartLabels" aria-hidden="true"></div>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -727,6 +895,9 @@
       const heroCurrentPace = document.getElementById('heroCurrentPace');
       const heroAvgPace = document.getElementById('heroAvgPace');
       const heroCaption = document.getElementById('heroCaption');
+      const viewButtons = Array.from(document.querySelectorAll('.nav-link[data-view]'));
+      const views = new Map(viewButtons.map((button) => [button.dataset.view, document.getElementById(button.dataset.view)]));
+      const viewShortcuts = document.querySelectorAll('[data-target]');
 
       let runs = [];
       let editId = null;
@@ -734,6 +905,33 @@
       const today = new Date();
       runDate.value = today.toISOString().slice(0, 10);
       submitButton.setAttribute('aria-label', 'Nieuwe run opslaan');
+
+      function showView(viewId) {
+        if (!views.has(viewId)) return;
+        views.forEach((section, id) => {
+          if (!section) return;
+          section.classList.toggle('active', id === viewId);
+        });
+        viewButtons.forEach((button) => {
+          button.classList.toggle('active', button.dataset.view === viewId);
+        });
+        scrollToTop();
+      }
+
+      viewButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          showView(button.dataset.view);
+        });
+      });
+
+      viewShortcuts.forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.dataset.target;
+          if (target) {
+            showView(target);
+          }
+        });
+      });
 
       function uid() {
         return crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
@@ -1091,6 +1289,7 @@
 
         if (action === 'edit') {
           editId = id;
+          showView('logView');
           runDate.value = run.date;
           runDistance.value = run.distance.toFixed(2).replace('.', ',');
           runTime.value = formatDuration(run.time);
