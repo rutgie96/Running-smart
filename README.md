@@ -7,7 +7,9 @@ Handig om inzicht te krijgen in je voortgang en persoonlijke records.
 - Runs toevoegen met datum, afstand en tijd
 - Automatische berekening van snelheid en tempo
 - Overzicht van je persoonlijke records
-- Mogelijkheid om statistieken te bekijken (gemiddelde, totalen, trends)
+- Startpagina met hero-statistieken en snelle acties naar logboek en KPI&apos;s
+- KPI-dashboard met voortgangsmeters gekoppeld aan je ingestelde doelen
+- Instellingenpagina om week- en maanddoelen plus streeftempo vast te leggen
 
 ## 💡 UI-verbeterpunten
 - Maak de navigatie ook beschikbaar op mobiele apparaten via een uitschuifbaar menu zodat knoppen niet op twee regels vallen.
