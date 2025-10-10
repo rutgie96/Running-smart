@@ -45,6 +45,13 @@
   const settingsReset = document.getElementById('settingsReset');
   const zonesList = document.getElementById('zonesList');
 
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const GAUGE_RADIUS = 40;
+  const GAUGE_START = 135;
+  const GAUGE_END = 45;
+  const GAUGE_RANGE = GAUGE_END - GAUGE_START + 360;
+  const GAUGE_LENGTH = 2 * Math.PI * GAUGE_RADIUS * (GAUGE_RANGE / 360);
+
   const defaultSettings = {
     weeklyGoalKm: 30,
     monthlyGoalKm: 120,
@@ -1182,13 +1189,6 @@
     const startB = startOfWeek(dateB);
     return startA.getTime() === startB.getTime();
   }
-
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-  const GAUGE_RADIUS = 40;
-  const GAUGE_START = 135;
-  const GAUGE_END = 45;
-  const GAUGE_RANGE = GAUGE_END - GAUGE_START + 360;
-  const GAUGE_LENGTH = 2 * Math.PI * GAUGE_RADIUS * (GAUGE_RANGE / 360);
 
   function createGaugeSvg(progressValue, markerProgress) {
     const svg = document.createElementNS(SVG_NS, 'svg');
