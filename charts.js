@@ -1,6 +1,13 @@
 (() => {
   function renderHrLineChart(canvas, runs) {
     if (!canvas || !runs || !runs.length || typeof Chart === 'undefined') return null;
+    const rootStyles = getComputedStyle(document.documentElement);
+    const accent = (rootStyles.getPropertyValue('--accent') || '#e10600').trim();
+    const accentSoft = (rootStyles.getPropertyValue('--accent-soft') || 'rgba(225, 6, 0, 0.2)').trim();
+    const ink = (rootStyles.getPropertyValue('--accent-ink') || '#f4f7fb').trim();
+    const muted = (rootStyles.getPropertyValue('--muted') || '#9097a5').trim();
+    const gridColor = 'rgba(255, 255, 255, 0.12)';
+
     const labels = runs
       .slice()
       .sort((a, b) => a.date.localeCompare(b.date))
@@ -16,8 +23,8 @@
         {
           label: 'Gem. hartslag',
           data: sortedRuns.map((run) => run.avgHr),
-          borderColor: '#2563eb',
-          backgroundColor: 'rgba(37, 99, 235, 0.25)',
+          borderColor: accent,
+          backgroundColor: accentSoft,
           tension: 0.3,
           fill: true,
           pointRadius: 4,
@@ -37,7 +44,7 @@
         scales: {
           x: {
             ticks: {
-              color: '#4b5563',
+              color: muted,
               autoSkip: true,
               maxTicksLimit: 8,
             },
@@ -47,16 +54,16 @@
           },
           y: {
             ticks: {
-              color: '#4b5563',
+              color: muted,
               callback: (value) => `${value} bpm`,
             },
             grid: {
-              color: 'rgba(148, 163, 184, 0.25)',
+              color: gridColor,
             },
             title: {
               display: true,
               text: 'Hartslag (bpm)',
-              color: '#0f172a',
+              color: ink,
             },
           },
         },
@@ -65,6 +72,11 @@
             display: false,
           },
           tooltip: {
+            backgroundColor: 'rgba(11, 14, 18, 0.9)',
+            titleColor: ink,
+            bodyColor: ink,
+            borderColor: accent,
+            borderWidth: 1,
             callbacks: {
               label: (context) => {
                 const run = context.dataset.meta[context.dataIndex];

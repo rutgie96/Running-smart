@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#0b0d10" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600&family=Titillium+Web:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
   <link
     rel="icon"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F%3C/text%3E%3C/svg%3E"
   />
-  <title>🏃‍♀️ Running Smart</title>
+  <title>🏁 TAG Heuer Running Smart</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <h1 aria-label="Running Smart hardloop dashboard">🏃‍♀️ Running Smart</h1>
+      <h1 aria-label="Running Smart hardloop dashboard">🏁 TAG Heuer Running Smart</h1>
+      <span class="brand-badge" aria-hidden="true">Formula 1 Edition</span>
       <nav class="primary-nav" aria-label="Hoofdnavigatie">
         <button type="button" class="nav-link active" data-view="homeView">Home</button>
         <button type="button" class="nav-link" data-view="logView">Run loggen</button>
@@ -29,10 +36,10 @@
   <main>
     <section class="view active" id="homeView" aria-labelledby="home-title">
       <section class="card intro-card">
-        <h2 id="home-title">Welkom terug</h2>
+        <h2 id="home-title">Welkom in de pitbox</h2>
         <p>
-          Houd je hardloopmomenten overzichtelijk bij en zie je voortgang in één oogopslag. Kies hieronder wat je wilt doen:
-          een nieuwe run registreren of direct naar je KPI&apos;s gaan.
+          Deze TAG Heuer Formula 1 editie combineert precieze timing met jouw hardloopdata. Start een nieuwe registratie of duik
+          meteen in je KPI&apos;s om te zien hoe je prestaties zich ontwikkelen.
         </p>
       </section>
       <section class="hero-card" aria-label="Laatste run overzicht">
@@ -60,7 +67,7 @@
             <span class="hero-sub-label">Gem. hartslag (30 dagen)</span>
           </div>
         </div>
-        <p class="hero-caption" id="heroCaption">Voer je eerste run in om statistieken te zien.</p>
+          <p class="hero-caption" id="heroCaption">Voer je eerste run in om de chronograaf te starten.</p>
       </section>
       <div class="home-actions" role="list">
         <article class="action-card" role="listitem">

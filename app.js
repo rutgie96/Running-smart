@@ -802,7 +802,7 @@
       heroAllTimePace.textContent = '—';
       heroAvgPace.textContent = '—';
       if (heroAvgHr) heroAvgHr.textContent = '—';
-      heroCaption.textContent = 'Voer je eerste run in om statistieken te zien.';
+    heroCaption.textContent = 'Voer je eerste run in om de chronograaf te starten.';
       return;
     }
     const latest = runs[0];
@@ -900,6 +900,7 @@
       helper: hasAvgHrAll ? describeHrZone(stats.avgHrAll) : 'Voer runs met hartslag in om trends te tonen.',
       progress: hasAvgHrAll ? gaugeProgressFromHr(stats.avgHrAll) : 0,
       marker: hrMarker,
+      tone: 'green',
       ariaLabel: hasAvgHrAll
         ? `Gemiddelde hartslag over alle runs ${Math.round(stats.avgHrAll)} slagen per minuut`
         : 'Geen hartslagdata beschikbaar',
@@ -914,6 +915,7 @@
       helper: hasAvgHr30 ? describeHrZone(stats.avgHr30) : 'Nog onvoldoende runs met hartslag in de laatste 30 dagen.',
       progress: hasAvgHr30 ? gaugeProgressFromHr(stats.avgHr30) : 0,
       marker: hrMarker,
+      tone: 'green',
       ariaLabel: hasAvgHr30
         ? `Gemiddelde hartslag laatste 30 dagen ${Math.round(stats.avgHr30)} slagen per minuut`
         : 'Geen hartslagdata voor de laatste 30 dagen',
@@ -928,6 +930,7 @@
       helper: hasAvgHr7 ? describeHrZone(stats.avgHr7) : 'Nog geen runs met hartslag in de laatste week.',
       progress: hasAvgHr7 ? gaugeProgressFromHr(stats.avgHr7) : 0,
       marker: hrMarker,
+      tone: 'green',
       ariaLabel: hasAvgHr7
         ? `Gemiddelde hartslag laatste 7 dagen ${Math.round(stats.avgHr7)} slagen per minuut`
         : 'Geen hartslagdata voor de laatste 7 dagen',
@@ -952,6 +955,9 @@
       const wrapper = document.createElement('div');
       wrapper.className = 'kpi-card';
       wrapper.setAttribute('role', 'listitem');
+      if (card.tone) {
+        wrapper.dataset.theme = card.tone;
+      }
       if (card.ariaLabel) {
         wrapper.setAttribute('aria-label', card.ariaLabel);
       }
