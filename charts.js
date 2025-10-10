@@ -90,60 +90,9 @@
     });
   }
 
-  function renderZoneChart(canvas, runs, maxHrUser) {
-    if (!canvas || !runs || !runs.length || !Number.isFinite(maxHrUser) || typeof Chart === 'undefined') return null;
-    const buckets = [0, 0, 0, 0, 0];
-    runs.forEach((run) => {
-      if (!Number.isFinite(run.avgHr)) return;
-      const ratio = run.avgHr / maxHrUser;
-      const index = ratio < 0.6 ? 0 : ratio < 0.7 ? 1 : ratio < 0.8 ? 2 : ratio < 0.9 ? 3 : 4;
-      buckets[index] += 1;
-    });
-
-    const total = buckets.reduce((sum, value) => sum + value, 0) || 1;
-    const labels = ['Z1', 'Z2', 'Z3', 'Z4', 'Z5'];
-    const ctx = canvas.getContext('2d');
-    return new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels,
-        datasets: [
-          {
-            data: buckets,
-            backgroundColor: ['#dbeafe', '#bfdbfe', '#93c5fd', '#60a5fa', '#2563eb'],
-            borderColor: '#ffffff',
-            borderWidth: 2,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '55%',
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: '#0f172a',
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                const count = context.parsed;
-                const percentage = ((count / total) * 100).toFixed(0);
-                return `${context.label}: ${count} runs (${percentage}%)`;
-              },
-            },
-          },
-        },
-      },
-    });
-  }
-
   function formatDate(value) {
     const date = new Date(value + 'T00:00:00');
-    return date.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit' });
+    return date.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
 
   function formatDuration(seconds) {
@@ -169,6 +118,5 @@
 
   window.RunningSmartCharts = {
     renderHrLineChart,
-    renderZoneChart,
   };
 })();

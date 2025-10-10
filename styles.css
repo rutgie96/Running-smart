@@ -912,13 +912,6 @@
       gap: 1rem;
     }
 
-    .chart-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
     .chart-card-body {
       position: relative;
       min-height: 240px;
@@ -939,23 +932,6 @@
       text-align: center;
       max-width: 220px;
       line-height: 1.4;
-    }
-
-    .chart-filter {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .chart-filter select {
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      padding: 0.4rem 0.8rem;
-      background: #fff;
-      font-size: 0.9rem;
-      color: var(--ink);
     }
 
     .zones-card {

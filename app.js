@@ -32,11 +32,10 @@
   const kpiGrid = document.getElementById('kpiGrid');
   const chartBars = document.getElementById('chartBars');
   const chartLabels = document.getElementById('chartLabels');
-  const hrLineCanvas = document.getElementById('hrLineChart');
-  const hrLineEmpty = document.getElementById('hrLineEmpty');
-  const hrRangeSelect = document.getElementById('hrRange');
-  const zoneCanvas = document.getElementById('zoneChart');
-  const zoneEmpty = document.getElementById('zoneEmpty');
+  const hrLineCanvas12 = document.getElementById('hrLineChart12');
+  const hrLineEmpty12 = document.getElementById('hrLineEmpty12');
+  const hrLineCanvasAll = document.getElementById('hrLineChartAll');
+  const hrLineEmptyAll = document.getElementById('hrLineEmptyAll');
   const settingsForm = document.getElementById('settingsForm');
   const goalWeeklyKm = document.getElementById('goalWeeklyKm');
   const goalMonthlyKm = document.getElementById('goalMonthlyKm');
@@ -57,8 +56,8 @@
   let runs = [];
   let editId = null;
   let settings = { ...defaultSettings };
-  let hrLineChart;
-  let zoneChart;
+  let hrLineChart12;
+  let hrLineChartAll;
 
   initialiseDate();
   submitButton?.setAttribute('aria-label', 'Nieuwe run opslaan');
@@ -73,8 +72,6 @@
       if (target) showView(target);
     });
   });
-
-  hrRangeSelect?.addEventListener('change', renderCharts);
 
   if (runForm) {
     runForm.addEventListener('submit', handleRunSubmit);
@@ -657,8 +654,8 @@
     thirtyDaysAgo.setDate(now.getDate() - 29);
     const sevenDaysAgo = new Date(now);
     sevenDaysAgo.setDate(now.getDate() - 6);
-    const ninetyDaysAgo = new Date(now);
-    ninetyDaysAgo.setDate(now.getDate() - 89);
+    const twelveWeeksAgo = new Date(now);
+    twelveWeeksAgo.setDate(now.getDate() - 83);
 
     let kmWeek = 0;
     let kmMonth = 0;
@@ -675,6 +672,8 @@
     let countAvgHr30 = 0;
     let totalAvgHr7 = 0;
     let countAvgHr7 = 0;
+    let totalAvgHrAll = 0;
+    let countAvgHrAll = 0;
     let recoverySum = 0;
     let recoveryCount = 0;
 
@@ -719,6 +718,11 @@
         }
       }
 
+      if (Number.isFinite(run.avgHr)) {
+        totalAvgHrAll += run.avgHr;
+        countAvgHrAll += 1;
+      }
+
       if (date >= thirtyDaysAgo && date <= now) {
         totalDistance30 += run.distanceKm;
         totalSeconds30 += run.durationSec;
@@ -744,15 +748,20 @@
 
     const avgHr30 = countAvgHr30 ? totalAvgHr30 / countAvgHr30 : null;
     const avgHr7 = countAvgHr7 ? totalAvgHr7 / countAvgHr7 : null;
+    const avgHrAll = countAvgHrAll ? totalAvgHrAll / countAvgHrAll : null;
     const recovery = recoveryCount ? recoverySum / recoveryCount : null;
 
+    const hrData7 = runs.filter((run) => {
+      const date = new Date(run.date + 'T00:00:00');
+      return date >= sevenDaysAgo && date <= now && Number.isFinite(run.avgHr);
+    });
     const hrData30 = runs.filter((run) => {
       const date = new Date(run.date + 'T00:00:00');
       return date >= thirtyDaysAgo && date <= now && Number.isFinite(run.avgHr);
     });
-    const hrData90 = runs.filter((run) => {
+    const hrData12Weeks = runs.filter((run) => {
       const date = new Date(run.date + 'T00:00:00');
-      return date >= ninetyDaysAgo && date <= now && Number.isFinite(run.avgHr);
+      return date >= twelveWeeksAgo && date <= now && Number.isFinite(run.avgHr);
     });
     const hrDataAll = runs.filter((run) => Number.isFinite(run.avgHr));
 
@@ -769,10 +778,12 @@
       pr5k: prFive,
       avgHr30,
       avgHr7,
+      avgHrAll,
       recovery,
       weeklyTotals,
+      hrData7,
       hrData30,
-      hrData90,
+      hrData12Weeks,
       hrDataAll,
     };
   }
@@ -868,18 +879,51 @@
       ariaLabel: has7Pace ? `Tempo laatste week ${formatPaceShort(stats.avgPace7)}` : 'Geen tempo (7 dagen)',
     });
 
+    const hasAvgHrAll = Number.isFinite(stats.avgHrAll) && stats.avgHrAll > 0;
+    const hasAvgHr30 = Number.isFinite(stats.avgHr30) && stats.avgHr30 > 0;
+    const hasAvgHr7 = Number.isFinite(stats.avgHr7) && stats.avgHr7 > 0;
+    const hrMarker = getHrGaugeMarker();
+
     cards.push({
-      type: 'plain',
-      label: 'Gem. hartslag (30 dagen)',
-      valueText: stats.avgHr30 ? `${Math.round(stats.avgHr30)} bpm` : '—',
-      helper: stats.avgHr30 ? 'Gebaseerd op runs met hartslag in de laatste 30 dagen.' : 'Voer hartslagwaarden in om trends te zien.',
+      type: 'gauge',
+      label: 'Gem. hartslag (altijd)',
+      valueText: hasAvgHrAll ? String(Math.round(stats.avgHrAll)) : '—',
+      unitText: hasAvgHrAll ? 'bpm' : '',
+      detail: hasAvgHrAll ? formatHrGaugeDetail(stats.hrDataAll.length) : '',
+      helper: hasAvgHrAll ? describeHrZone(stats.avgHrAll) : 'Voer runs met hartslag in om trends te tonen.',
+      progress: hasAvgHrAll ? gaugeProgressFromHr(stats.avgHrAll) : 0,
+      marker: hrMarker,
+      ariaLabel: hasAvgHrAll
+        ? `Gemiddelde hartslag over alle runs ${Math.round(stats.avgHrAll)} slagen per minuut`
+        : 'Geen hartslagdata beschikbaar',
     });
 
     cards.push({
-      type: 'plain',
+      type: 'gauge',
+      label: 'Gem. hartslag (30 dagen)',
+      valueText: hasAvgHr30 ? String(Math.round(stats.avgHr30)) : '—',
+      unitText: hasAvgHr30 ? 'bpm' : '',
+      detail: hasAvgHr30 ? formatHrGaugeDetail(stats.hrData30.length) : '',
+      helper: hasAvgHr30 ? describeHrZone(stats.avgHr30) : 'Nog onvoldoende runs met hartslag in de laatste 30 dagen.',
+      progress: hasAvgHr30 ? gaugeProgressFromHr(stats.avgHr30) : 0,
+      marker: hrMarker,
+      ariaLabel: hasAvgHr30
+        ? `Gemiddelde hartslag laatste 30 dagen ${Math.round(stats.avgHr30)} slagen per minuut`
+        : 'Geen hartslagdata voor de laatste 30 dagen',
+    });
+
+    cards.push({
+      type: 'gauge',
       label: 'Gem. hartslag (7 dagen)',
-      valueText: stats.avgHr7 ? `${Math.round(stats.avgHr7)} bpm` : '—',
-      helper: stats.avgHr7 ? 'Recente trainingsweek.' : 'Nog geen runs met hartslag in de laatste week.',
+      valueText: hasAvgHr7 ? String(Math.round(stats.avgHr7)) : '—',
+      unitText: hasAvgHr7 ? 'bpm' : '',
+      detail: hasAvgHr7 ? formatHrGaugeDetail(stats.hrData7.length) : '',
+      helper: hasAvgHr7 ? describeHrZone(stats.avgHr7) : 'Nog geen runs met hartslag in de laatste week.',
+      progress: hasAvgHr7 ? gaugeProgressFromHr(stats.avgHr7) : 0,
+      marker: hrMarker,
+      ariaLabel: hasAvgHr7
+        ? `Gemiddelde hartslag laatste 7 dagen ${Math.round(stats.avgHr7)} slagen per minuut`
+        : 'Geen hartslagdata voor de laatste 7 dagen',
     });
 
     cards.push({
@@ -1031,37 +1075,33 @@
 
   function renderCharts(stats) {
     const chartsLib = window.RunningSmartCharts;
-    if (!chartsLib || !chartsLib.renderHrLineChart || !chartsLib.renderZoneChart) return;
+    if (!chartsLib || !chartsLib.renderHrLineChart) return;
 
-    const range = hrRangeSelect?.value || '30';
-    let data = stats.hrData30;
-    if (range === '90') {
-      data = stats.hrData90;
-    } else if (range === 'all') {
-      data = stats.hrDataAll;
+    if (hrLineChart12) {
+      hrLineChart12.destroy();
+      hrLineChart12 = undefined;
+    }
+    if (hrLineChartAll) {
+      hrLineChartAll.destroy();
+      hrLineChartAll = undefined;
     }
 
-    if (hrLineChart) {
-      hrLineChart.destroy();
-      hrLineChart = undefined;
-    }
-    if (zoneChart) {
-      zoneChart.destroy();
-      zoneChart = undefined;
-    }
-
-    if (data && data.length && hrLineCanvas) {
-      hrLineEmpty?.setAttribute('hidden', '');
-      hrLineChart = chartsLib.renderHrLineChart(hrLineCanvas, data);
-    } else {
-      hrLineEmpty?.removeAttribute('hidden');
+    if (hrLineCanvas12) {
+      if (stats.hrData12Weeks && stats.hrData12Weeks.length) {
+        hrLineEmpty12?.setAttribute('hidden', '');
+        hrLineChart12 = chartsLib.renderHrLineChart(hrLineCanvas12, stats.hrData12Weeks);
+      } else {
+        hrLineEmpty12?.removeAttribute('hidden');
+      }
     }
 
-    if (settings.maxHrUser && stats.hrDataAll.length && zoneCanvas) {
-      zoneEmpty?.setAttribute('hidden', '');
-      zoneChart = chartsLib.renderZoneChart(zoneCanvas, stats.hrDataAll, settings.maxHrUser);
-    } else {
-      zoneEmpty?.removeAttribute('hidden');
+    if (hrLineCanvasAll) {
+      if (stats.hrDataAll && stats.hrDataAll.length) {
+        hrLineEmptyAll?.setAttribute('hidden', '');
+        hrLineChartAll = chartsLib.renderHrLineChart(hrLineCanvasAll, stats.hrDataAll);
+      } else {
+        hrLineEmptyAll?.removeAttribute('hidden');
+      }
     }
   }
 
@@ -1226,6 +1266,57 @@
     const max = 900; // 15:00
     const clamped = clamp((paceSeconds - min) / (max - min), 0, 1);
     return 1 - clamped;
+  }
+
+  function gaugeProgressFromHr(avgHr) {
+    if (!Number.isFinite(avgHr) || avgHr <= 0) return 0;
+    const maxHr = Number.isFinite(settings.maxHrUser) && settings.maxHrUser > 0 ? settings.maxHrUser : 200;
+    return clamp(avgHr / maxHr, 0, 1);
+  }
+
+  function getHrGaugeMarker() {
+    if (!settings || !settings.zones) return null;
+    const zone = settings.zones.z3;
+    if (!zone) return null;
+    return clamp(zone[1], 0, 1);
+  }
+
+  function formatHrGaugeDetail(count) {
+    if (!Number.isFinite(count) || count <= 0) return '';
+    return count === 1 ? 'Gebaseerd op 1 run.' : `Gebaseerd op ${count} runs.`;
+  }
+
+  function describeHrZone(avgHr) {
+    if (!Number.isFinite(avgHr) || avgHr <= 0) return '';
+    const maxHr = Number.isFinite(settings.maxHrUser) && settings.maxHrUser > 0 ? settings.maxHrUser : null;
+    if (!maxHr) {
+      return 'Tip: stel je maximale hartslag in voor zone-informatie.';
+    }
+    const zones = settings.zones || computeZones();
+    const ratio = avgHr / maxHr;
+    const ordered = ['z1', 'z2', 'z3', 'z4', 'z5'];
+    let foundKey = null;
+    let range = null;
+    for (const key of ordered) {
+      const zone = zones[key];
+      if (!zone) continue;
+      const [min, max] = zone;
+      if (ratio >= min && ratio <= max + 0.0001) {
+        foundKey = key;
+        range = zone;
+        break;
+      }
+    }
+    if (!foundKey && zones.z5) {
+      foundKey = 'z5';
+      range = zones.z5;
+    }
+    if (!range) {
+      return `Gemeten: ${Math.round(avgHr)} bpm`;
+    }
+    const lower = Math.round(range[0] * maxHr);
+    const upper = Math.round(range[1] * maxHr);
+    return `Zone ${foundKey.toUpperCase()} · ${lower}–${upper} bpm`;
   }
 
   function uid() {

@@ -187,28 +187,26 @@
         </div>
         <div class="kpi-grid" id="kpiGrid" role="list"></div>
         <div class="chart-grid">
-          <article class="chart-card" aria-labelledby="hrChartTitle">
-            <div class="chart-card-header">
-              <h3 id="hrChartTitle">Gemiddelde hartslag</h3>
-              <label class="chart-filter" for="hrRange">
-                Bereik
-                <select id="hrRange" name="hrRange">
-                  <option value="30">30 dagen</option>
-                  <option value="90">90 dagen</option>
-                  <option value="all">Alles</option>
-                </select>
-              </label>
-            </div>
+          <article class="chart-card" aria-labelledby="hrChart12Title">
+            <h3 id="hrChart12Title">Gemiddelde hartslag (laatste 12 weken)</h3>
             <div class="chart-card-body">
-              <canvas id="hrLineChart" aria-label="Lijngrafiek hartslag" role="img"></canvas>
-              <p id="hrLineEmpty" class="chart-empty" hidden>Voer runs met hartslag in om deze grafiek te vullen.</p>
+              <canvas
+                id="hrLineChart12"
+                aria-label="Lijngrafiek gemiddelde hartslag laatste 12 weken"
+                role="img"
+              ></canvas>
+              <p id="hrLineEmpty12" class="chart-empty" hidden>Geen runs met hartslag in de laatste 12 weken.</p>
             </div>
           </article>
-          <article class="chart-card" aria-labelledby="zoneChartTitle">
-            <h3 id="zoneChartTitle">Hartslagzones</h3>
+          <article class="chart-card" aria-labelledby="hrChartAllTitle">
+            <h3 id="hrChartAllTitle">Gemiddelde hartslag (altijd)</h3>
             <div class="chart-card-body">
-              <canvas id="zoneChart" aria-label="Verdeling hartslagzones" role="img"></canvas>
-              <p id="zoneEmpty" class="chart-empty">Voer je maximale hartslag in bij Instellingen om deze grafiek te zien.</p>
+              <canvas
+                id="hrLineChartAll"
+                aria-label="Lijngrafiek gemiddelde hartslag over alle runs"
+                role="img"
+              ></canvas>
+              <p id="hrLineEmptyAll" class="chart-empty" hidden>Voer runs met hartslag in om deze grafiek te vullen.</p>
             </div>
           </article>
           <article class="chart-card" aria-labelledby="weeklyChartTitle">
