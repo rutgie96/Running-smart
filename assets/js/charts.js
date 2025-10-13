@@ -4,10 +4,10 @@ export function renderHrLineChart(canvas, runs) {
   if (!canvas || !runs || !runs.length || typeof Chart === 'undefined') return null;
   const rootStyles = getComputedStyle(document.documentElement);
   const accent = (rootStyles.getPropertyValue('--accent') || '#e10600').trim();
-  const accentSoft = (rootStyles.getPropertyValue('--accent-soft') || 'rgba(225, 6, 0, 0.2)').trim();
-  const ink = (rootStyles.getPropertyValue('--accent-ink') || '#f4f7fb').trim();
-  const muted = (rootStyles.getPropertyValue('--muted') || '#9097a5').trim();
-  const gridColor = 'rgba(255, 255, 255, 0.12)';
+  const accentSoft = (rootStyles.getPropertyValue('--accent-soft') || 'rgba(225, 6, 0, 0.14)').trim();
+  const ink = (rootStyles.getPropertyValue('--ink') || '#1e2329').trim();
+  const muted = (rootStyles.getPropertyValue('--muted') || '#5d6774').trim();
+  const gridColor = 'rgba(30, 40, 50, 0.12)';
 
   const labels = runs
     .slice()
@@ -73,7 +73,7 @@ export function renderHrLineChart(canvas, runs) {
           display: false,
         },
         tooltip: {
-          backgroundColor: 'rgba(11, 14, 18, 0.9)',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
           titleColor: ink,
           bodyColor: ink,
           borderColor: accent,
