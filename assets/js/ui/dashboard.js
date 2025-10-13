@@ -46,7 +46,7 @@ function renderHero(context, stats) {
     if (heroAllTimePace) heroAllTimePace.textContent = '—';
     if (heroAvgPace) heroAvgPace.textContent = '—';
     if (heroAvgHr) heroAvgHr.textContent = '—';
-    if (heroCaption) heroCaption.textContent = 'Voer je eerste run in om de chronograaf te starten.';
+    if (heroCaption) heroCaption.textContent = 'Voer je eerste run in om te beginnen.';
     return;
   }
   const latest = state.runs[0];

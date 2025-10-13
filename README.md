@@ -12,7 +12,7 @@ Handig om inzicht te krijgen in je voortgang en persoonlijke records.
 - Instellingenpagina voor doelen, streeftempo, maximale hartslag en JSON-/CSV-export
 
 ## 📁 Mappenstructuur
-- `assets/css/styles.css` — hoofdstylesheet met Formula 1-branding.
+- `assets/css/styles.css` — hoofdstylesheet voor de lichte Running Smart-stijl.
 - `assets/js/main.js` — startpunt (ES modules) dat context, views en dashboards initialiseert.
 - `assets/js/ui/` — UI-modules voor navigatie, dashboard, runs en instellingen.
 - `assets/js/data/` — opslag, standaardwaarden en statistiekberekeningen.
